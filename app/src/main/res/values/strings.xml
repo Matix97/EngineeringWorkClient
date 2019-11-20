@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="child_button_name">Dziecko</string>
+    <string name="parent_button_name">Rodzic</string>
+    <string name="todo">TODO</string>
 </resources>
