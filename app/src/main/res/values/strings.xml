@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">ExchangeToys</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Your Toys</string>
+    <string name="title_dashboard">Toys</string>
+    <string name="title_notifications">Settings</string>
     <string name="child_button_name">Dziecko</string>
     <string name="parent_button_name">Rodzic</string>
     <string name="todo">TODO</string>
+    <string name="your_child">Your child</string>
+    <string name="toy_action">Rent</string>
+    <string name="toy_name">name</string>
+    <string name="toy_some_info">some_info</string>
+    <string name="your_rented_toys">Your rented toys</string>
+    <string name="your_toys">Your toys</string>
 </resources>

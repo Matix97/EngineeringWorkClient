@@ -30,6 +30,7 @@ public class ParentLoginActivity extends Activity {
             if(loginName.getText().toString().equals("admin") && password.getText().toString().equals("admin"))//na sztywno logowane
             {
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
                 startActivity(intent);
             }
             else{
