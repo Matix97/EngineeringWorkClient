@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.exchangetoys.MainActivity;
+import com.example.exchangetoys.ParentMainActivity;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.ui.fragment.ChildArrayAdapter;
 import com.example.exchangetoys.ui.fragment.ChildModelToRecycle;
@@ -35,7 +35,7 @@ public class NotificationsFragment extends Fragment {
         notificationsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText("Welcome " + MainActivity.loginName);
+                textView.setText("Welcome " + ParentMainActivity.loginName);
             }
         });
         // Initializing list view with the custom adapter

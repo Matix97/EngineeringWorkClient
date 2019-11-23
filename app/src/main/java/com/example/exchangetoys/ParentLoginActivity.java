@@ -2,16 +2,12 @@ package com.example.exchangetoys;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import com.example.exchangetoys.ui.ChildLoginActivity;
 
 public class ParentLoginActivity extends Activity {
 
@@ -22,14 +18,14 @@ public class ParentLoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parent_login_activity);
-        loginButton=findViewById(R.id.paretn_login_button);
+        loginButton=findViewById(R.id.child_login_button);
         registerButton=findViewById(R.id.register_parent_button);
-        loginName=findViewById(R.id.login_name_parent);
-        password=findViewById(R.id.login_password_parent);
+        loginName=findViewById(R.id.login_name_child);
+        password=findViewById(R.id.login_password_child);
         loginButton.setOnClickListener(v->{
             if(loginName.getText().toString().equals("admin") && password.getText().toString().equals("admin"))//na sztywno logowane
             {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, ParentMainActivity.class);
                 intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
                 startActivity(intent);
             }
