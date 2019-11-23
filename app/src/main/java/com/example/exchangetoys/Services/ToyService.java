@@ -1,6 +1,6 @@
 package com.example.exchangetoys.Services;
 
-import com.example.exchangetoys.DTOs.ToyServiceData.ExtendedToy;
+import com.example.exchangetoys.DTOs.ToyServiceData.Rental;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 
 import java.util.List;
@@ -14,8 +14,8 @@ public interface ToyService {
 
     @GET("toys")
     Call<List<Toy>> getToys();
-    @POST("toys/choosing")//download more information about specific toy
-    Call<Void> chooseToy(@Body ExtendedToy extendedToy);
+//    @POST("toys/choosing")//download more information about specific toy ///w sumie zbędne, od razu całe info
+//    Call<Void> chooseToy(@Body ExtendedToy extendedToy);
     @POST("addToy")//add new advertisement
     Call<Void> addToy(@Body Toy toy);
     @POST("editToy")
@@ -24,5 +24,7 @@ public interface ToyService {
     Call<List<Toy>> getYourToysAdvert();
     @GET("toys/yourRentedToy")
     Call<List<Toy>> getYourRentedToys();
+    @POST("confirmRent")
+    Call<Void> confirmRent(@Body Rental rental );
 
 }
