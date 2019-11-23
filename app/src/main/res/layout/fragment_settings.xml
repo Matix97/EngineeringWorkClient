@@ -15,14 +15,14 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/your_child"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_notifications"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:text="@string/your_child"
-        android:textSize="20sp" />
+    android:id="@+id/your_child"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/text_notifications"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="15dp"
+    android:text="@string/your_child"
+    android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycle_view"
@@ -32,4 +32,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="60dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@drawable/add_icon"
+        android:focusable="true"
+        android:layout_alignEnd="@+id/my_recycle_view"
+        android:layout_alignBottom="@+id/my_recycle_view"/>
+
 </RelativeLayout>
