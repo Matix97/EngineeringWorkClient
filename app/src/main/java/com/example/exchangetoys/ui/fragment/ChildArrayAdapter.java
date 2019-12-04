@@ -61,3 +61,14 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
         }
     }
 }
+
+
+//olx takie kategorie
+//konfiguracja obaszaru wyszukiwanie
+//wypożyczanie za opłatą, można
+//opłata i kaucja
+////pole na co mozna się wymienić
+//kto chce na co się wymienić
+//filtrowanie po stronie serwera
+//hosting plików,
+//

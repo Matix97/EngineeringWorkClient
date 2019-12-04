@@ -6,13 +6,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.exchangetoys.DTOs.BearerToken;
+import com.example.exchangetoys.Services.ServiceGenerator;
+import com.example.exchangetoys.Services.UserService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ParentLoginActivity extends Activity {
 
     EditText loginName, password;
     Button loginButton,registerButton;
+    private UserService userService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,12 +32,32 @@ public class ParentLoginActivity extends Activity {
         registerButton=findViewById(R.id.register_parent_button);
         loginName=findViewById(R.id.login_name_child);
         password=findViewById(R.id.login_password_child);
+        this.userService = ServiceGenerator.createService(UserService.class);
         loginButton.setOnClickListener(v->{
-            if(loginName.getText().toString().equals("admin") && password.getText().toString().equals("admin"))//na sztywno logowane
+            //if(loginName.getText().toString().equals("admin") && password.getText().toString().equals("admin"))//na sztywno logowane
+            if(true)
             {
-                Intent intent = new Intent(this, ParentMainActivity.class);
-                intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
-                startActivity(intent);
+                Call<BearerToken> call = userService.login(loginName.getText().toString(),password.getText().toString(),"adult");
+                call.enqueue(new Callback<BearerToken>() {
+                    @Override
+                    public void onResponse(Call<BearerToken> call, Response<BearerToken> response) {
+                        if (response.isSuccessful()) {
+                            ServiceGenerator.bearerToken = response.body().getString();
+                            Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
+                            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
+                            startActivity(intent);
+
+                        } else
+                            Toast.makeText(ParentLoginActivity.this, "error Jeb", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<BearerToken> call, Throwable t) {
+                        Toast.makeText(ParentLoginActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
             else{
                 new AlertDialog.Builder(ParentLoginActivity.this)
