@@ -18,7 +18,7 @@ public interface UserService {
     @POST("registerChild")
     Call<Child> registerChild(@Body Child child);
     @POST("authenticate")
-    Call<BearerToken> login(@Header("username") String username, @Header("password") String password,@Header("role") String role);
+    Call<BearerToken> login(@Header("Authorization") byte[] message);
     @POST("updateChild")
     Call<Void> updateChild(@Body Child child);
     @POST("suggestToy")

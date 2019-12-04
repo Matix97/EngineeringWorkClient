@@ -11,12 +11,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionTools {
 
-    private byte[] key = "mafds--t7l-8yt23".getBytes();
-    private SecretKeySpec secretKey;
-
-    EncryptionTools(){
-        secretKey=new SecretKeySpec(key,"AES");
-    }
+    private static final byte[] key = "mafds--t7l-8yt23".getBytes();
+    private static SecretKeySpec secretKey = new SecretKeySpec(key,"AES");
 
     /**
      *
@@ -28,7 +24,7 @@ public class EncryptionTools {
      * @throws IllegalBlockSizeException
      * @throws InvalidKeyException
      */
-    public byte[] encrypt(String data) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+    public static byte[] encrypt(String data) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
         Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte encrypted[] = cipher.doFinal(data.getBytes());
@@ -45,7 +41,7 @@ public class EncryptionTools {
      * @throws IllegalBlockSizeException
      * @throws InvalidKeyException
      */
-    public String decrypt(byte [] encrypted) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+    public static String decrypt(byte [] encrypted) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
         Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte decrypted[] = cipher.doFinal(encrypted);
