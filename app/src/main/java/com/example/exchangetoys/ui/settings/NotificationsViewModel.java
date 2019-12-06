@@ -1,4 +1,4 @@
-package com.example.exchangetoys.ui.notifications;
+package com.example.exchangetoys.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

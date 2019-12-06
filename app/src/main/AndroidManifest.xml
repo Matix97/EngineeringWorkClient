@@ -35,6 +35,9 @@
         <activity
             android:name=".ParentLoginActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ParentRegisterActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

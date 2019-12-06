@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_main_list_of_toys, container, false);
 
         toys=root.findViewById(R.id.my_toys);
 

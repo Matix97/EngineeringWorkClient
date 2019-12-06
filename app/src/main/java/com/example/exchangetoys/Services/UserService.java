@@ -3,7 +3,6 @@ package com.example.exchangetoys.Services;
 
 import com.example.exchangetoys.DTOs.BearerToken;
 import com.example.exchangetoys.DTOs.ToyServiceData.SuggestedToy;
-import com.example.exchangetoys.DTOs.UserServiceData.Adult;
 import com.example.exchangetoys.DTOs.UserServiceData.Child;
 
 import retrofit2.Call;
@@ -13,8 +12,8 @@ import retrofit2.http.POST;
 
 public interface UserService {
 
-    @POST("registerParent")
-    Call<Adult> registerParent(@Body Adult register);
+    @POST("register")
+    Call<Void> registerParent(@Header("Authorization") byte[] message);
     @POST("registerChild")
     Call<Child> registerChild(@Body Child child);
     @POST("authenticate")
