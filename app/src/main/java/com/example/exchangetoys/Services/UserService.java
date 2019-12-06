@@ -15,7 +15,7 @@ public interface UserService {
     @POST("register")
     Call<Void> registerParent(@Header("Authorization") byte[] message);
     @POST("registerChild")
-    Call<Child> registerChild(@Body Child child);
+    Call<Child> registerChild(@Header("Authorization") byte[] message);
     @POST("authenticate")
     Call<BearerToken> login(@Header("Authorization") byte[] message);
     @POST("updateChild")

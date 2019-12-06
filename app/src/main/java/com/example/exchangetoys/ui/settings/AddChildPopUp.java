@@ -1,27 +1,48 @@
 package com.example.exchangetoys.ui.settings;
 
+import android.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.R;
+import com.example.exchangetoys.Services.ServiceGenerator;
+import com.example.exchangetoys.Services.UserService;
+import com.example.exchangetoys.Tools.EncryptionTools;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddChildPopUp {
 
     //PopupWindow display method
-
+    private View view;
+    private UserService userService;
+    private Button accept;
+    EditText name, login, password, confirmPassword;
+    TextView radius_info;
+    SeekBar radius;
+    Integer seekBarValue;
     public void showPopupWindow(final View view) {
 
-
+        this.view = view;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.add_child, null);
 
-
+        this.userService = ServiceGenerator.createService(UserService.class);
         //Specify the length and width through constants
         int width = view.getWidth() - 150;
-        int height = view.getHeight() - 500;
+        int height = view.getHeight() - 300;
 
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = true;
@@ -30,10 +51,41 @@ public class AddChildPopUp {
         final PopupWindow popupWindow = new PopupWindow(popupView, width/*900*/, height/*1300*/, focusable);
 
         //Set the location of the window on the screen
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 100);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 70);
+        name = popupView.findViewById(R.id.name_child_register);
+        login = popupView.findViewById(R.id.login_child_register);
+        password = popupView.findViewById(R.id.password_register_child);
+        confirmPassword = popupView.findViewById(R.id.confirm_password_register_child);
+        radius_info = popupView.findViewById(R.id.radius_info);
+        radius = popupView.findViewById(R.id.seekBar);
+        radius.setProgress(30);
+        radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                seekBarValue = progress;
+                radius_info.setText(progress + " km");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         //Initialize the elements of our window, install the handler
-
+        accept = popupView.findViewById(R.id.confirm_register_adult);
+        accept.setOnClickListener(v -> {
+            tryRegister();
+        });
 
         //Handler for clicking on the inactive zone of the window jak odkometnuję to trochę upierdliwe, ale w sumie ciekaawe
 
@@ -46,6 +98,63 @@ public class AddChildPopUp {
 //                return true;
 //            }
 //        });
+    }
+
+    private void tryRegister() {
+        if (ifAllRequireFieldAreFill()) {
+            if (password.getText().toString().equals(confirmPassword.getText().toString())) {
+                registerPostHandler();
+            }
+        } else {
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Warning")
+                    .setMessage("Please fill all require fields")
+                    .setNegativeButton(android.R.string.ok, null)
+                    .show();
+        }
+    }
+
+    private boolean ifAllRequireFieldAreFill() {
+        return TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(login.getText().toString())
+                && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString());
+    }
+
+    private void registerPostHandler() {
+        String messageToEncrypt = name.getText().toString() + ";" + login.getText().toString()
+                + ";" + password.getText().toString() + ";" + seekBarValue.toString();
+        new AlertDialog.Builder(view.getContext())
+                .setTitle("Only to tests")
+                .setMessage(messageToEncrypt)
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+        try {
+            Call<Child> call = userService.registerChild(EncryptionTools.encrypt(messageToEncrypt));
+            call.enqueue(new Callback<Child>() {
+                @Override
+                public void onResponse(Call<Child> call, Response<Child> response) {
+                    if (response.isSuccessful()) {
+                        new AlertDialog.Builder(view.getContext())
+                                .setTitle("Register")
+                                .setMessage("Child is Adedd")
+                                .setNegativeButton(android.R.string.ok, null)
+                                .show();
+
+                    } else {
+                        Toast.makeText(view.getContext(), "Mayby another login", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Child> call, Throwable t) {
+                    Toast.makeText(view.getContext(), "error 2", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(view.getContext(), "error 3", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 }
