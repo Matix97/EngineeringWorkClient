@@ -37,7 +37,7 @@ public class ParentRegisterActivity extends Activity {
         password = findViewById(R.id.password_register);
         confirmPassword = findViewById(R.id.confirm_password_register);
 
-        accept.findViewById(R.id.confirm_register_adult);
+        accept = findViewById(R.id.confirm_register_adult);
         accept.setOnClickListener(v -> {
             tryRegister();
         });
