@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,11 +69,17 @@ public class SettingsFragment extends Fragment {
     private void addChildHandler(LayoutInflater inflater,ViewGroup container){
         Snackbar.make(root, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-        AddChildFragment addChildFragment= new AddChildFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment, addChildFragment, null)
-                .addToBackStack(null)
-                .commit();
+        AddChildPopUp addChildPopUp = new AddChildPopUp();
+        addChildPopUp.showPopupWindow(root);
+        //AddChildFragment addChildFragment= new AddChildFragment();
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.nav_host_fragment, addChildFragment, null)
+//                .addToBackStack(null)
+//                .commit();
+
+
+        PopupWindow pw = new PopupWindow(inflater.inflate(R.layout.add_child, null, false), 100, 100, true);
+        //pw.showAtLocation((root.findViewById(R.id.)), Gravity.CENTER, 0, 0);
         //też nie działa...
 //        AppCompatActivity activity = (AppCompatActivity) root.getContext();
 //        activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, addChildFragment).addToBackStack(null).commit();
