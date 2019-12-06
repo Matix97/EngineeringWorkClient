@@ -66,7 +66,7 @@ public class AddChildPopUp {
                                           boolean fromUser) {
                 // TODO Auto-generated method stub
                 seekBarValue = progress;
-                radius_info.setText(progress + " km");
+                radius_info.setText("Chosen radius: " + progress + " km");
             }
 
             @Override
@@ -140,7 +140,7 @@ public class AddChildPopUp {
                                 .show();
 
                     } else {
-                        Toast.makeText(view.getContext(), "Mayby another login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Maybe another login", Toast.LENGTH_SHORT).show();
                     }
 
                 }

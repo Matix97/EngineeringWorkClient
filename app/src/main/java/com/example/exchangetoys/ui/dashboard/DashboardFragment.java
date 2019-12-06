@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.FilterActivity;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
 import com.example.exchangetoys.ui.fragment.ToyModelToRecycle;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     private RecyclerView toys;
+    private FloatingActionButton filterButton;
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
@@ -30,7 +33,11 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main_list_of_toys, container, false);
 
         toys=root.findViewById(R.id.my_toys);
-
+        filterButton = root.findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(v -> {
+            FilterActivity filterActivity = new FilterActivity();
+            filterActivity.showPopupWindow(root);
+        });
         // my_toys.getLayoutParams().height=root.getHeight()/2-50;
         //rented_toys.getLayoutParams().height=root.getHeight()/2-50;
         ///////////////////////

@@ -33,9 +33,11 @@
             android:name=".ChildLoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/theme"
             android:name=".ParentLoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:theme="@style/theme"
             android:name=".ParentRegisterActivity"
             android:screenOrientation="portrait" />
     </application>
