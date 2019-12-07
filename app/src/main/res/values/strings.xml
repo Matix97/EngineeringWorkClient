@@ -13,4 +13,10 @@
     <string name="your_rented_toys">Your rented toys</string>
     <string name="your_toys">Your toys</string>
     <string name="register">Register</string>
+    <!--To spinner category-->
+    <string name="category_prompt">Choose a category</string>
+    <string name="age_prompt">Age Range</string>
+    <string name="tag_prompt">Tags</string>
+
+
 </resources>

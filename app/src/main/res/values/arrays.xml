@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_category">
+        <item>cars</item>
+        <item>dolls</item>
+        <item>tedyie</item>
+        <item>item4</item>
+    </string-array>
+    <string-array name="age_category">
+        <item>0-3</item>
+        <item>4-7</item>
+        <item>8-12</item>
+        <item>13-15</item>
+        <item>15-100</item>
+    </string-array>
+    <string-array name="tag_category">
+        <item>jakis</item>
+    </string-array>
+</resources>
