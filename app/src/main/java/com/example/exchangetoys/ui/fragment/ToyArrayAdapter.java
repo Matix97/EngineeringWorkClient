@@ -1,14 +1,12 @@
 package com.example.exchangetoys.ui.fragment;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,9 +70,10 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), "onClick " + getLayoutPosition() + " " + toyName.getText(), Toast.LENGTH_SHORT).show();
-            Log.d("onclick", "onClick " + getLayoutPosition() + " " + toyName.getText());
+          //  Toast.makeText(view.getContext(), "onClick " + getLayoutPosition() + " " + toyName.getText(), Toast.LENGTH_SHORT).show();
+            //Log.d("onclick", "onClick " + getLayoutPosition() + " " + toyName.getText());
             Intent intent = new Intent(view.getContext(), ToyActivity.class);
+            intent.putExtra("toy",new ToyModelToRecycle(toyName.getText().toString(),toyInfo.getText().toString(),toyImage.getImageAlpha()));
             view.getContext().startActivity(intent);
         }
     }
