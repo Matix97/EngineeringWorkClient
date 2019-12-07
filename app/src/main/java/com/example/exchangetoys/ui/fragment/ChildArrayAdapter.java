@@ -19,6 +19,7 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
     private ArrayList<ChildModelToRecycle> itemList;
+
     // Constructor of the class
     public ChildArrayAdapter(int layoutId, ArrayList<ChildModelToRecycle> itemList) {
         listItemLayout = layoutId;
@@ -36,8 +37,7 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(listItemLayout, parent, false);
-        ViewHolder myViewHolder = new ViewHolder(view);
-        return myViewHolder;
+        return new ViewHolder(view);
     }
 
     // load data in each row element
@@ -50,11 +50,13 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
     // Static inner class to initialize the views of rows
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView item;
+
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            item = (TextView) itemView.findViewById(R.id.row_item);
+            item = itemView.findViewById(R.id.row_item);
         }
+
         @Override
         public void onClick(View view) {
             Log.d("onclick", "onClick " + getLayoutPosition() + " " + item.getText());

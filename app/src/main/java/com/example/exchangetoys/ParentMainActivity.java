@@ -15,6 +15,12 @@ import com.google.android.material.snackbar.Snackbar;
 public class ParentMainActivity extends AppCompatActivity {
 
     public static String loginName;
+
+    public static void filtr(View view) {
+        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)//todo it's only for testing so later delete
+                .setAction("Action", null).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +39,6 @@ public class ParentMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-    }
-
-    public static void filtr(View view) {
-        Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
     }
 
 }

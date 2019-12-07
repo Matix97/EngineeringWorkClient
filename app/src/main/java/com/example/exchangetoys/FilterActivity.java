@@ -10,6 +10,7 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
@@ -52,7 +53,7 @@ public class FilterActivity {
         isVintage = popupView.findViewById(R.id.is_vintage);
         confirm = popupView.findViewById(R.id.confirm_filtr);
         confirm.setOnClickListener(s -> {
-            //  filter();
+            //  filter();//todo uncomment or something like this...
             popupWindow.dismiss();
             ParentMainActivity.filtr(view);
 
@@ -63,14 +64,18 @@ public class FilterActivity {
 
     private void filter() {
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        Call<List<Toy>> call = toyService.getToys();
+        double latitude = 0, longitude = 0;//todo get real location
+        FilterDTO filterDTO = new FilterDTO(mainCategory.getSelectedItem().toString(),
+                age.getSelectedItem().toString(), tags.getSelectedItem().toString(),
+                anyKeyword.getText().toString(), isDidactic.isChecked(), isVintage.isChecked(),
+                latitude, longitude);
+        Call<List<Toy>> call = toyService.getToys(filterDTO);
         call.enqueue(new Callback<List<Toy>>() {
             @Override
             public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()) {//todo create list
 //                data = response.body();
 //                for (int i = 0; i < data.size(); i++) {
-//                    if (!data.get(i).isTaken() && data.get(i).isOk())
 //                        finalData.add(data.get(i));
 //                }
 //                CarArturAdapter arturAdapter = new CarArturAdapter(getContext(), R.layout.cars_adapter, finalData);

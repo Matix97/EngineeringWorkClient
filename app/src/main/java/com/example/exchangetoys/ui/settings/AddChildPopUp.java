@@ -24,14 +24,15 @@ import retrofit2.Response;
 
 public class AddChildPopUp {
 
+    private EditText name, login, password, confirmPassword, childAge;
+    private TextView radius_info;
+    private SeekBar radius;
+    private Integer seekBarValue;
     //PopupWindow display method
     private View view;
     private UserService userService;
     private Button accept;
-    EditText name, login, password, confirmPassword;
-    TextView radius_info;
-    SeekBar radius;
-    Integer seekBarValue;
+
     public void showPopupWindow(final View view) {
 
         this.view = view;
@@ -56,9 +57,11 @@ public class AddChildPopUp {
         login = popupView.findViewById(R.id.login_child_register);
         password = popupView.findViewById(R.id.password_register_child);
         confirmPassword = popupView.findViewById(R.id.confirm_password_register_child);
+        childAge = popupView.findViewById(R.id.child_age);
         radius_info = popupView.findViewById(R.id.radius_info);
         radius = popupView.findViewById(R.id.seekBar);
         radius.setProgress(30);
+        radius_info.setText("Chosen radius: " + 30 + " km");
         radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -102,9 +105,19 @@ public class AddChildPopUp {
 
     private void tryRegister() {
         if (ifAllRequireFieldAreFill()) {
-            if (password.getText().toString().equals(confirmPassword.getText().toString())) {
-                registerPostHandler();
+            try {
+                Integer.parseInt(childAge.getText().toString());
+                if (password.getText().toString().equals(confirmPassword.getText().toString())) {
+                    registerPostHandler();
+                }
+            } catch (NumberFormatException e) {
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("Error")
+                        .setMessage("age is not a number")
+                        .setNegativeButton(android.R.string.ok, null)
+                        .show();
             }
+
         } else {
             new AlertDialog.Builder(view.getContext())
                     .setTitle("Warning")
@@ -115,13 +128,14 @@ public class AddChildPopUp {
     }
 
     private boolean ifAllRequireFieldAreFill() {
-        return TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(login.getText().toString())
+        return TextUtils.isEmpty(childAge.getText().toString()) && TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(login.getText().toString())
                 && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString());
     }
 
     private void registerPostHandler() {
         String messageToEncrypt = name.getText().toString() + ";" + login.getText().toString()
-                + ";" + password.getText().toString() + ";" + seekBarValue.toString();
+                + ";" + password.getText().toString() + ";" + childAge.getText().toString()
+                + ";" + seekBarValue.toString();
         new AlertDialog.Builder(view.getContext())
                 .setTitle("Only to tests")
                 .setMessage(messageToEncrypt)

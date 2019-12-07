@@ -19,6 +19,7 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
     private ArrayList<ToyModelToRecycle> itemList;
+
     // Constructor of the class
     public ToyArrayAdapter(int layoutId, ArrayList<ToyModelToRecycle> itemList) {
         listItemLayout = layoutId;
@@ -47,24 +48,25 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
         toyName.setText(itemList.get(listPosition).getName());
         TextView toyInfo = holder.toyInfo;
         toyInfo.setText(itemList.get(listPosition).getInfo());
-        ImageView imageView =holder.toyImage;
+        ImageView imageView = holder.toyImage;
         imageView.setImageResource(itemList.get(listPosition).getImage());
     }
 
     // Static inner class to initialize the views of rows
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView toyName,toyInfo;
+        public TextView toyName, toyInfo;
         public ImageView toyImage;
         public Button toyButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            toyName = (TextView) itemView.findViewById(R.id.toyName);
-            toyInfo = (TextView) itemView.findViewById(R.id.toySomeInfo);
+            toyName = itemView.findViewById(R.id.toyName);
+            toyInfo = itemView.findViewById(R.id.toySomeInfo);
             toyImage = itemView.findViewById(R.id.imageViewToy);
-            toyButton =itemView.findViewById(R.id.buttonToyAction);
+            toyButton = itemView.findViewById(R.id.buttonToyAction);
         }
+
         @Override
         public void onClick(View view) {
             Log.d("onclick", "onClick " + getLayoutPosition() + " " + toyName.getText());

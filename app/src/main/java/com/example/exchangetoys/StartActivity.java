@@ -9,20 +9,20 @@ import androidx.annotation.Nullable;
 
 public class StartActivity extends Activity {
     ImageButton parentActivity, childActivity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_activity);
-        parentActivity =findViewById(R.id.parent_button);
-        childActivity=findViewById(R.id.child_button);
+        parentActivity = findViewById(R.id.parent_button);
+        childActivity = findViewById(R.id.child_button);
         childActivity.setImageResource(R.drawable.child_button_picture);
         parentActivity.setImageResource(R.drawable.parents_button_picture);
-        parentActivity.setOnClickListener(v->{
+        parentActivity.setOnClickListener(v -> {
             Intent intent = new Intent(this, ParentLoginActivity.class);
-            //intent.putExtra("Value1", ed1.getText().toString());              /opcjonalnie jakieś wartości
             startActivity(intent);
         });
-        childActivity.setOnClickListener(v->{
+        childActivity.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChildLoginActivity.class);
             startActivity(intent);
         });

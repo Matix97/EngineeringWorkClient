@@ -18,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//todo add location to register
 public class ParentRegisterActivity extends Activity {
     Button accept;
     EditText name, surname, email, phoneNumber, password, confirmPassword;
@@ -65,7 +66,7 @@ public class ParentRegisterActivity extends Activity {
 
     private void registerPostHandler() {
         String messageToEncrypt = name.getText().toString() + ";" + surname.getText().toString()
-                + ";" + password.getText().toString()+ ";" + phoneNumber.getText().toString()
+                + ";" + password.getText().toString() + ";" + phoneNumber.getText().toString()
                 + ";" + email.getText().toString();
         try {
             Call<Void> call = userService.registerParent(EncryptionTools.encrypt(messageToEncrypt));
@@ -82,7 +83,6 @@ public class ParentRegisterActivity extends Activity {
                     } else {
                         Toast.makeText(ParentRegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
                     }
-
                 }
 
                 @Override

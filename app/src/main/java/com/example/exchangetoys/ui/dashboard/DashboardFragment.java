@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,16 +22,16 @@ import java.util.ArrayList;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+
     private RecyclerView toys;
     private FloatingActionButton filterButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
+                             ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_main_list_of_toys, container, false);
 
-        toys=root.findViewById(R.id.my_toys);
+        toys = root.findViewById(R.id.my_toys);
         filterButton = root.findViewById(R.id.filter_button);
         filterButton.setOnClickListener(v -> {
             FilterActivity filterActivity = new FilterActivity();
@@ -44,14 +43,14 @@ public class DashboardFragment extends Fragment {
         // Initializing list view with the custom adapter
         ArrayList<ToyModelToRecycle> itemList = new ArrayList<>();
         // Populating list items
-        for(int i=0; i<100; i++) {
-            itemList.add(new ToyModelToRecycle("Toy " + i,"opis",R.drawable.child_button_picture));
+        for (int i = 0; i < 100; i++) {
+            itemList.add(new ToyModelToRecycle("Toy " + i, "opis", R.drawable.child_button_picture));
         }
         ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, itemList);
 
         toys.setLayoutManager(new LinearLayoutManager(root.getContext()));
         toys.setItemAnimator(new DefaultItemAnimator());
-        toys.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         toys.setAdapter(itemArrayAdapter);
         return root;
     }
