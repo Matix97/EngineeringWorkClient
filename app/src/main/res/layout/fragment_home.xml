@@ -43,6 +43,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="60dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_toy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_alignBottom="@+id/my_recycle_view_my_toy"
+        android:layout_alignRight="@+id/my_recycle_view_my_toy" />
 
 
 

@@ -1,5 +1,6 @@
 package com.example.exchangetoys.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,23 +13,31 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.AddToyActivity;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
 import com.example.exchangetoys.ui.fragment.ToyModelToRecycle;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView my_toys, rented_toys;
-
-
+    private FloatingActionButton addToy;
+private View root;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+
         my_toys = root.findViewById(R.id.my_recycle_view_my_toy);
         rented_toys = root.findViewById(R.id.my_recycle_view_rented_toy);
+        addToy=root.findViewById(R.id.add_toy);
+        addToy.setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), AddToyActivity.class);
+            startActivity(intent);
+        });
         // my_toys.getLayoutParams().height=root.getHeight()/2-50;
         //rented_toys.getLayoutParams().height=root.getHeight()/2-50;
         ///////////////////////

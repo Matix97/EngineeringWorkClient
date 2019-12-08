@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false">
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toy name" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Toy's Name" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toy description" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="151dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/age_prompt" />
+
+    <Spinner
+        android:id="@+id/age_spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:entries="@array/age_category"
+        android:prompt="@string/age_prompt"
+        android:spinnerMode="dialog" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/category_prompt" />
+
+    <Spinner
+        android:id="@+id/category_spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:entries="@array/spinner_category"
+        android:prompt="@string/category_prompt"
+        android:spinnerMode="dialog" />
+    <!--tags-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/tag_prompt" />
+
+    <Spinner
+        android:id="@+id/tag_spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:entries="@array/tag_category"
+        android:prompt="@string/tag_prompt"
+        android:spinnerMode="dialog" />
+
+    <CheckBox
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/is_didactic2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Is didactic" />
+
+    <CheckBox
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/is_vintage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Is vintage" />
+
+        <Button
+            android:id="@+id/make_photo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Make photo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/uplouded_photos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/confirm_adding_toy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create advert" />
+
+</LinearLayout>
+</ScrollView>
