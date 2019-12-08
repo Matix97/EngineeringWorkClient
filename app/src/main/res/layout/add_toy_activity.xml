@@ -102,14 +102,10 @@
             android:layout_weight="1"
             android:text="Make photo" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/uplouded_photos"
+        android:id="@+id/uploaded_photos"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
