@@ -28,6 +28,7 @@ public class UploadImage {
     private static Context context;
    private static Bitmap bitmap;
    private static String path;
+private static  byte[] test;
     public static void execute(Bitmap bitmap, Context context){
         UploadImage.context=context;
         UploadImage.bitmap=bitmap;
@@ -42,7 +43,7 @@ public class UploadImage {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
         byte[] bitmapData = bos.toByteArray();
-
+test=bitmapData;
         //write the bytes in file
         FileOutputStream fos = null;
         try {
@@ -74,9 +75,10 @@ public class UploadImage {
         // Create MultipartBody.Part using file request-body,file name and part name
         MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), fileReqBody);
         //Create request body with text description and text media type
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        //RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
         //
-        Call call = uploadAPIs.uploadImage(PhotoNetworkClient.KEY_API,  part,description);
+
+        Call call = uploadAPIs.uploadImage(PhotoNetworkClient.KEY_API,file);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
