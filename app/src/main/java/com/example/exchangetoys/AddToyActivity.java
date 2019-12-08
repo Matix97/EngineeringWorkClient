@@ -2,10 +2,13 @@ package com.example.exchangetoys;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
@@ -18,6 +21,7 @@ public class AddToyActivity extends Activity {
     private CheckBox isDidactic, isVintage;
     private RecyclerView photos;
     private Button makePhoto,confirm;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,13 +44,25 @@ public class AddToyActivity extends Activity {
         });
 
 
-
+        imageView=findViewById(R.id.imageView);
     }
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private void makePhotoFunction() {
-        Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            //Toast.makeText(this,"I made photo",Toast.LENGTH_SHORT);
+        }
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imageBitmap);
         }
     }
 
