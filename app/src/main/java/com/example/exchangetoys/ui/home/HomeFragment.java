@@ -49,9 +49,11 @@ private View root;
         }
         ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, itemList);
         my_toys = root.findViewById(R.id.my_recycle_view_rented_toy);
-        my_toys.setLayoutManager(new LinearLayoutManager(root.getContext()));
+LinearLayoutManager linearLayoutManager=new LinearLayoutManager(root.getContext());
+linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        my_toys.setLayoutManager(linearLayoutManager);
         my_toys.setItemAnimator(new DefaultItemAnimator());
-        my_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        my_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
         my_toys.setAdapter(itemArrayAdapter);
 
         ToyArrayAdapter itemArrayAdapter2 = new ToyArrayAdapter(R.layout.toy_item, itemList);
