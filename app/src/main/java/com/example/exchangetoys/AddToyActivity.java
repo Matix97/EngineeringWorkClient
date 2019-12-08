@@ -10,9 +10,27 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.exchangetoys.Services.PhotoNetworkClient;
+import com.example.exchangetoys.Services.PhotoService;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class AddToyActivity extends Activity {
 
@@ -57,13 +75,76 @@ public class AddToyActivity extends Activity {
         }
 
     }
+    //to get image from camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
+            uploadToServer(convertBitmapToFilePath(imageBitmap));
         }
+    }
+    private String convertBitmapToFilePath(Bitmap bitmap){
+
+
+//create a file to write bitmap data
+        File f = new File(this.getCacheDir(), "temp_");//todo jakaś lepsza nazwa
+       String path=null;
+
+//Convert bitmap to byte array
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+        FileOutputStream fos = null;
+        try {
+            f.createNewFile();
+            fos = new FileOutputStream(f);
+            path=f.getPath();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return path;
+    }
+    private void uploadToServer(String filePath) {
+        Retrofit retrofit = PhotoNetworkClient.getRetrofitClient(this);
+        PhotoService uploadAPIs = retrofit.create(PhotoService.class);
+        //Create a file object using file path
+        File file = new File(filePath);
+        // Create a request body with file and image media type
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+        // Create MultipartBody.Part using file request-body,file name and part name
+        MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), fileReqBody);
+        //Create request body with text description and text media type
+       // RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        //
+        Call call = uploadAPIs.uploadImage(PhotoNetworkClient.KEY_API,part);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful())
+                    Toast.makeText(AddToyActivity.this,"I send photo",Toast.LENGTH_SHORT);
+                else
+                    Toast.makeText(AddToyActivity.this,"response isn't successful",Toast.LENGTH_SHORT);
+
+            }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Toast.makeText(AddToyActivity.this,"on failure",Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     private void confirmFunction() {
