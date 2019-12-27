@@ -1,6 +1,7 @@
 package com.example.exchangetoys;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cloudinary.android.MediaManager;
 import com.example.exchangetoys.DTOs.ToyServiceData.AddToyDTO;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
@@ -34,12 +34,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AddToyActivity extends Activity {
 
@@ -83,11 +77,7 @@ public class AddToyActivity extends Activity {
         photos.addItemDecoration(new DividerItemDecoration(AddToyActivity.this, DividerItemDecoration.HORIZONTAL));
         photos.setAdapter(itemArrayAdapter);
 
-        Map config = new HashMap();
-        config.put("cloud_name", "dxlmhjfv1");
-        config.put("api_key", "766496874972834");
-        config.put("api_secret", "wADqusLIUpVTvVD3aKBrLWGoHy4");
-        MediaManager.init(this, config);
+
 
         uploadedPhotoURLs.init();
 
@@ -159,41 +149,52 @@ public class AddToyActivity extends Activity {
 
 
     private void confirmFunction() {
-        if(UploadedPhotoURL.ALL_IMAGE_UPLOADED){
-            ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
-            ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-            AddToyDTO addToyDTO=new AddToyDTO();
-            addToyDTO.setName(name.getText().toString());
-            addToyDTO.setDescription(description.getText().toString());
-            addToyDTO.setAgeRange(age.getSelectedItem().toString());
-            addToyDTO.setCategory(category.getSelectedItem().toString());
-            ArrayList<String> tagsTemp=new ArrayList<>();
-            tagsTemp.add(tags.getSelectedItem().toString());
-            addToyDTO.setTags(tagsTemp);
-            addToyDTO.setIfDidactic(isDidactic.isChecked());
-            addToyDTO.setIfVintage(isVintage.isChecked());
-            addToyDTO.setToysFactoryName("");
-            addToyDTO.setPhotosURLs(photoURLS);
-            Call<Void> call = toyService.addToy(addToyDTO);
-            call.enqueue(new Callback<Void>() {
-                @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane 
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
 
-                    } else
-                    {
-                        
-                    }
-                        
-                }
+            if (UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
+                ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
+                ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+                AddToyDTO addToyDTO = new AddToyDTO();
+                addToyDTO.setName(name.getText().toString());
+                addToyDTO.setDescription(description.getText().toString());
+                addToyDTO.setAgeRange(age.getSelectedItem().toString());
+                addToyDTO.setCategory(category.getSelectedItem().toString());
+                ArrayList<String> tagsTemp = new ArrayList<>();
+                tagsTemp.add(tags.getSelectedItem().toString());
+                addToyDTO.setTags(tagsTemp);
+                addToyDTO.setIfDidactic(isDidactic.isChecked());
+                addToyDTO.setIfVintage(isVintage.isChecked());
+                addToyDTO.setToysFactoryName("");
+                addToyDTO.setPhotosURLs(photoURLS);
+//            Call<Void> call = toyService.addToy(addToyDTO);
+//            call.enqueue(new Callback<Void>() {
+//                @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
+//                public void onResponse(Call<Void> call, Response<Void> response) {
+//                    if (response.isSuccessful()) {
+//
+//                    } else
+//                    {
+//
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Void> call, Throwable t) {
+//
+//                }
+//            });
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                   
-                }
-            });
+                UploadedPhotoURL.clear();
+                finish();
+            }
+            else {
+                new AlertDialog.Builder(this)
+                        .setTitle("Wait")
+                        .setMessage("We are uploading Your photos, try again in few seconds")
+                        .setNegativeButton(android.R.string.ok, null)
+                        .show();
+            }
 
-            UploadedPhotoURL.clear();
-        }
+
     }
 }

@@ -19,7 +19,7 @@ import java.util.Map;
 public class UploadImage {
 
     public static void execute(Bitmap bitmap, Context context) throws IOException {
-
+        UploadedPhotoURL.ALL_IMAGE_UPLOADED=false;
         //Convert bitmap to byte array
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50 /*ignored for PNG*/, bos);

@@ -8,8 +8,12 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
+import com.cloudinary.android.MediaManager;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ParentLoginActivity extends Activity {
@@ -20,6 +24,12 @@ public class ParentLoginActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //to nie jest perfekcyjne
+        Map config = new HashMap();
+        config.put("cloud_name", "dxlmhjfv1");
+        config.put("api_key", "766496874972834");
+        config.put("api_secret", "wADqusLIUpVTvVD3aKBrLWGoHy4");
+        MediaManager.init(this, config);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parent_login_activity);
         loginButton = findViewById(R.id.child_login_button);
