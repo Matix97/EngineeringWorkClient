@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Toy implements Serializable {
-    //na pewno trzeba jakoś wiele obrazów zapipsywać i przkazywac??? spytaj
     private int toyID;
     //dodaj id właścicilea
     private String emailAddress;//key to toy's owner

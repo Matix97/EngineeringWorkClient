@@ -1,5 +1,6 @@
 package com.example.exchangetoys.Services;
 
+import com.example.exchangetoys.DTOs.ToyServiceData.AddToyDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Rental;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
@@ -18,7 +19,7 @@ public interface ToyService {
 
     @POST("addToy")
 //add new advertisement
-    Call<Void> addToy(@Body Toy toy);
+    Call<Void> addToy(@Body AddToyDTO toy);
 
     @POST("editToy")
     Call<Void> editToy(@Body Toy toy);

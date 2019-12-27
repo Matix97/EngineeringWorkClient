@@ -20,8 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cloudinary.android.MediaManager;
+import com.example.exchangetoys.DTOs.ToyServiceData.AddToyDTO;
+import com.example.exchangetoys.Services.ServiceGenerator;
+import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.Tools.ImageUtils;
 import com.example.exchangetoys.Tools.UploadImage;
+import com.example.exchangetoys.Tools.UploadedPhotoURL;
 import com.example.exchangetoys.recycleAdapters.ImageAdapter;
 import com.example.exchangetoys.recycleAdapters.ImageArrayAdapter;
 
@@ -33,9 +37,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AddToyActivity extends Activity {
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
     private EditText name, description;
     private Spinner age, category, tags;
     private CheckBox isDidactic, isVintage;
@@ -43,6 +51,7 @@ public class AddToyActivity extends Activity {
     private Button makePhoto, confirm;
     private ArrayList<ImageAdapter> itemList;
     private File pictureImagePath = null;
+    private UploadedPhotoURL uploadedPhotoURLs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,10 +89,11 @@ public class AddToyActivity extends Activity {
         config.put("api_secret", "wADqusLIUpVTvVD3aKBrLWGoHy4");
         MediaManager.init(this, config);
 
+        uploadedPhotoURLs.init();
+
 
     }
 
-    String currentPhotoPath;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -97,10 +107,9 @@ public class AddToyActivity extends Activity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-    static final int REQUEST_TAKE_PHOTO = 1;
+
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -133,15 +142,12 @@ public class AddToyActivity extends Activity {
         if (requestCode == 1) {
             File imgFile = pictureImagePath;
             if(imgFile.exists()){
-               // BitmapFactory.Options options = new BitmapFactory.Options();
-                //options.inSampleSize = 24;
-
-
-                //Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),options);
                 Bitmap myBitmap =  ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
                 itemList.add(new ImageAdapter(myBitmap));
                 try {
-                    UploadImage.testExecute(myBitmap,this);
+
+                    UploadImage.execute(myBitmap,this);
+                    UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -149,11 +155,45 @@ public class AddToyActivity extends Activity {
 
             }
         }
-
     }
 
 
     private void confirmFunction() {
+        if(UploadedPhotoURL.ALL_IMAGE_UPLOADED){
+            ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
+            ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+            AddToyDTO addToyDTO=new AddToyDTO();
+            addToyDTO.setName(name.getText().toString());
+            addToyDTO.setDescription(description.getText().toString());
+            addToyDTO.setAgeRange(age.getSelectedItem().toString());
+            addToyDTO.setCategory(category.getSelectedItem().toString());
+            ArrayList<String> tagsTemp=new ArrayList<>();
+            tagsTemp.add(tags.getSelectedItem().toString());
+            addToyDTO.setTags(tagsTemp);
+            addToyDTO.setIfDidactic(isDidactic.isChecked());
+            addToyDTO.setIfVintage(isVintage.isChecked());
+            addToyDTO.setToysFactoryName("");
+            addToyDTO.setPhotosURLs(photoURLS);
+            Call<Void> call = toyService.addToy(addToyDTO);
+            call.enqueue(new Callback<Void>() {
+                @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane 
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
 
+                    } else
+                    {
+                        
+                    }
+                        
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                   
+                }
+            });
+
+            UploadedPhotoURL.clear();
+        }
     }
 }
