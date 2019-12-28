@@ -35,6 +35,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AddToyActivity extends Activity {
 
     static final int REQUEST_TAKE_PHOTO = 1;
@@ -68,9 +72,9 @@ public class AddToyActivity extends Activity {
             confirmFunction();
         });
         itemList = new ArrayList<>();
-        ImageArrayAdapter itemArrayAdapter = new ImageArrayAdapter(itemList,R.layout.fragment_photo);
-        photos= findViewById(R.id.uploaded_photos);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(AddToyActivity.this);
+        ImageArrayAdapter itemArrayAdapter = new ImageArrayAdapter(itemList, R.layout.fragment_photo);
+        photos = findViewById(R.id.uploaded_photos);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddToyActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photos.setLayoutManager(linearLayoutManager);
         photos.setItemAnimator(new DefaultItemAnimator());
@@ -78,8 +82,7 @@ public class AddToyActivity extends Activity {
         photos.setAdapter(itemArrayAdapter);
 
 
-
-        uploadedPhotoURLs.init();
+        UploadedPhotoURL.init();
 
 
     }
@@ -109,7 +112,7 @@ public class AddToyActivity extends Activity {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-                pictureImagePath=photoFile;
+                pictureImagePath = photoFile;
             } catch (IOException ex) {
                 // Error occurred while creating the File
 
@@ -126,17 +129,17 @@ public class AddToyActivity extends Activity {
         }
     }
 
-//    //to get image from camera
+    //    //to get image from camera
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             File imgFile = pictureImagePath;
-            if(imgFile.exists()){
-                Bitmap myBitmap =  ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
+            if (imgFile.exists()) {
+                Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
                 itemList.add(new ImageAdapter(myBitmap));
                 try {
 
-                    UploadImage.execute(myBitmap,this);
+                    UploadImage.execute(myBitmap, this);
                     UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
 
                 } catch (IOException e) {
@@ -150,50 +153,49 @@ public class AddToyActivity extends Activity {
 
     private void confirmFunction() {
 
-            if (UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
-                ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
-                ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-                AddToyDTO addToyDTO = new AddToyDTO();
-                addToyDTO.setName(name.getText().toString());
-                addToyDTO.setDescription(description.getText().toString());
-                addToyDTO.setAgeRange(age.getSelectedItem().toString());
-                addToyDTO.setCategory(category.getSelectedItem().toString());
-                ArrayList<String> tagsTemp = new ArrayList<>();
-                tagsTemp.add(tags.getSelectedItem().toString());
-                addToyDTO.setTags(tagsTemp);
-                addToyDTO.setIfDidactic(isDidactic.isChecked());
-                addToyDTO.setIfVintage(isVintage.isChecked());
-                addToyDTO.setToysFactoryName("");
-                addToyDTO.setPhotosURLs(photoURLS);
-//            Call<Void> call = toyService.addToy(addToyDTO);
-//            call.enqueue(new Callback<Void>() {
-//                @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
-//                public void onResponse(Call<Void> call, Response<Void> response) {
-//                    if (response.isSuccessful()) {
-//
-//                    } else
-//                    {
-//
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Void> call, Throwable t) {
-//
-//                }
-//            });
+        if (UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
+            ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
+            ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+            AddToyDTO addToyDTO = new AddToyDTO();
+            addToyDTO.setName(name.getText().toString());
+            addToyDTO.setDescription(description.getText().toString());
+            addToyDTO.setAgeRange(age.getSelectedItem().toString());
+            addToyDTO.setCategory(category.getSelectedItem().toString());
+            ArrayList<String> tagsTemp = new ArrayList<>();
+            tagsTemp.add(tags.getSelectedItem().toString());
+            addToyDTO.setTags(tagsTemp);
+            addToyDTO.setIfDidactic(isDidactic.isChecked());
+            addToyDTO.setIfVintage(isVintage.isChecked());
+            addToyDTO.setToysFactoryName("");
+            addToyDTO.setPhotosURLs(photoURLS);
 
-                UploadedPhotoURL.clear();
-                finish();
-            }
-            else {
-                new AlertDialog.Builder(this)
-                        .setTitle("Wait")
-                        .setMessage("We are uploading Your photos, try again in few seconds")
-                        .setNegativeButton(android.R.string.ok, null)
-                        .show();
-            }
+            Call<Void> call = toyService.addToy(addToyDTO);
+            call.enqueue(new Callback<Void>() {
+                @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+
+                    } else {
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+
+                }
+            });
+
+            UploadedPhotoURL.clear();
+            finish();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Wait")
+                    .setMessage("We are uploading Your photos, try again in few seconds")
+                    .setNegativeButton(android.R.string.ok, null)
+                    .show();
+        }
 
 
     }

@@ -32,7 +32,7 @@ public class AddChildPopUp {
     private View view;
     private UserService userService;
     private Button accept;
-
+     PopupWindow popupWindow;
     public void showPopupWindow(final View view) {
 
         this.view = view;
@@ -49,7 +49,7 @@ public class AddChildPopUp {
         boolean focusable = true;
 
         //Create a window with our parameters
-        final PopupWindow popupWindow = new PopupWindow(popupView, width/*900*/, height/*1300*/, focusable);
+         popupWindow = new PopupWindow(popupView, width/*900*/, height/*1300*/, focusable);
 
         //Set the location of the window on the screen
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 70);
@@ -62,6 +62,7 @@ public class AddChildPopUp {
         radius = popupView.findViewById(R.id.seekBar);
         radius.setProgress(30);
         radius_info.setText("Chosen radius: " + 30 + " km");
+        seekBarValue=30;
         radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -75,6 +76,7 @@ public class AddChildPopUp {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
+
 
             }
 
@@ -110,6 +112,13 @@ public class AddChildPopUp {
                 if (password.getText().toString().equals(confirmPassword.getText().toString())) {
                     registerPostHandler();
                 }
+                else{
+                    new AlertDialog.Builder(view.getContext())
+                            .setTitle("Error")
+                            .setMessage("passwords aren't the same")
+                            .setNegativeButton(android.R.string.ok, null)
+                            .show();
+                }
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(view.getContext())
                         .setTitle("Error")
@@ -128,8 +137,8 @@ public class AddChildPopUp {
     }
 
     private boolean ifAllRequireFieldAreFill() {
-        return TextUtils.isEmpty(childAge.getText().toString()) && TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(login.getText().toString())
-                && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString());
+        return !(TextUtils.isEmpty(childAge.getText().toString()) && TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(login.getText().toString())
+                && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString()));
     }
 
     private void registerPostHandler() {
@@ -168,7 +177,7 @@ public class AddChildPopUp {
             Toast.makeText(view.getContext(), "error 3", Toast.LENGTH_SHORT).show();
         }
 
-
+        popupWindow.dismiss();
     }
 
 }

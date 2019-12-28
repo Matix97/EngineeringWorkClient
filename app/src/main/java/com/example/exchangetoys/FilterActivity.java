@@ -1,5 +1,6 @@
 package com.example.exchangetoys;
 
+import android.location.Location;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,11 @@ public class FilterActivity {
     private EditText anyKeyword;
     private CheckBox isDidactic, isVintage;
     private Button confirm;
+    private Location location;
 
-    public void showPopupWindow(final View v) {
+    public void showPopupWindow(final View v,Location location) {
         this.view = v;
+        this.location=location;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.filtr_activity, null);
@@ -53,7 +56,7 @@ public class FilterActivity {
         isVintage = popupView.findViewById(R.id.is_vintage);
         confirm = popupView.findViewById(R.id.confirm_filtr);
         confirm.setOnClickListener(s -> {
-            //  filter();//todo uncomment or something like this...
+            filter();//todo uncomment or something like this...
             popupWindow.dismiss();
             ParentMainActivity.filtr(view);
 
@@ -64,7 +67,10 @@ public class FilterActivity {
 
     private void filter() {
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        double latitude = 0, longitude = 0;//todo get real location
+        double latitude = 0, longitude = 0;
+
+        latitude=location.getLatitude();
+        longitude=location.getLongitude();
         FilterDTO filterDTO = new FilterDTO(mainCategory.getSelectedItem().toString(),
                 age.getSelectedItem().toString(), tags.getSelectedItem().toString(),
                 anyKeyword.getText().toString(), isDidactic.isChecked(), isVintage.isChecked(),
@@ -90,4 +96,5 @@ public class FilterActivity {
             }
         });
     }
+
 }
