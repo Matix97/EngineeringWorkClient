@@ -10,14 +10,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.cloudinary.android.MediaManager;
 import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.exchangetoys.Tools.MediaManagerInitializer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,11 +30,7 @@ public class ParentLoginActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //to nie jest perfekcyjne
-        Map config = new HashMap();
-        config.put("cloud_name", "dxlmhjfv1");
-        config.put("api_key", "766496874972834");
-        config.put("api_secret", "wADqusLIUpVTvVD3aKBrLWGoHy4");
-        MediaManager.init(this, config);
+        MediaManagerInitializer.getInstance(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parent_login_activity);
         loginButton = findViewById(R.id.child_login_button);

@@ -174,7 +174,11 @@ public class AddToyActivity extends Activity {
                 @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
-
+                        new AlertDialog.Builder(AddToyActivity.this)
+                                .setTitle("Oy yee... we did this")
+                                .setMessage("We are creating your advert")
+                                .setNegativeButton(android.R.string.ok, null)
+                                .show();
                     } else {
 
                     }
