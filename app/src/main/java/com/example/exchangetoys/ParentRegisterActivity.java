@@ -59,9 +59,9 @@ public class ParentRegisterActivity extends Activity {
     }
 
     private boolean ifAllRequireFieldAreFill() {
-        return TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(surname.getText().toString())
+        return !(TextUtils.isEmpty(name.getText().toString()) && TextUtils.isEmpty(surname.getText().toString())
                 && TextUtils.isEmpty(email.getText().toString())
-                && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString());
+                && TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmPassword.getText().toString()));
     }
 
     private void registerPostHandler() {

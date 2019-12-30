@@ -14,10 +14,10 @@ import retrofit2.http.POST;
 
 public interface ToyService {
 
-    @POST("toys")
+    @POST("toys/getToys")
     Call<List<Toy>> getToys(@Body FilterDTO filter);
 
-    @POST("addToy")
+    @POST("toy")
 //add new advertisement
     Call<Void> addToy(@Body AddToyDTO toy);
 
