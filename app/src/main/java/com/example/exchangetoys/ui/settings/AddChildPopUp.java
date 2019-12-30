@@ -12,11 +12,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
-import com.example.exchangetoys.Tools.EncryptionTools;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +38,7 @@ public class AddChildPopUp {
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.add_child, null);
 
-        this.userService = ServiceGenerator.createService(UserService.class);
+        this.userService = ServiceGenerator.createAuthorizedService(UserService.class);
         //Specify the length and width through constants
         int width = view.getWidth() - 150;
         int height = view.getHeight() - 300;
@@ -145,20 +143,18 @@ public class AddChildPopUp {
         String messageToEncrypt = name.getText().toString() + ";" + login.getText().toString()
                 + ";" + password.getText().toString() + ";" + childAge.getText().toString()
                 + ";" + seekBarValue.toString();
-        new AlertDialog.Builder(view.getContext())
-                .setTitle("Only to tests")
-                .setMessage(messageToEncrypt)
-                .setNegativeButton(android.R.string.ok, null)
-                .show();
+
         try {
-            Call<Child> call = userService.registerChild(EncryptionTools.encrypt(messageToEncrypt));
-            call.enqueue(new Callback<Child>() {
+
+            Call<Void> call = userService.registerChild(messageToEncrypt);
+            call.enqueue(new Callback<Void>() {
                 @Override
-                public void onResponse(Call<Child> call, Response<Child> response) {
+                public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
+
                         new AlertDialog.Builder(view.getContext())
                                 .setTitle("Register")
-                                .setMessage("Child is Adedd")
+                                .setMessage("child add")
                                 .setNegativeButton(android.R.string.ok, null)
                                 .show();
 
@@ -169,7 +165,7 @@ public class AddChildPopUp {
                 }
 
                 @Override
-                public void onFailure(Call<Child> call, Throwable t) {
+                public void onFailure(Call<Void> call, Throwable t) {
                     Toast.makeText(view.getContext(), "error 2", Toast.LENGTH_SHORT).show();
                 }
             });

@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BearerToken {
-    private int userID;
-    private String expiresAt;
-    private String string;
-    private int id;
+    private static final long serialVersionUID = -8091879091924046844L;
+    private final String jwttoken;
 }

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.cloudinary.android.MediaManager;
-import com.example.exchangetoys.DTOs.BearerToken;
+import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
@@ -52,12 +52,14 @@ public class ParentLoginActivity extends Activity {
             //todo UNCOMMENT
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {
-                Call<BearerToken> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
-                call.enqueue(new Callback<BearerToken>() {
+                Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
+
+                call.enqueue(new Callback<JwtResponse>() {
                     @Override
-                    public void onResponse(Call<BearerToken> call, Response<BearerToken> response) {
+                    public void onResponse(Call<JwtResponse> call, Response<JwtResponse> response) {
                         if (response.isSuccessful()) {
-                            ServiceGenerator.bearerToken = response.body().getString();
+
+                            ServiceGenerator.bearerToken = response.body().getJwttoken();
                             Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
                             intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
@@ -78,7 +80,7 @@ public class ParentLoginActivity extends Activity {
                     }
 
                     @Override
-                    public void onFailure(Call<BearerToken> call, Throwable t) {
+                    public void onFailure(Call<JwtResponse> call, Throwable t) {
                         Toast.makeText(ParentLoginActivity.this, "error", Toast.LENGTH_SHORT).show();
 
 

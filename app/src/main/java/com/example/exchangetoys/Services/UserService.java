@@ -1,7 +1,7 @@
 package com.example.exchangetoys.Services;
 
 
-import com.example.exchangetoys.DTOs.BearerToken;
+import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.DTOs.ToyServiceData.SuggestedToy;
 import com.example.exchangetoys.DTOs.UserServiceData.Child;
 
@@ -16,10 +16,10 @@ public interface UserService {
     Call<Void> registerParent(@Header("Authorization") byte[] message);
 
     @POST("child")
-    Call<Child> registerChild(@Header("Authorization") byte[] message);
+    Call<Void> registerChild(@Body String message);
 
     @POST("authenticate")
-    Call<BearerToken> login(@Header("Authorization") byte[] message);
+    Call<JwtResponse> login(@Header("Authorization") byte[] message);
 
     @POST("updateChild")
     Call<Void> updateChild(@Body Child child);
