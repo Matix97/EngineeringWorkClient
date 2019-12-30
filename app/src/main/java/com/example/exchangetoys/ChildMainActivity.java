@@ -1,5 +1,6 @@
 package com.example.exchangetoys;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
 import com.example.exchangetoys.ui.fragment.ToyModelToRecycle;
 
@@ -35,6 +37,10 @@ public class ChildMainActivity extends AppCompatActivity {
         toys.setItemAnimator(new DefaultItemAnimator());
         toys.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         toys.setAdapter(itemArrayAdapter);
+        new AlertDialog.Builder(this)
+                .setTitle("Token")
+                .setMessage(ServiceGenerator.bearerToken)
+                .show();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
