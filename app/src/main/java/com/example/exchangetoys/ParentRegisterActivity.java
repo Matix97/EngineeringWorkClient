@@ -69,6 +69,7 @@ public class ParentRegisterActivity extends Activity {
                 + ";" + password.getText().toString() + ";" + phoneNumber.getText().toString()
                 + ";" + email.getText().toString();
         try {
+            this.userService = ServiceGenerator.createService(UserService.class);
             Call<Void> call = userService.registerParent(EncryptionTools.encrypt(messageToEncrypt));
             call.enqueue(new Callback<Void>() {
                 @Override

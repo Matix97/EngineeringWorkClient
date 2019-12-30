@@ -14,6 +14,7 @@ import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
+import com.example.exchangetoys.Tools.MediaManagerInitializer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,7 @@ public class ChildLoginActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        MediaManagerInitializer.getInstance(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.child_login_activity);
         confirm = findViewById(R.id.child_login_button);
@@ -35,6 +37,7 @@ public class ChildLoginActivity extends Activity {
         confirm.setOnClickListener(v -> {
             String messageToEncrypt = login.getText().toString() + ";" + password.getText().toString() + ";" + "child";
             try {
+                this.userService = ServiceGenerator.createService(UserService.class);
                 Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
 
                 call.enqueue(new Callback<JwtResponse>() {
