@@ -17,17 +17,17 @@
 
         android:contentDescription="@string/todo" />
 
-    <Button
-        android:id="@+id/buttonToyAction"
-        android:layout_width="125dp"
-        android:layout_height="41dp"
-        android:layout_alignTop="@+id/imageViewToy"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="38dp"
-        android:layout_toEndOf="@+id/imageViewToy"
-        android:text="@string/toy_action" />
+<!--    <Button-->
+<!--        android:id="@+id/buttonToyAction"-->
+<!--        android:layout_width="125dp"-->
+<!--        android:layout_height="41dp"-->
+<!--        android:layout_alignTop="@+id/imageViewToy"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="75dp"-->
+<!--        android:layout_marginTop="47dp"-->
+<!--        android:layout_marginEnd="38dp"-->
+<!--        android:layout_toEndOf="@+id/imageViewToy"-->
+<!--        android:text="@string/toy_action" />-->
 
     <TextView
         android:id="@+id/toyName"

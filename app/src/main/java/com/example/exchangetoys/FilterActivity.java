@@ -9,18 +9,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
-import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
-import com.example.exchangetoys.Services.ServiceGenerator;
-import com.example.exchangetoys.Services.ToyService;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.exchangetoys.ui.dashboard.DashboardFragment;
 
 public class FilterActivity {
     private View view;
@@ -30,11 +21,9 @@ public class FilterActivity {
     private EditText anyKeyword;
     private CheckBox isDidactic, isVintage;
     private Button confirm;
-    private Location location;
 
     public void showPopupWindow(final View v,Location location) {
         this.view = v;
-        this.location=location;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.filtr_activity, null);
@@ -56,45 +45,20 @@ public class FilterActivity {
         isVintage = popupView.findViewById(R.id.is_vintage);
         confirm = popupView.findViewById(R.id.confirm_filtr);
         confirm.setOnClickListener(s -> {
-            filter();//todo uncomment or something like this...
+
+            FilterDTO filterDTO = new FilterDTO(mainCategory.getSelectedItem().toString(),
+                    age.getSelectedItem().toString(), tags.getSelectedItem().toString(),
+                    anyKeyword.getText().toString(), isDidactic.isChecked(), isVintage.isChecked(),
+                    location.getLatitude(), location.getLongitude());
+            DashboardFragment.downloadToys(filterDTO,view);
             popupWindow.dismiss();
-            ParentMainActivity.filtr(view);
+          //  ParentMainActivity.filtr(view);
 
         });
 
 
     }
 
-    private void filter() {
-        ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        double latitude = 0, longitude = 0;
 
-        latitude=location.getLatitude();
-        longitude=location.getLongitude();
-        FilterDTO filterDTO = new FilterDTO(mainCategory.getSelectedItem().toString(),
-                age.getSelectedItem().toString(), tags.getSelectedItem().toString(),
-                anyKeyword.getText().toString(), isDidactic.isChecked(), isVintage.isChecked(),
-                latitude, longitude);
-        Call<List<Toy>> call = toyService.getToys(filterDTO);
-        call.enqueue(new Callback<List<Toy>>() {
-            @Override
-            public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
-                if (response.isSuccessful()) {//todo create list
-//                data = response.body();
-//                for (int i = 0; i < data.size(); i++) {
-//                        finalData.add(data.get(i));
-//                }
-//                CarArturAdapter arturAdapter = new CarArturAdapter(getContext(), R.layout.cars_adapter, finalData);
-//                setListAdapter(arturAdapter);
-                } else
-                    Toast.makeText(view.getContext(), "Error in GET toys ", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<Toy>> call, Throwable t) {
-                Toast.makeText(view.getContext(), "FAILURE Error in GET toys ", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 }

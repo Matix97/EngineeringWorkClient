@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -20,14 +21,22 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
+import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.FilterActivity;
 import com.example.exchangetoys.R;
+import com.example.exchangetoys.Services.ServiceGenerator;
+import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
-import com.example.exchangetoys.ui.fragment.ToyModelToRecycle;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.LOCATION_SERVICE;
@@ -35,9 +44,10 @@ import static android.content.Context.LOCATION_SERVICE;
 public class DashboardFragment extends Fragment  implements LocationSource.OnLocationChangedListener{
 
 
-    private RecyclerView toys;
+    public static RecyclerView toys;
     private FloatingActionButton filterButton;
     private static final int REQ_PERMISSION = 0;
+    private static ArrayList<Toy> download = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,19 +83,41 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
         // my_toys.getLayoutParams().height=root.getHeight()/2-50;
         //rented_toys.getLayoutParams().height=root.getHeight()/2-50;
         ///////////////////////
-        // Initializing list view with the custom adapter
-        ArrayList<ToyModelToRecycle> itemList = new ArrayList<>();
-        // Populating list items
-        for (int i = 0; i < 100; i++) {
-            itemList.add(new ToyModelToRecycle("Toy " + i, "opis", R.drawable.child_button_picture));
-        }
-        ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, itemList);
+        downloadToys(new FilterDTO(),root);
 
-        toys.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        toys.setItemAnimator(new DefaultItemAnimator());
-        toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        toys.setAdapter(itemArrayAdapter);
+
+
+
         return root;
+    }
+    public static void downloadToys(FilterDTO filterDTO,View view){
+
+        ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+        Call<List<Toy>> call = toyService.getToys(filterDTO);
+        call.enqueue(new Callback<List<Toy>>() {
+            @Override
+            public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
+                if (response.isSuccessful()) {//todo create list
+                    download.clear();
+                    for (Toy t:response.body())
+                        download.add(t);
+                    ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
+                    toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    toys.setItemAnimator(new DefaultItemAnimator());
+                    toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+                    toys.setAdapter(itemArrayAdapter);
+
+                } else
+                    Toast.makeText(view.getContext(), "Error in GET toys \nToken"+ServiceGenerator.bearerToken, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Toy>> call, Throwable t) {
+                Toast.makeText(view.getContext(), "FAILURE Error in GET toys ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
     // Check for permission to access Location
     private boolean checkPermission() {

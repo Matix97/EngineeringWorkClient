@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 
 public interface ToyService {
 
-    @POST("toys/getToys")
+    @POST("toy/filter")
     Call<List<Toy>> getToys(@Body FilterDTO filter);
 
     @POST("toy")

@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.AddToyActivity;
+import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
-import com.example.exchangetoys.ui.fragment.ToyModelToRecycle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -42,10 +42,10 @@ private View root;
         //rented_toys.getLayoutParams().height=root.getHeight()/2-50;
         ///////////////////////
         // Initializing list view with the custom adapter
-        ArrayList<ToyModelToRecycle> itemList = new ArrayList<>();
+        ArrayList<Toy> itemList = new ArrayList<>();
         // Populating list items
-        for (int i = 0; i < 100; i++) {
-            itemList.add(new ToyModelToRecycle("Toy " + i, "opis", R.drawable.child_button_picture));
+        for (int i = 0; i < 3; i++) {
+            itemList.add(new Toy());
         }
         ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, itemList);
         my_toys = root.findViewById(R.id.my_recycle_view_rented_toy);

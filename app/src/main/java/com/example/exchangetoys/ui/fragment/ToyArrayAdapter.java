@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.ToyActivity;
 
@@ -19,10 +19,10 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
 
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
-    private ArrayList<ToyModelToRecycle> itemList;
+    private ArrayList<Toy> itemList;
 
     // Constructor of the class
-    public ToyArrayAdapter(int layoutId, ArrayList<ToyModelToRecycle> itemList) {
+    public ToyArrayAdapter(int layoutId, ArrayList<Toy> itemList) {
         listItemLayout = layoutId;
         this.itemList = itemList;
     }
@@ -46,18 +46,18 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ToyArrayAdapter.ViewHolder holder, final int listPosition) {
         TextView toyName = holder.toyName;
-        toyName.setText(itemList.get(listPosition).getName());
+        toyName.setText(itemList.get(listPosition).getToy_name());
         TextView toyInfo = holder.toyInfo;
-        toyInfo.setText(itemList.get(listPosition).getInfo());
-        ImageView imageView = holder.toyImage;
-        imageView.setImageResource(itemList.get(listPosition).getImage());
+        toyInfo.setText(itemList.get(listPosition).getToy_description());
+     //   ImageView imageView = holder.toyImage;
+      //  imageView.setImageResource(itemList.get(listPosition).getImage());
     }
 
     // Static inner class to initialize the views of rows
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView toyName, toyInfo;
         public ImageView toyImage;
-        public Button toyButton;
+      //  public Button toyButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,15 +65,17 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
             toyName = itemView.findViewById(R.id.toyName);
             toyInfo = itemView.findViewById(R.id.toySomeInfo);
             toyImage = itemView.findViewById(R.id.imageViewToy);
-            toyButton = itemView.findViewById(R.id.buttonToyAction);
+         //   toyButton = itemView.findViewById(R.id.buttonToyAction);
         }
 
         @Override
         public void onClick(View view) {
-          //  Toast.makeText(view.getContext(), "onClick " + getLayoutPosition() + " " + toyName.getText(), Toast.LENGTH_SHORT).show();
-            //Log.d("onclick", "onClick " + getLayoutPosition() + " " + toyName.getText());
             Intent intent = new Intent(view.getContext(), ToyActivity.class);
-            intent.putExtra("toy",new ToyModelToRecycle(toyName.getText().toString(),toyInfo.getText().toString(),toyImage.getImageAlpha()));
+            Toy toy =new Toy();
+            toy.setToy_name(toyName.getText().toString());
+            toy.setToy_description(toyInfo.getText().toString());
+
+            intent.putExtra("toy",toy);
             view.getContext().startActivity(intent);
         }
     }
