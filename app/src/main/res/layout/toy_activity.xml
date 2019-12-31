@@ -5,11 +5,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+
+    <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/toy_activity_image"
         android:layout_width="match_parent"
-        android:layout_height="286dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        android:layout_centerHorizontal="true"
+        android:layout_height="240dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="55dp" />
 
     <TextView
         android:id="@+id/toy_activity_name"

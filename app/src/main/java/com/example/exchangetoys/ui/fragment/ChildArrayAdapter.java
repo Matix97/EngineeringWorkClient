@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.R;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
 
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
-    private ArrayList<ChildModelToRecycle> itemList;
+    private ArrayList<Child> itemList;
 
     // Constructor of the class
-    public ChildArrayAdapter(int layoutId, ArrayList<ChildModelToRecycle> itemList) {
+    public ChildArrayAdapter(int layoutId, ArrayList<Child> itemList) {
         listItemLayout = layoutId;
         this.itemList = itemList;
     }
@@ -44,7 +45,7 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
         TextView item = holder.item;
-        item.setText(itemList.get(listPosition).getName());
+        item.setText(itemList.get(listPosition).getChild_name());
     }
 
     // Static inner class to initialize the views of rows

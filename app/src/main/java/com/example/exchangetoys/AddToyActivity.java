@@ -152,8 +152,7 @@ public class AddToyActivity extends Activity {
 
 
     private void confirmFunction() {
-
-        if (UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
+        if (UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD==0 || UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
             ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
             ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
             AddToyDTO addToyDTO = new AddToyDTO();
@@ -174,11 +173,7 @@ public class AddToyActivity extends Activity {
                 @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if (response.isSuccessful()) {
-                        new AlertDialog.Builder(AddToyActivity.this)
-                                .setTitle("Oy yee... we did this")
-                                .setMessage("We are creating your advert")
-                                .setNegativeButton(android.R.string.ok, null)
-                                .show();
+
                     } else {
 
                     }

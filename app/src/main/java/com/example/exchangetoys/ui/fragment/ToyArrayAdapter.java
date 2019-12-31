@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.R;
+import com.example.exchangetoys.Tools.DownloadImageTask;
 import com.example.exchangetoys.ToyActivity;
 
 import java.util.ArrayList;
@@ -49,15 +50,19 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
         toyName.setText(itemList.get(listPosition).getToy_name());
         TextView toyInfo = holder.toyInfo;
         toyInfo.setText(itemList.get(listPosition).getToy_description());
-     //   ImageView imageView = holder.toyImage;
-      //  imageView.setImageResource(itemList.get(listPosition).getImage());
+        ImageView imageView = holder.toyImage;
+        holder.toy=itemList.get(listPosition);
+        if (itemList.get(listPosition).getToy_photos() != null && itemList.get(listPosition).getToy_photos() != "")
+            new DownloadImageTask(imageView)
+                    .execute(itemList.get(listPosition).getToy_photos().split(";")[0]);
     }
 
     // Static inner class to initialize the views of rows
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView toyName, toyInfo;
         public ImageView toyImage;
-      //  public Button toyButton;
+        public Toy toy;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,17 +70,13 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
             toyName = itemView.findViewById(R.id.toyName);
             toyInfo = itemView.findViewById(R.id.toySomeInfo);
             toyImage = itemView.findViewById(R.id.imageViewToy);
-         //   toyButton = itemView.findViewById(R.id.buttonToyAction);
+            //   toyButton = itemView.findViewById(R.id.buttonToyAction);
         }
 
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), ToyActivity.class);
-            Toy toy =new Toy();
-            toy.setToy_name(toyName.getText().toString());
-            toy.setToy_description(toyInfo.getText().toString());
-
-            intent.putExtra("toy",toy);
+            intent.putExtra("toy", toy);
             view.getContext().startActivity(intent);
         }
     }
