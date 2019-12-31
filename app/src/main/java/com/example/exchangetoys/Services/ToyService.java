@@ -24,10 +24,10 @@ public interface ToyService {
     @POST("editToy")
     Call<Void> editToy(@Body Toy toy);
 
-    @GET("toys/yourAdvert")
+    @GET("toy/yourAdvert")
     Call<List<Toy>> getYourToysAdvert();
 
-    @GET("toys/yourRentedToy")
+    @GET("toy/yourRentedToy")
     Call<List<Toy>> getYourRentedToys();
 
     @POST("confirmRent")

@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment {
                 Toast.makeText(root.getContext(), "FAILURE Error in GET child ", Toast.LENGTH_SHORT).show();
             }
         });
-        //todo change to equivalent request
+
 
     }
 }

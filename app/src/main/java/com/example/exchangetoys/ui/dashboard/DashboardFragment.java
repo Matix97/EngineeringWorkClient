@@ -75,7 +75,7 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
 
            // LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());
             FilterActivity filterActivity = new FilterActivity();
-            filterActivity.showPopupWindow(root,location);
+            filterActivity.showPopupWindow(root,location,"notChild");
         });
         if (checkPermission())
         {}

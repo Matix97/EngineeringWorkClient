@@ -22,7 +22,7 @@ public class FilterActivity {
     private CheckBox isDidactic, isVintage;
     private Button confirm;
 
-    public void showPopupWindow(final View v,Location location) {
+    public void showPopupWindow(final View v,Location location, String whoCallMeXD) {
         this.view = v;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -50,7 +50,8 @@ public class FilterActivity {
                     age.getSelectedItem().toString(), tags.getSelectedItem().toString(),
                     anyKeyword.getText().toString(), isDidactic.isChecked(), isVintage.isChecked(),
                     location.getLatitude(), location.getLongitude());
-            DashboardFragment.downloadToys(filterDTO,view);
+            if(!whoCallMeXD.equals("child"))
+                DashboardFragment.downloadToys(filterDTO,view);
             popupWindow.dismiss();
           //  ParentMainActivity.filtr(view);
 
