@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
-import com.example.exchangetoys.child.FilterActivityChild;
+import com.example.exchangetoys.FilterActivityParent;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
@@ -74,7 +74,7 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
             Location location = locationManager.getLastKnownLocation(theBestSupplier);
 
            // LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());
-            FilterActivityChild filterActivity = new FilterActivityChild();
+            FilterActivityParent filterActivity = new FilterActivityParent();
             filterActivity.showPopupWindow(root,location,"notChild");
         });
         if (checkPermission())
