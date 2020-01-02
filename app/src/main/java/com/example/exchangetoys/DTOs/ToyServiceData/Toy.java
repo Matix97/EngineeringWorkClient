@@ -26,6 +26,8 @@ public class Toy implements Parcelable {
     private String toy_factory_name;
     private int toy_quality_of_made;
     private String toy_photos;
+    private double toy_latitude;
+    private double toy_longitude;
 
     protected Toy(Parcel in) {
         if (in.readByte() == 0) {

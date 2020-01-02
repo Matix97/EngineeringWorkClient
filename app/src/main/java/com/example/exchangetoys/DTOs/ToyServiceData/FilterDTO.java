@@ -16,4 +16,5 @@ public class FilterDTO {
     private Boolean isVintage;
     private double latitude;
     private double longitude;
+    private Integer radius;
 }

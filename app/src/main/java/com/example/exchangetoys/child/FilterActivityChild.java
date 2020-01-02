@@ -1,4 +1,4 @@
-package com.example.exchangetoys;
+package com.example.exchangetoys.child;
 
 import android.location.Location;
 import android.view.Gravity;
@@ -11,10 +11,10 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
-import com.example.exchangetoys.child.ChildMainActivity;
+import com.example.exchangetoys.R;
 import com.example.exchangetoys.ui.dashboard.DashboardFragment;
 
-public class FilterActivity {
+public class FilterActivityChild {
     private View view;
 
 
@@ -29,7 +29,7 @@ public class FilterActivity {
         this.view = v;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.filtr_activity, null);
+        View popupView = inflater.inflate(R.layout.filtr_activity_child, null);
         //Specify the length and width through constants
         int width = view.getWidth() - 150;
         int height = view.getHeight() - 300;
@@ -91,11 +91,15 @@ public class FilterActivity {
             if(checkBoxVintage.isChecked())filterDTO.setIsVintage(isVintage.isChecked());
             filterDTO.setLatitude(location.getLatitude());
             filterDTO.setLongitude(location.getLongitude());
+            filterDTO.setRadius(null);
 
-            if(!whoCallMeXD.equals("child"))
+            if(!whoCallMeXD.equals("child")){
+                filterDTO.setRadius(null);// TODO: 02/01/2020 get info from correct inbox 
                 DashboardFragment.downloadToys(filterDTO,view);
+            }
+               
             if(whoCallMeXD.equals("child"))
-                ChildMainActivity.downloadToys2(filterDTO,view);
+                ChildMainActivity.downloadToys2(filterDTO,view,location);
             popupWindow.dismiss();
 
 

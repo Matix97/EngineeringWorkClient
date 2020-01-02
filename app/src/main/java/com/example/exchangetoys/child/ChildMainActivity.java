@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
-import com.example.exchangetoys.FilterActivity;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
@@ -43,7 +42,7 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
     private static RecyclerView toys;
     private FloatingActionButton filterButton;
     private static ArrayList<Toy> download = new ArrayList<>();
-
+    private static Location startLocation;
     private static final int REQ_PERMISSION = 0;
 
     @Override
@@ -68,9 +67,9 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
                 return;
             }
             Location location = locationManager.getLastKnownLocation(theBestSupplier);
-
+    startLocation=location;
             // LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());
-            FilterActivity filterActivity = new FilterActivity();
+            FilterActivityChild filterActivity = new FilterActivityChild();
             filterActivity.showPopupWindow(filterButton.getRootView(),location,"child");
         });
         if (checkPermission())
@@ -78,11 +77,14 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
         else askPermission();
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////potem wywalilć
         // Initializing list view with the custom adapter
-        downloadToys2(new FilterDTO(),ChildMainActivity.toys);
+        downloadToys2(new FilterDTO(),ChildMainActivity.toys,startLocation);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
-    public static void downloadToys2(FilterDTO filterDTO, View view){
+    public static void downloadToys2(FilterDTO filterDTO, View view,Location location){
+
+        filterDTO.setLongitude(location.getLongitude());
+        filterDTO.setLatitude(location.getLatitude());
 
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = toyService.getToys(filterDTO);

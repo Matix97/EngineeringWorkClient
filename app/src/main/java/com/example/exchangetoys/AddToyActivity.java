@@ -1,19 +1,28 @@
 package com.example.exchangetoys;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -28,6 +37,7 @@ import com.example.exchangetoys.Tools.UploadImage;
 import com.example.exchangetoys.Tools.UploadedPhotoURL;
 import com.example.exchangetoys.recycleAdapters.ImageAdapter;
 import com.example.exchangetoys.recycleAdapters.ImageArrayAdapter;
+import com.google.android.gms.maps.LocationSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +49,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddToyActivity extends Activity {
+import static android.content.ContentValues.TAG;
+
+public class AddToyActivity extends Activity implements LocationSource.OnLocationChangedListener{
 
     static final int REQUEST_TAKE_PHOTO = 1;
     private EditText name, description;
@@ -50,6 +62,7 @@ public class AddToyActivity extends Activity {
     private ArrayList<ImageAdapter> itemList;
     private File pictureImagePath = null;
     private UploadedPhotoURL uploadedPhotoURLs;
+    private static final int REQ_PERMISSION = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -167,6 +180,17 @@ public class AddToyActivity extends Activity {
             addToyDTO.setIfVintage(isVintage.isChecked());
             addToyDTO.setToysFactoryName("");
             addToyDTO.setPhotosURLs(photoURLS);
+            //
+            Criteria kr = new Criteria();
+            LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+            String theBestSupplier = locationManager.getBestProvider(kr, true);
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            Location location = locationManager.getLastKnownLocation(theBestSupplier);
+            addToyDTO.setToy_latitude(location.getLatitude());
+            addToyDTO.setToy_longitude(location.getLongitude());
 
             Call<Void> call = toyService.addToy(addToyDTO);
             call.enqueue(new Callback<Void>() {
@@ -195,6 +219,51 @@ public class AddToyActivity extends Activity {
                     .setNegativeButton(android.R.string.ok, null)
                     .show();
         }
+
+
+    }
+
+    // Check for permission to access Location
+    private boolean checkPermission() {
+        Log.d(TAG, "checkPermission()");
+        // Ask for permission if it wasn't granted yet
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED);
+    }
+
+    // Asks for permission
+    private void askPermission() {
+        Log.d(TAG, "askPermission()");
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                REQ_PERMISSION
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult()");
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_PERMISSION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    if (checkPermission()){}
+                    // googleMap.setMyLocationEnabled(true);
+
+                } else {
+                    // Permission denied
+
+                }
+                break;
+            }
+        }
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        //  LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());
 
 
     }
