@@ -12,8 +12,8 @@ public class FilterDTO {
     private String age;
     private String tags;
     private String anyKeyword;
-    private boolean isDidactic;
-    private boolean isVintage;
+    private Boolean isDidactic;
+    private Boolean isVintage;
     private double latitude;
     private double longitude;
 }

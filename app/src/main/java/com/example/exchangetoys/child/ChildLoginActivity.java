@@ -1,4 +1,4 @@
-package com.example.exchangetoys;
+package com.example.exchangetoys.child;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
+import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
@@ -44,7 +45,7 @@ public class ChildLoginActivity extends Activity {
                     @Override
                     public void onResponse(Call<JwtResponse> call, Response<JwtResponse> response) {
                         if (response.isSuccessful()) {
-
+                            ServiceGenerator.role="child";
                             ServiceGenerator.bearerToken = response.body().getJwttoken();
                             Intent intent = new Intent(ChildLoginActivity.this, ChildMainActivity.class);
                             startActivity(intent);

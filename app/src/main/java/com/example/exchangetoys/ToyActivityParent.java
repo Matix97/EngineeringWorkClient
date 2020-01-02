@@ -15,13 +15,13 @@ import com.example.exchangetoys.ui.fragment.ImageArrayAdapter;
 
 import java.util.ArrayList;
 
-public class ToyActivity extends Activity {
+public class ToyActivityParent extends Activity {
     private RecyclerView images;
     private TextView name, description;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.toy_activity);
+        setContentView(R.layout.toy_activity_parent);
         Bundle bundle = getIntent().getExtras();
         Toy toy = bundle.getParcelable("toy");
         //image=findViewById(R.id.toy_activity_image);

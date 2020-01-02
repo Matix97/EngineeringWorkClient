@@ -33,4 +33,7 @@ public interface ToyService {
     @POST("confirmRent")
     Call<Void> confirmRent(@Body Rental rental);
 
+    @POST("toy/want")
+    Call<Void> iWantAToy(@Body Long todId);
+
 }

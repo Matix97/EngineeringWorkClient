@@ -52,7 +52,7 @@ public class ParentLoginActivity extends Activity {
                     @Override
                     public void onResponse(Call<JwtResponse> call, Response<JwtResponse> response) {
                         if (response.isSuccessful()) {
-
+                            ServiceGenerator.role="adult";
                             ServiceGenerator.bearerToken = response.body().getJwttoken();
                             Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);

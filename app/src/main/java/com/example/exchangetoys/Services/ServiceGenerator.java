@@ -10,6 +10,7 @@ public class ServiceGenerator {
     public static final String API_BASE_URL = "http://desktop-cl9tkhh:8080/";
 
     public static String bearerToken;
+    public static String role;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

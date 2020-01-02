@@ -97,7 +97,7 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
         call.enqueue(new Callback<List<Toy>>() {
             @Override
             public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
-                if (response.isSuccessful()) {//todo create list
+                if (response.isSuccessful()) {
                     download.clear();
                     for (Toy t:response.body())
                         download.add(t);

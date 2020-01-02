@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 
+import com.example.exchangetoys.child.ChildLoginActivity;
+
 public class StartActivity extends Activity {
     ImageButton parentActivity, childActivity;
 

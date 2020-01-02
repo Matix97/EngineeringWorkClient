@@ -1,4 +1,4 @@
-package com.example.exchangetoys;
+package com.example.exchangetoys.child;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
+import com.example.exchangetoys.FilterActivity;
+import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;

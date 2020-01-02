@@ -23,10 +23,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".ChildMainActivity"></activity>
+        <activity android:name=".child.ChildMainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ParentMainActivity"
             android:label="@string/app_name"
+            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,6 +37,7 @@
         </activity>
         <activity
             android:name=".StartActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,23 +46,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChildLoginActivity"
+            android:name=".child.ChildLoginActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:theme="@style/theme"
             android:name=".ParentLoginActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:theme="@style/theme"
             android:name=".ParentRegisterActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:theme="@style/theme"
-            android:name=".ToyActivity"
+            android:name=".ToyActivityParent"
+            android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:theme="@style/theme"
             android:name=".AddToyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"     />
+        <activity
+            android:theme="@style/theme"
+            android:name=".child.ToyActivityChild"
+            android:configChanges="orientation"
             android:screenOrientation="portrait" />
     </application>
 

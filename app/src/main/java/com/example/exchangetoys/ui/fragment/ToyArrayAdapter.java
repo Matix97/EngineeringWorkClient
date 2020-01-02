@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.R;
+import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Tools.DownloadImageTask;
-import com.example.exchangetoys.ToyActivity;
+import com.example.exchangetoys.ToyActivityParent;
+import com.example.exchangetoys.child.ToyActivityChild;
 
 import java.util.ArrayList;
 
@@ -75,9 +77,17 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), ToyActivity.class);
-            intent.putExtra("toy", toy);
-            view.getContext().startActivity(intent);
+            if(ServiceGenerator.role.equals("child")){
+                Intent intent = new Intent(view.getContext(), ToyActivityChild.class);
+                intent.putExtra("toy", toy);
+                view.getContext().startActivity(intent);
+            }
+            if(ServiceGenerator.role.equals("adult")){
+                Intent intent = new Intent(view.getContext(), ToyActivityParent.class);
+                intent.putExtra("toy", toy);
+                view.getContext().startActivity(intent);
+            }
+
         }
     }
 }
