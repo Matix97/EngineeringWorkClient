@@ -123,8 +123,14 @@ public class FilterActivityParent {
             if(checkBoxTagSpinner.isChecked()) filterDTO.setTags(tags.getSelectedItem().toString());
             if(checkBoxDidactic.isChecked())filterDTO.setIsDidactic(isDidactic.isChecked());
             if(checkBoxVintage.isChecked())filterDTO.setIsVintage(isVintage.isChecked());
-            filterDTO.setLatitude(location.getLatitude());
-            filterDTO.setLongitude(location.getLongitude());
+            if(location!=null){
+                filterDTO.setLatitude(location.getLatitude());
+                filterDTO.setLongitude(location.getLongitude());
+            }
+            else{
+                // TODO: 03/01/2020 LOCATION
+            }
+
             filterDTO.setRadius(null);
 
             if(!whoCallMeXD.equals("child")){

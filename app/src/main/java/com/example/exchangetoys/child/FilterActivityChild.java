@@ -12,7 +12,6 @@ import android.widget.Spinner;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.R;
-import com.example.exchangetoys.ui.dashboard.DashboardFragment;
 
 public class FilterActivityChild {
     private View view;
@@ -25,7 +24,7 @@ public class FilterActivityChild {
     private CheckBox checkBoxAnyKeyword, checkBoxCategorySpinner, checkBoxAgeSpinner,checkBoxTagSpinner,checkBoxDidactic,checkBoxVintage;
 
 
-    public void showPopupWindow(final View v,Location location, String whoCallMeXD) {
+    public void showPopupWindow(final View v,Location location) {
         this.view = v;
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -89,16 +88,12 @@ public class FilterActivityChild {
             if(checkBoxTagSpinner.isChecked()) filterDTO.setTags(tags.getSelectedItem().toString());
             if(checkBoxDidactic.isChecked())filterDTO.setIsDidactic(isDidactic.isChecked());
             if(checkBoxVintage.isChecked())filterDTO.setIsVintage(isVintage.isChecked());
-            filterDTO.setLatitude(location.getLatitude());
-            filterDTO.setLongitude(location.getLongitude());
+
             filterDTO.setRadius(null);
 
-            if(!whoCallMeXD.equals("child")){
-                filterDTO.setRadius(null);// TODO: 02/01/2020 get info from correct inbox 
-                DashboardFragment.downloadToys(filterDTO,view);
-            }
+
                
-            if(whoCallMeXD.equals("child"))
+
                 ChildMainActivity.downloadToys2(filterDTO,view,location);
             popupWindow.dismiss();
 

@@ -70,7 +70,7 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
     startLocation=location;
             // LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());
             FilterActivityChild filterActivity = new FilterActivityChild();
-            filterActivity.showPopupWindow(filterButton.getRootView(),location,"child");
+            filterActivity.showPopupWindow(filterButton.getRootView(),location);
         });
         if (checkPermission())
         {}
@@ -82,9 +82,17 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
     public static void downloadToys2(FilterDTO filterDTO, View view,Location location){
+if(location!=null){
+    filterDTO.setLongitude(location.getLongitude());
+    filterDTO.setLatitude(location.getLatitude());
+}
+else
+{
+    // TODO: 03/01/2020 LOCATION
+    filterDTO.setLongitude(19.36222803);
+    filterDTO.setLatitude(51.8746158);
+}
 
-        filterDTO.setLongitude(location.getLongitude());
-        filterDTO.setLatitude(location.getLatitude());
 
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = toyService.getToys(filterDTO);

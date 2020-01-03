@@ -189,8 +189,14 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
                 return;
             }
             Location location = locationManager.getLastKnownLocation(theBestSupplier);
-            addToyDTO.setToy_latitude(location.getLatitude());
-            addToyDTO.setToy_longitude(location.getLongitude());
+            if(location!=null){
+                addToyDTO.setToy_latitude(location.getLatitude());
+                addToyDTO.setToy_longitude(location.getLongitude());
+            }
+            else{
+                // TODO: 03/01/2020 LOCATION
+            }
+
 
             Call<Void> call = toyService.addToy(addToyDTO);
             call.enqueue(new Callback<Void>() {
