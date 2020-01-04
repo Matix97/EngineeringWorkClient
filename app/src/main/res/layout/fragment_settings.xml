@@ -32,15 +32,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="60dp" />
-
+    <!--        app:srcCompat="@drawable/add_icon"-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:srcCompat="@drawable/add_icon"
+
         android:focusable="true"
         android:layout_alignEnd="@+id/my_recycle_view"
         android:layout_alignBottom="@+id/my_recycle_view"/>
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="ADD\nCHILD"
+        android:elevation="6dp"
+        android:textSize="18dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#fff"
+        android:layout_alignEnd="@+id/my_recycle_view"
+        android:layout_alignBottom="@+id/my_recycle_view"
+        app:layout_anchorGravity="center"/>
 
 </RelativeLayout>

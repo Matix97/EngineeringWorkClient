@@ -49,17 +49,37 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
+        android:text="Add toy"
         android:layout_alignBottom="@+id/my_recycle_view_my_toy"
         android:layout_alignRight="@+id/my_recycle_view_my_toy" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/rent_toy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:tooltipText="Rent"
         android:layout_alignBottom="@+id/my_recycle_view_rented_toy"
         android:layout_alignRight="@+id/my_recycle_view_rented_toy" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="RENT"
+        android:elevation="6dp"
+        android:textSize="18dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#fff"
+        android:layout_alignBottom="@+id/my_recycle_view_rented_toy"
+        android:layout_alignRight="@+id/my_recycle_view_rented_toy"
+        app:layout_anchorGravity="center"/>
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="ADD\nTOY"
+        android:elevation="6dp"
+        android:textSize="18dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#fff"
+        android:layout_alignBottom="@+id/my_recycle_view_my_toy"
+        android:layout_alignRight="@+id/my_recycle_view_my_toy"
+        app:layout_anchorGravity="center"/>
 
 
 

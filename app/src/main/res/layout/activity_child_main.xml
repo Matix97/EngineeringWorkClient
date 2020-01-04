@@ -22,5 +22,16 @@
         app:backgroundTint="@color/common_google_signin_btn_text_dark"
         android:layout_alignTop="@+id/my_toys"
         android:layout_alignRight="@+id/my_toys" />
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="FILTR"
+        android:elevation="6dp"
+        android:textSize="18dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#fff"
+        android:layout_alignTop="@+id/my_toys"
+        android:layout_alignRight="@+id/my_toys"
+        app:layout_anchorGravity="center"/>
 
 </RelativeLayout>
