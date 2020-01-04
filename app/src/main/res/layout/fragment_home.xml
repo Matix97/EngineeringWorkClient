@@ -51,6 +51,15 @@
         android:focusable="true"
         android:layout_alignBottom="@+id/my_recycle_view_my_toy"
         android:layout_alignRight="@+id/my_recycle_view_my_toy" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/rent_toy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:tooltipText="Rent"
+        android:layout_alignBottom="@+id/my_recycle_view_rented_toy"
+        android:layout_alignRight="@+id/my_recycle_view_rented_toy" />
 
 
 

@@ -74,6 +74,11 @@
             android:name=".child.ToyActivityChild"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/theme"
+            android:name=".RentalToyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

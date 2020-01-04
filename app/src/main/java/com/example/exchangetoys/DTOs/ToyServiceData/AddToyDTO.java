@@ -18,6 +18,8 @@ public class AddToyDTO {
     private ArrayList<String> photosURLs;
     private double toy_latitude;
     private double toy_longitude;
+    private Double money;
+    private String typOfTransaction;
     public void setAgeRange(String ageRange){
         switch(ageRange){
             case "0-3": this.ageRange=1;break;

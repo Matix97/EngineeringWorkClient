@@ -3,6 +3,8 @@ package com.example.exchangetoys.child;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -57,6 +59,13 @@ public class ToyActivityChild extends Activity {
             images.setItemAnimator(new DefaultItemAnimator());
             images.setAdapter(imageArrayAdapter);
         }
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        ViewGroup.LayoutParams layoutParams= images.getLayoutParams();
+        layoutParams.height=height/2-200;
+        images.setLayoutParams(layoutParams);
     }
 
     private void iWantThisToy(Long toyId) {

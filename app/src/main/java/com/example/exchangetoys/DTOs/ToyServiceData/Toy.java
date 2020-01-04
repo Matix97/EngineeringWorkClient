@@ -28,6 +28,8 @@ public class Toy implements Parcelable {
     private String toy_photos;
     private double toy_latitude;
     private double toy_longitude;
+    private Double money;
+    private String typOfTransaction;
 
     protected Toy(Parcel in) {
         if (in.readByte() == 0) {

@@ -8,7 +8,31 @@
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Typ of advert" />
 
+    <Spinner
+        android:id="@+id/typ_advert_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:entries="@array/advert_type"
+        android:spinnerMode="dialog" />
+    <TextView
+        android:id="@+id/asdasdad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Money: " />
+
+    <EditText
+        android:id="@+id/money_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="" />
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
@@ -78,6 +102,7 @@
         android:entries="@array/tag_category"
         android:prompt="@string/tag_prompt"
         android:spinnerMode="dialog" />
+
 
     <CheckBox
         android:layout_marginTop="10dp"

@@ -33,7 +33,7 @@ public class SettingsFragment extends Fragment {
     private View root;
     private UserService userService;
     private RecyclerView recyclerView;
-    private ArrayList<Child> childrenList;
+    private static ArrayList<Child> childrenList;
     private FloatingActionButton addChildButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,7 +44,8 @@ public class SettingsFragment extends Fragment {
         addChildButton = root.findViewById(R.id.floatingActionButton);
         addChildButton.setOnClickListener(v -> addChildHandler(inflater, container));
         // Initializing list view with the custom adapter
-        childrenList = new ArrayList<>();
+        if(childrenList==null)
+            childrenList = new ArrayList<>();
 
 
         recyclerView = root.findViewById(R.id.my_recycle_view);
@@ -77,7 +78,8 @@ public class SettingsFragment extends Fragment {
                     ChildArrayAdapter itemArrayAdapter = new ChildArrayAdapter(R.layout.child_item, childrenList);
                     recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
+                        recyclerView.addItemDecoration(new DividerItemDecoration(root.getContext(), DividerItemDecoration.VERTICAL));
                     recyclerView.setAdapter(itemArrayAdapter);
 
                 } else {

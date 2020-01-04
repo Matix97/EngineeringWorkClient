@@ -39,9 +39,11 @@ public class ParentLoginActivity extends Activity {
         password = findViewById(R.id.login_password_child);
         this.userService = ServiceGenerator.createService(UserService.class);
         loginButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
-//            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
-//            startActivity(intent);
+            //tylko do testó na tablecie
+            // TODO: 04/01/2020 USUN
+            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
+            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
+            startActivity(intent);
             //todo UNCOMMENT
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {

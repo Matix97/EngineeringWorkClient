@@ -129,6 +129,8 @@ public class FilterActivityParent {
             }
             else{
                 // TODO: 03/01/2020 LOCATION
+                filterDTO.setLongitude(19.36222803);
+                filterDTO.setLatitude(51.8746158);
             }
 
             filterDTO.setRadius(null);

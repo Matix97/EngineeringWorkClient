@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.exchangetoys.AddToyActivity;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.R;
+import com.example.exchangetoys.RentalToyActivity;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
 
     private RecyclerView my_toys, rented_toys;
-    private FloatingActionButton addToy;
+    private FloatingActionButton addToy,rentToy;
     private View root;
     private ArrayList<Toy> myToysData, rentedToysData;
 
@@ -43,6 +44,11 @@ public class HomeFragment extends Fragment {
 
         my_toys = root.findViewById(R.id.my_recycle_view_my_toy);
         rented_toys = root.findViewById(R.id.my_recycle_view_rented_toy);
+        rentToy = root.findViewById(R.id.rent_toy);
+        rentToy.setOnClickListener(v->{
+            Intent intent = new Intent(root.getContext(), RentalToyActivity.class);
+            startActivity(intent);
+        });
         addToy = root.findViewById(R.id.add_toy);
         addToy.setOnClickListener(v -> {
             Intent intent = new Intent(root.getContext(), AddToyActivity.class);

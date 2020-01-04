@@ -4,7 +4,10 @@
         <item>cars</item>
         <item>dolls</item>
         <item>teddies</item>
-        <item>item4</item>
+        <item>sporting</item>
+        <item>construction set</item>
+        <item>another</item>
+
     </string-array>
     <string-array name="age_category">
         <item>0-3</item>
@@ -14,6 +17,20 @@
         <item>16-100</item>
     </string-array>
     <string-array name="tag_category">
-        <item>jakis</item>
+        <item>soft</item>
+        <item>funny</item>
+        <item>scary</item>
+        <item>groupToy</item>
+        <item>collector</item>
+        <item>boys</item>
+        <item>girls</item>
+    </string-array>
+    <string-array name="advert_type">
+        <item>timeExchange</item>
+        <item>endlessExchange</item>
+        <item>moneyCommitment</item>
+        <item>freeCommitment</item>
+        <item>moneyTimeRental</item>
+        <item>freeTimeRental</item>
     </string-array>
 </resources>

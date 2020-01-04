@@ -1,14 +1,13 @@
 package com.example.exchangetoys;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,7 +15,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -30,7 +28,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.exchangetoys.DTOs.ToyServiceData.AddToyDTO;
+import com.example.exchangetoys.DTOs.ToyServiceData.RentalDTO;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.Tools.ImageUtils;
@@ -52,12 +50,11 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class AddToyActivity extends Activity implements LocationSource.OnLocationChangedListener{
+public class RentalToyActivity extends Activity implements LocationSource.OnLocationChangedListener{
 
     static final int REQUEST_TAKE_PHOTO = 1;
-    private EditText name, description;
-    private Spinner age, category, tags;
-    private CheckBox isDidactic, isVintage;
+
+
     private RecyclerView photos;
     private Button makePhoto, confirm;
     private ArrayList<ImageAdapter> itemList;
@@ -65,27 +62,23 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
     private UploadedPhotoURL uploadedPhotoURLs;
     private static final int REQ_PERMISSION = 0;
 
-    private EditText money_text;
+    private EditText money_text,editTextData,editTextFutureHolder,editTextToyToExchangeSecond;
     private Spinner typ_advert_spinner;
     private ArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_toy_activity);
-        name = findViewById(R.id.editText);
-        description = findViewById(R.id.editText2);
-        age = findViewById(R.id.age_spinner2);
-        category = findViewById(R.id.category_spinner2);
-        tags = findViewById(R.id.tag_spinner2);
-        isDidactic = findViewById(R.id.is_didactic2);
-        isVintage = findViewById(R.id.is_vintage2);
+        setContentView(R.layout.rental_activity);
+
+
         makePhoto = findViewById(R.id.make_photo_button);
-        confirm = findViewById(R.id.confirm_adding_toy);
-        money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
+        confirm = findViewById(R.id.confirm_rental);
+      //  money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
         typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
-
-
+        editTextData=findViewById(R.id.editTextData);
+        editTextFutureHolder=findViewById(R.id.editTextFutureHolder);
+        editTextToyToExchangeSecond=findViewById(R.id.editTextToyToExchangeSecond);
 
 
         makePhoto.setOnClickListener(v -> {
@@ -98,11 +91,11 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
         itemList = new ArrayList<>();
         ImageArrayAdapter itemArrayAdapter = new ImageArrayAdapter(itemList, R.layout.fragment_photo);
         photos = findViewById(R.id.uploaded_photos);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AddToyActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RentalToyActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photos.setLayoutManager(linearLayoutManager);
         photos.setItemAnimator(new DefaultItemAnimator());
-        photos.addItemDecoration(new DividerItemDecoration(AddToyActivity.this, DividerItemDecoration.HORIZONTAL));
+        photos.addItemDecoration(new DividerItemDecoration(RentalToyActivity.this, DividerItemDecoration.HORIZONTAL));
         photos.setAdapter(itemArrayAdapter);
 
 
@@ -179,42 +172,14 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
         if (UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD==0 || UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
             ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
             ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-            AddToyDTO addToyDTO = new AddToyDTO();
-            addToyDTO.setName(name.getText().toString());
-            addToyDTO.setDescription(description.getText().toString());
-            addToyDTO.setAgeRange(age.getSelectedItem().toString());
-            addToyDTO.setCategory(category.getSelectedItem().toString());
-            ArrayList<String> tagsTemp = new ArrayList<>();
-            tagsTemp.add(tags.getSelectedItem().toString());
-            addToyDTO.setTags(tagsTemp);
-            addToyDTO.setIfDidactic(isDidactic.isChecked());
-            addToyDTO.setIfVintage(isVintage.isChecked());
-            addToyDTO.setToysFactoryName("");
-            addToyDTO.setPhotosURLs(photoURLS);
-            addToyDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
-            if(typ_advert_spinner.getSelectedItem().toString().equals("moneyTimeRental") || typ_advert_spinner.getSelectedItem().toString().equals("moneyCommitment"))
-                addToyDTO.setMoney(Double.valueOf(money_text.getText().toString()));
-            //
-            Criteria kr = new Criteria();
-            LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-            String theBestSupplier = locationManager.getBestProvider(kr, true);
+            RentalDTO rentalDTO = new RentalDTO();
+            rentalDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
+          //  rentalDTO.setSuggestedReturnDate(editTextData.getText().toString()); todo ustaw datę z sensme
+            rentalDTO.setFutureHolder(editTextFutureHolder.getText().toString());
+            rentalDTO.setPhotos(photoURLS);
+rentalDTO.setSecondToyIdToTransaction(Long.valueOf(editTextToyToExchangeSecond.getText().toString()));
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            Location location = locationManager.getLastKnownLocation(theBestSupplier);
-            if(location!=null){
-                addToyDTO.setToy_latitude(location.getLatitude());
-                addToyDTO.setToy_longitude(location.getLongitude());
-            }
-            else{
-                // TODO: 03/01/2020 LOCATION
-                addToyDTO.setToy_longitude(19.36222803);
-                addToyDTO.setToy_latitude(51.8746158);
-            }
-
-
-            Call<Void> call = toyService.addToy(addToyDTO);
+            Call<Void> call = toyService.rentToy(rentalDTO);
             call.enqueue(new Callback<Void>() {
                 @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
                 public void onResponse(Call<Void> call, Response<Void> response) {

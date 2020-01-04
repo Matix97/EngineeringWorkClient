@@ -92,7 +92,24 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
         return root;
     }
     public static void downloadToys(FilterDTO filterDTO,View view){
-
+        //only to test tablet 
+        // TODO: 04/01/2020 USUN
+        Toy toy=new Toy();
+        toy.setToy_name("test");
+        toy.setToy_description("opisafdsfdsaf" +
+                "dsaf" +
+                "dsafds" +
+                "fasd" +
+                "f");
+        toy.setToy_photos("https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138519/s1dsa6lwuzi6ajalkadv.jpg;https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138569/kyjqlxq5v77sx3pix9l1.jpg");
+        download.add(toy);
+        ServiceGenerator.role="adult";
+        ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
+        toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        toys.setItemAnimator(new DefaultItemAnimator());
+        toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+        toys.setAdapter(itemArrayAdapter);
+        ///
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = toyService.getToys(filterDTO);
         call.enqueue(new Callback<List<Toy>>() {

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false">
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Typ of rental" />
+
+        <Spinner
+            android:id="@+id/typ_advert_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:entries="@array/advert_type"
+            android:spinnerMode="dialog" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Return data" />
+
+        <EditText
+            android:id="@+id/editTextData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+           />
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Future holder" />
+
+        <EditText
+            android:id="@+id/editTextFutureHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            />
+        <TextView
+            android:id="@+id/textView125"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toy to exchange(id na pałę, potem jakies wybierania)" />
+
+        <EditText
+            android:id="@+id/editTextToyToExchange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            />
+        <TextView
+            android:id="@+id/textView1253"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moja zabawka na wyminę" />
+
+        <EditText
+            android:id="@+id/editTextToyToExchangeSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            />
+
+
+        <Button
+            android:id="@+id/make_photo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Make photo" />
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/uploaded_photos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/confirm_rental"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rental" />
+
+    </LinearLayout>
+</ScrollView>

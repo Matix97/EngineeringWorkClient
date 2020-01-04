@@ -2,7 +2,7 @@ package com.example.exchangetoys.Services;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.AddToyDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
-import com.example.exchangetoys.DTOs.ToyServiceData.Rental;
+import com.example.exchangetoys.DTOs.ToyServiceData.RentalDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 
 import java.util.List;
@@ -31,9 +31,12 @@ public interface ToyService {
     Call<List<Toy>> getYourRentedToys();
 
     @POST("confirmRent")
-    Call<Void> confirmRent(@Body Rental rental);
+    Call<Void> confirmRent(@Body RentalDTO rental);
 
     @POST("toy/want")
     Call<Void> iWantAToy(@Body Long todId);
+
+    @POST("toy/rent")
+    Call<Void> rentToy(@Body RentalDTO rentalDTO);
 
 }
