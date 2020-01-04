@@ -14,6 +14,8 @@ import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
 
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +49,14 @@ public class ParentRegisterActivity extends Activity {
     private void tryRegister() {
         if (ifAllRequireFieldAreFill()) {
             if (password.getText().toString().equals(confirmPassword.getText().toString())) {
-                registerPostHandler();
+                if(emailIsEmail(email.getText().toString()))
+                    registerPostHandler();
+                else
+                    new AlertDialog.Builder(this)
+                            .setTitle("Warning")
+                            .setMessage("Please input correct email address")
+                            .setNegativeButton(android.R.string.ok, null)
+                            .show();
             }
         } else {
             new AlertDialog.Builder(this)
@@ -56,6 +65,18 @@ public class ParentRegisterActivity extends Activity {
                     .setNegativeButton(android.R.string.ok, null)
                     .show();
         }
+    }
+
+    private boolean emailIsEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 
     private boolean ifAllRequireFieldAreFill() {

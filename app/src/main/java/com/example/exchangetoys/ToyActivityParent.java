@@ -1,13 +1,21 @@
 package com.example.exchangetoys;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,10 +26,13 @@ import com.example.exchangetoys.ui.fragment.ImageArrayAdapter;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class ToyActivityParent extends Activity {
     private RecyclerView images;
     private TextView name, description;
-private Button contactByEmail,contactByPhone;
+    private Button contactByEmail, contactByPhone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,10 @@ private Button contactByEmail,contactByPhone;
         description = findViewById(R.id.toy_activity_description);
         name.setText(toy.getToy_name());
         description.setText(toy.getToy_description());
+        contactByPhone = findViewById(R.id.contactByPhone);
+        contactByEmail = findViewById(R.id.contactByEmial);
+        contactByPhone.setOnClickListener(v -> phoneHandler());
+        contactByEmail.setOnClickListener(v -> emailHandler());
 
         if (toy.getToy_photos() != null && toy.getToy_photos() != "") {
             String[] urls = toy.getToy_photos().split(";");
@@ -56,5 +71,67 @@ private Button contactByEmail,contactByPhone;
         images.setLayoutParams(layoutParams);
 
 
+    }
+
+    private void emailHandler() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mobiz@gmail.com"});
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback/Support: Speech to text App");
+        startActivity(Intent.createChooser(shareIntent, "Share "));
+    }
+
+
+    private void phoneHandler() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                askPermission();
+
+            }
+            else{
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:"+514682757));//change the number
+                startActivity(callIntent);}
+        }
+
+    }
+    private static final int REQ_PERMISSION = 0;
+    // Check for permission to access Location
+    private boolean checkPermission() {
+
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                == PackageManager.PERMISSION_GRANTED);
+    }
+
+    // Asks for permission
+    private void askPermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.CALL_PHONE},
+                REQ_PERMISSION
+        );
+    }
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,       int[] grantResults){
+        Log.d(TAG, "onRequestPermissionsResult()");
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_PERMISSION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    if (checkPermission()){}
+
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:"+514682757));//change the number
+                    startActivity(callIntent);
+
+                } else {
+                    // Permission denied
+
+                }
+                break;
+            }
+        }
     }
 }
