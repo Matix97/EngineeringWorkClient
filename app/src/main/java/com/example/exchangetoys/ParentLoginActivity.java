@@ -41,9 +41,9 @@ public class ParentLoginActivity extends Activity {
         loginButton.setOnClickListener(v -> {
             //tylko do testó na tablecie
             //
-            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
-            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
-            startActivity(intent);
+//            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
+//            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
+//            startActivity(intent);
             //
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {

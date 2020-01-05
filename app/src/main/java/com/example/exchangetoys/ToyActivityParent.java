@@ -33,6 +33,7 @@ public class ToyActivityParent extends Activity {
     private TextView name, description;
     private Button contactByEmail, contactByPhone;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +46,10 @@ public class ToyActivityParent extends Activity {
         name.setText(toy.getToy_name());
         description.setText(toy.getToy_description());
         contactByPhone = findViewById(R.id.contactByPhone);
+        if(toy.getToy_owner_phone_number()==null) contactByPhone.setEnabled(false);
         contactByEmail = findViewById(R.id.contactByEmial);
-        contactByPhone.setOnClickListener(v -> phoneHandler());
-        contactByEmail.setOnClickListener(v -> emailHandler());
+        contactByPhone.setOnClickListener(v -> phoneHandler(toy.getToy_owner_phone_number()));
+        contactByEmail.setOnClickListener(v -> emailHandler(toy.getToy_owner_id()));
 
         if (toy.getToy_photos() != null && toy.getToy_photos() != "") {
             String[] urls = toy.getToy_photos().split(";");
@@ -73,16 +75,20 @@ public class ToyActivityParent extends Activity {
 
     }
 
-    private void emailHandler() {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"mobiz@gmail.com"});
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback/Support: Speech to text App");
-        startActivity(Intent.createChooser(shareIntent, "Share "));
+    private void emailHandler(String ownerEmail/*, String emailMessage*/) {
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + ownerEmail));
+    //    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ownerEmail});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Zwracam się z uprzejmą prośbą: Speech to text App");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+//emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
+
+        startActivity(Intent.createChooser(emailIntent, "Send Email"));
+
     }
 
 
-    private void phoneHandler() {
+    private void phoneHandler(String phone) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -91,7 +97,8 @@ public class ToyActivityParent extends Activity {
             }
             else{
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:"+514682757));//change the number
+                if(phone !=null)
+                    callIntent.setData(Uri.parse("tel:"+phone));//change the number
                 startActivity(callIntent);}
         }
 
@@ -122,9 +129,7 @@ public class ToyActivityParent extends Activity {
                     // Permission granted
                     if (checkPermission()){}
 
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:"+514682757));//change the number
-                    startActivity(callIntent);
+
 
                 } else {
                     // Permission denied

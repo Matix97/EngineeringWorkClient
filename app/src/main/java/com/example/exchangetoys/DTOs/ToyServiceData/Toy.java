@@ -30,6 +30,7 @@ public class Toy implements Parcelable {
     private double toy_longitude;
     private Double money;
     private String typOfTransaction;
+    private String toy_owner_phone_number;
 
     protected Toy(Parcel in) {
         if (in.readByte() == 0) {
@@ -50,6 +51,7 @@ public class Toy implements Parcelable {
         toy_factory_name = in.readString();
         toy_quality_of_made = in.readInt();
         toy_photos = in.readString();
+        toy_owner_phone_number = in.readString();
     }
 
     public static final Creator<Toy> CREATOR = new Creator<Toy>() {
@@ -91,5 +93,6 @@ public class Toy implements Parcelable {
         dest.writeString(toy_factory_name);
         dest.writeInt(toy_quality_of_made);
         dest.writeString(toy_photos);
+        dest.writeString(toy_owner_phone_number);
     }
 }
