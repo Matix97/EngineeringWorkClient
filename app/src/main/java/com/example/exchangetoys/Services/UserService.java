@@ -2,6 +2,7 @@ package com.example.exchangetoys.Services;
 
 
 import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
+import com.example.exchangetoys.DTOs.ToyServiceData.SuggestedToy;
 import com.example.exchangetoys.DTOs.UserServiceData.Child;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public interface UserService {
     @POST("authenticate")
     Call<JwtResponse> login(@Header("Authorization") byte[] message);
 
+    @GET("adult/suggestion")
+    Call<List<SuggestedToy>> getSuggestion();
 //    @POST("updateChild")
 //    Call<Void> updateChild(@Body Child child);
 //

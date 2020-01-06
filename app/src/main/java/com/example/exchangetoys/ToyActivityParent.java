@@ -49,7 +49,7 @@ public class ToyActivityParent extends Activity {
         if(toy.getToy_owner_phone_number()==null) contactByPhone.setEnabled(false);
         contactByEmail = findViewById(R.id.contactByEmial);
         contactByPhone.setOnClickListener(v -> phoneHandler(toy.getToy_owner_phone_number()));
-        contactByEmail.setOnClickListener(v -> emailHandler(toy.getToy_owner_id()));
+        contactByEmail.setOnClickListener(v -> emailHandler(toy.getToy_owner_id(),creatBodyMail(toy),creatSubject(toy)));
 
         if (toy.getToy_photos() != null && toy.getToy_photos() != "") {
             String[] urls = toy.getToy_photos().split(";");
@@ -74,13 +74,27 @@ public class ToyActivityParent extends Activity {
 
 
     }
+    private String creatBodyMail(Toy toy){
+        StringBuilder s = new StringBuilder("Witam, \nzwracam się z uprzejmym zapytaniem dotyczącym ogłoszenia \"");
+        s.append(toy.getToy_name());
+        s.append("\"\n<wpisz swoje pytania>");
+        s.append("\nSErdecznie pozdrawaiam\n ");
 
-    private void emailHandler(String ownerEmail/*, String emailMessage*/) {
+
+        return s.toString();
+    }
+    private String creatSubject(Toy toy){
+        StringBuilder s = new StringBuilder("Toy's app: ");
+        s.append(toy.getToy_name());
+        return s.toString();
+    }
+
+    private void emailHandler(String ownerEmail, String emailMessage,String emailTitle) {
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + ownerEmail));
     //    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ownerEmail});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Zwracam się z uprzejmą prośbą: Speech to text App");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailTitle);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, emailMessage);
 //emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
 
         startActivity(Intent.createChooser(emailIntent, "Send Email"));

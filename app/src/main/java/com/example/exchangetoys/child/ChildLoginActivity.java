@@ -39,6 +39,7 @@ public class ChildLoginActivity extends Activity {
             String messageToEncrypt = login.getText().toString() + ";" + password.getText().toString() + ";" + "child";
             try {
                 this.userService = ServiceGenerator.createService(UserService.class);
+                ServiceGenerator.bearerToken=null;
                 Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
 
                 call.enqueue(new Callback<JwtResponse>() {

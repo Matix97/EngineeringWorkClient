@@ -16,6 +16,8 @@ import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
 import com.example.exchangetoys.Tools.MediaManagerInitializer;
 
+import java.util.Timer;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,10 +28,10 @@ public class ParentLoginActivity extends Activity {
     EditText loginName, password;
     Button loginButton, registerButton;
     private UserService userService;
-
+Timer t;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //to nie jest perfekcyjne
+
         MediaManagerInitializer.getInstance(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.parent_login_activity);
@@ -39,15 +41,11 @@ public class ParentLoginActivity extends Activity {
         password = findViewById(R.id.login_password_child);
         this.userService = ServiceGenerator.createService(UserService.class);
         loginButton.setOnClickListener(v -> {
-            //tylko do testó na tablecie
-            //
-//            Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
-//            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
-//            startActivity(intent);
-            //
+
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {
                 this.userService = ServiceGenerator.createService(UserService.class);
+                ServiceGenerator.bearerToken=null;
                 Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
 
                 call.enqueue(new Callback<JwtResponse>() {
@@ -56,22 +54,18 @@ public class ParentLoginActivity extends Activity {
                         if (response.isSuccessful()) {
                             ServiceGenerator.role="adult";
                             ServiceGenerator.bearerToken = response.body().getJwttoken();
+                            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
+                            i.putExtra("token",ServiceGenerator.bearerToken);
+                            ParentLoginActivity.this.startService(i);
                             Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
-                            intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
                             startActivity(intent);
 
                         } else
                             new AlertDialog.Builder(ParentLoginActivity.this)
                                     .setTitle("Bad Login")
                                     .setMessage("Are You sure about Your login and password?")
-
-                                    // Specifying a listener allows you to take an action before dismissing the dialog.
-                                    // The dialog is automatically dismissed when a dialog button is clicked.
-
-                                    // A null listener allows the button to dismiss the dialog and take no further action.
                                     .setNegativeButton(android.R.string.ok, null)
-                                    // .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();
                     }
 
@@ -90,7 +84,6 @@ public class ParentLoginActivity extends Activity {
         });
         registerButton.setOnClickListener(v -> {
             Intent intent = new Intent(ParentLoginActivity.this, ParentRegisterActivity.class);
-            // intent.putExtra("name", loginName.getText().toString());             //opcjonalnie jakieś wartości
             startActivity(intent);
         });
 

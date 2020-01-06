@@ -17,6 +17,8 @@
     <string name="category_prompt">Choose a category</string>
     <string name="age_prompt">Age Range</string>
     <string name="tag_prompt">Tags</string>
+    <string name="channel_name">test</string>
+    <string name="channel_description">opis testu asdasdasd</string>
 
 
 </resources>

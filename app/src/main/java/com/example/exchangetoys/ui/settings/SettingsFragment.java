@@ -19,7 +19,6 @@ import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.ui.fragment.ChildArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +56,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void addChildHandler(LayoutInflater inflater, ViewGroup container) {
-        Snackbar.make(root, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+//        Snackbar.make(root, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show();
         AddChildPopUp addChildPopUp = new AddChildPopUp();
         addChildPopUp.showPopupWindow(root);
     }

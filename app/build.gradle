@@ -1,3 +1,4 @@
+//noinspection GradleDeprecatedConfiguration
 apply plugin: 'com.android.application'
 
 android {
@@ -48,4 +49,6 @@ dependencies {
     //lokalizacja
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    //firbease-notification
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 }

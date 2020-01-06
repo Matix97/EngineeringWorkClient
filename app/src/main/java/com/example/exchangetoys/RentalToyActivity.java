@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -42,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -62,7 +64,8 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
     private UploadedPhotoURL uploadedPhotoURLs;
     private static final int REQ_PERMISSION = 0;
 
-    private EditText money_text,editTextData,editTextFutureHolder,editTextToyToExchangeSecond;
+    private DatePicker picker;
+    private EditText money_text,editTextFutureHolder,editTextToyToExchangeSecond;
     private Spinner typ_advert_spinner;
     private ArrayAdapter mAdapter;
 
@@ -76,7 +79,7 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
         confirm = findViewById(R.id.confirm_rental);
       //  money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
         typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
-        editTextData=findViewById(R.id.editTextData);
+        picker =findViewById(R.id.editTextData);
         editTextFutureHolder=findViewById(R.id.editTextFutureHolder);
         editTextToyToExchangeSecond=findViewById(R.id.editTextToyToExchangeSecond);
 
@@ -166,7 +169,17 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
             }
         }
     }
-
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
 
     private void confirmFunction() {
         if (UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD==0 || UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
@@ -174,10 +187,24 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
             ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
             RentalDTO rentalDTO = new RentalDTO();
             rentalDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
-          //  rentalDTO.setSuggestedReturnDate(editTextData.getText().toString()); todo ustaw datę z sensme
+//            String pattern = "yyyy-MM-dd";
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//            try {
+//                System.out.println("DATA: "+simpleDateFormat.parse(simpleDateFormat.format(getDate(picker.getYear(),picker.getMonth(),picker.getDayOfMonth() ))));
+//                rentalDTO.setSuggestedReturnDate(simpleDateFormat.parse(simpleDateFormat.format(getDate(picker.getYear(),picker.getMonth(),picker.getDayOfMonth() ))));// todo ustaw datę z sensme
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+
+            //picker.getDayOfMonth()+"/"+ (picker.getMonth() + 1)+"/"+picker.getYear();
             rentalDTO.setFutureHolder(editTextFutureHolder.getText().toString());
             rentalDTO.setPhotos(photoURLS);
-rentalDTO.setSecondToyIdToTransaction(Long.valueOf(editTextToyToExchangeSecond.getText().toString()));
+            try{
+                rentalDTO.setSecondToyIdToTransaction(Long.valueOf(editTextToyToExchangeSecond.getText().toString()));
+            }catch (Exception e){
+
+            }
+
 
             Call<Void> call = toyService.rentToy(rentalDTO);
             call.enqueue(new Callback<Void>() {
