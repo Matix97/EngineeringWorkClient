@@ -92,13 +92,13 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
         return root;
     }
     public static void downloadToys(FilterDTO filterDTO,View view){
-        //only to test tablet 
-//        //
+        //only to test
+////        //
 //        Toy toy=new Toy();
 //        toy.setToy_name("test");
 //        toy.setToy_description("opisafdsfdsaf" +
-//                "dsaf" +
-//                "dsafds" +
+//                "dsaf\n" +
+//                "dsafds\n" +
 //                "fasd" +
 //                "f");
 //        toy.setToy_photos("https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138519/s1dsa6lwuzi6ajalkadv.jpg;https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138569/kyjqlxq5v77sx3pix9l1.jpg");

@@ -71,7 +71,8 @@ public class NotificationService extends Service {
                                 int j=0;
                                 for (SuggestedToy t:response.body()   ) {
                                     System.out.println(t);
-                                    Intent i = new Intent(NotificationService.this, ParentMainActivity.class);
+                                    Intent i = new Intent(NotificationService.this, ChildSettings.class);
+                                    i.putExtra("child",t.getChild());
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     PendingIntent pendingIntent = PendingIntent.getActivity(NotificationService.this, 0, i, 0);
 

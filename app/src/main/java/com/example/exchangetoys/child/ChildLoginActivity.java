@@ -38,6 +38,11 @@ public class ChildLoginActivity extends Activity {
         confirm.setOnClickListener(v -> {
             String messageToEncrypt = login.getText().toString() + ";" + password.getText().toString() + ";" + "child";
             try {
+//to test
+//                ServiceGenerator.role="child";
+//               // ServiceGenerator.bearerToken = response.body().getJwttoken();
+//                Intent intent = new Intent(ChildLoginActivity.this, ChildMainActivity.class);
+//                startActivity(intent);
                 this.userService = ServiceGenerator.createService(UserService.class);
                 ServiceGenerator.bearerToken=null;
                 Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));

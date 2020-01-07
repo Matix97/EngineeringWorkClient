@@ -1,6 +1,7 @@
 package com.example.exchangetoys.ui.fragment;
 
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.exchangetoys.ChildSettings;
 import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.R;
 
@@ -46,11 +48,13 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
         TextView item = holder.item;
         item.setText(itemList.get(listPosition).getChild_name());
+        holder.child = itemList.get(listPosition);
     }
 
     // Static inner class to initialize the views of rows
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView item;
+        public Child child;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -61,6 +65,9 @@ public class ChildArrayAdapter extends RecyclerView.Adapter<ChildArrayAdapter.Vi
         @Override
         public void onClick(View view) {
             Log.d("onclick", "onClick " + getLayoutPosition() + " " + item.getText());
+            Intent intent = new Intent(view.getContext(), ChildSettings.class);
+            intent.putExtra("child", child);
+            view.getContext().startActivity(intent);
         }
     }
 }

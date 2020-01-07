@@ -88,6 +88,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/theme" />
+        <activity
+            android:name=".ChildSettings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/theme" />
 <!--        to notification -->
         <service
             android:name="NotificationService"

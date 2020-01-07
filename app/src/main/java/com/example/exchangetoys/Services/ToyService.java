@@ -9,8 +9,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ToyService {
 
@@ -38,5 +40,8 @@ public interface ToyService {
 
     @POST("toy/rent")
     Call<Void> rentToy(@Body RentalDTO rentalDTO);
+
+    @DELETE("toy/want/{id}")
+    Call<Long> deleteSuggestion(@Path("id") Long itemId);
 
 }

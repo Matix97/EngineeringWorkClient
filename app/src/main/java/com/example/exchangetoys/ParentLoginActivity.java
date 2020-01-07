@@ -16,8 +16,6 @@ import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.Tools.EncryptionTools;
 import com.example.exchangetoys.Tools.MediaManagerInitializer;
 
-import java.util.Timer;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +26,7 @@ public class ParentLoginActivity extends Activity {
     EditText loginName, password;
     Button loginButton, registerButton;
     private UserService userService;
-Timer t;
+//Timer t;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -44,6 +42,11 @@ Timer t;
 
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {
+
+//                //to test
+//                ServiceGenerator.role="adult";
+//                Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
+//                startActivity(intent);
                 this.userService = ServiceGenerator.createService(UserService.class);
                 ServiceGenerator.bearerToken=null;
                 Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));

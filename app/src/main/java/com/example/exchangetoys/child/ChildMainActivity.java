@@ -92,7 +92,22 @@ else
     filterDTO.setLongitude(19.36222803);
     filterDTO.setLatitude(51.8746158);
 }
-
+//        //
+//        Toy toy=new Toy();
+//        toy.setToy_name("test");
+//        toy.setToy_description("opisafdsfdsaf" +
+//                "dsaf\n" +
+//                "dsafds\n" +
+//                "fasd" +
+//                "f");
+//        toy.setToy_photos("https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138519/s1dsa6lwuzi6ajalkadv.jpg;https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138569/kyjqlxq5v77sx3pix9l1.jpg");
+//        download.add(toy);
+//        ServiceGenerator.role="child";
+//        ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
+//        toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
+//        toys.setItemAnimator(new DefaultItemAnimator());
+//        toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+//        toys.setAdapter(itemArrayAdapter);
 
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = toyService.getToys(filterDTO);
