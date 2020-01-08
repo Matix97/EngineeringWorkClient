@@ -19,6 +19,8 @@ public class Child implements Parcelable {
     private double child_latitude;
     private double child_longitude;
     private String child_suggestion;
+    private String availableAge;
+    private String availableTag;
 
     protected Child(Parcel in) {
         if (in.readByte() == 0) {
@@ -35,6 +37,8 @@ public class Child implements Parcelable {
         child_latitude = in.readDouble();
         child_longitude = in.readDouble();
         child_suggestion = in.readString();
+        availableAge = in.readString();
+        availableTag = in.readString();
     }
 
     public static final Creator<Child> CREATOR = new Creator<Child>() {
@@ -71,5 +75,7 @@ public class Child implements Parcelable {
         dest.writeDouble(child_latitude);
         dest.writeDouble(child_longitude);
         dest.writeString(child_suggestion);
+        dest.writeString(availableAge);
+        dest.writeString(availableTag);
     }
 }

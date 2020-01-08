@@ -40,7 +40,7 @@ import static android.content.ContentValues.TAG;
 public class ChildMainActivity extends AppCompatActivity  implements LocationSource.OnLocationChangedListener{
 
     private static RecyclerView toys;
-    private FloatingActionButton filterButton;
+    private FloatingActionButton filterButton, suggestionButton;
     private static ArrayList<Toy> download = new ArrayList<>();
     private static Location startLocation;
     private static final int REQ_PERMISSION = 0;
@@ -50,6 +50,8 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_main);
         toys = findViewById(R.id.my_toys);
+        suggestionButton = findViewById(R.id.floatingActionButton);
+        suggestionButton.setOnClickListener(v -> mySuggestionActivity());
         filterButton = findViewById(R.id.filter_button_child);
         filterButton.setOnClickListener(v -> {
             Criteria kr = new Criteria();
@@ -81,6 +83,11 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
+
+    private void mySuggestionActivity() {
+        // TODO: 08/01/2020 nowy intetn pewnie 
+    }
+
     public static void downloadToys2(FilterDTO filterDTO, View view,Location location){
 if(location!=null){
     filterDTO.setLongitude(location.getLongitude());
@@ -92,22 +99,7 @@ else
     filterDTO.setLongitude(19.36222803);
     filterDTO.setLatitude(51.8746158);
 }
-//        //
-//        Toy toy=new Toy();
-//        toy.setToy_name("test");
-//        toy.setToy_description("opisafdsfdsaf" +
-//                "dsaf\n" +
-//                "dsafds\n" +
-//                "fasd" +
-//                "f");
-//        toy.setToy_photos("https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138519/s1dsa6lwuzi6ajalkadv.jpg;https://res.cloudinary.com/dxlmhjfv1/image/upload/v1578138569/kyjqlxq5v77sx3pix9l1.jpg");
-//        download.add(toy);
-//        ServiceGenerator.role="child";
-//        ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
-//        toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        toys.setItemAnimator(new DefaultItemAnimator());
-//        toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-//        toys.setAdapter(itemArrayAdapter);
+
 
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = toyService.getToys(filterDTO);

@@ -28,7 +28,7 @@ import retrofit2.Response;
 public class NotificationService extends Service {
 
     private static String token;
-    private final String CHANNEL_ID = "2";
+    private  String CHANNEL_ID = "2";
 
     @Nullable
     @Override
@@ -74,9 +74,14 @@ public class NotificationService extends Service {
                                     Intent i = new Intent(NotificationService.this, ChildSettings.class);
                                     i.putExtra("child",t.getChild());
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                                     PendingIntent pendingIntent = PendingIntent.getActivity(NotificationService.this, 0, i, 0);
-
-
+                                    System.out.println("MY_TAG: Notification: "+i.getExtras().toString());
+                                    System.out.println("MY_TAG: Notification: "+t.getChild());
+                                    Integer integer =Integer.parseInt(CHANNEL_ID);
+                                    integer++;
+                                    CHANNEL_ID = String.valueOf(integer);
+                                    System.out.println("MY_TAG: Notification: "+ CHANNEL_ID);
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, CHANNEL_ID)
                                             .setSmallIcon(R.drawable.add_icon)
                                             .setContentTitle(t.getChild().getChild_name())

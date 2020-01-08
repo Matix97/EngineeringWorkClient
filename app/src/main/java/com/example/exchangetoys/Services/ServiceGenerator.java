@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "http://21c19d6c.ngrok.io";
+    public static final String API_BASE_URL = "http://f3ec7c63.ngrok.io";
 
     public static String bearerToken;
     public static String role;
