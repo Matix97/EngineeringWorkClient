@@ -37,6 +37,9 @@ public interface UserService {
 
     @POST("child/update")
     Call<Child> updateChild(@Body ChildUpdateDTO childUpdateDTO);
+
+    @GET("child/suggestion")
+    Call<List<Toy>> getChildSuggestion();
 //    @POST("updateChild")
 //    Call<Void> updateChild(@Body Child child);
 //

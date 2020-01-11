@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="110dp">
+
+    <ImageView
+        android:id="@+id/imageViewToy"
+        android:layout_width="130dp"
+        android:layout_height="82dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+
+        android:contentDescription="@string/todo" />
+
+        <Button
+            android:id="@+id/delete_suggestion"
+            android:layout_width="125dp"
+            android:layout_height="41dp"
+            android:layout_alignTop="@+id/imageViewToy"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="38dp"
+            android:layout_toEndOf="@+id/imageViewToy"
+            android:text="DELETE" />
+
+    <TextView
+        android:id="@+id/toyName"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/toy_name" />
+
+    <TextView
+        android:id="@+id/toySomeInfo"
+        android:layout_width="61dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toyName"
+        android:layout_alignEnd="@+id/toyName"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:text="@string/toy_some_info" />
+
+</RelativeLayout>

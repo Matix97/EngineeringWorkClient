@@ -52,11 +52,11 @@ public class ParentRegisterActivity extends Activity {
                 if(emailIsEmail(email.getText().toString()))
                     registerPostHandler();
                 else
-                    new AlertDialog.Builder(this)
-                            .setTitle("Warning")
-                            .setMessage("Please input correct email address")
-                            .setNegativeButton(android.R.string.ok, null)
-                            .show();
+                        new AlertDialog.Builder(this)
+                                .setTitle("Warning")
+                                .setMessage("Please input correct email address")
+                                .setNegativeButton(android.R.string.ok, null)
+                                .show();
             }
         } else {
             new AlertDialog.Builder(this)

@@ -1,6 +1,7 @@
 package com.example.exchangetoys.child;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -85,7 +86,9 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
     }
 
     private void mySuggestionActivity() {
-        // TODO: 08/01/2020 nowy intetn pewnie 
+        Intent intent = new Intent(ChildMainActivity.this, SuggestedToys.class);
+        startActivity(intent);
+
     }
 
     public static void downloadToys2(FilterDTO filterDTO, View view,Location location){
