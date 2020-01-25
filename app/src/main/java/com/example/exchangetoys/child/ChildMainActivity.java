@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.FilterDTO;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
+import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
+import com.example.exchangetoys.Services.UserService;
 import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,9 +47,30 @@ public class ChildMainActivity extends AppCompatActivity  implements LocationSou
     private static ArrayList<Toy> download = new ArrayList<>();
     private static Location startLocation;
     private static final int REQ_PERMISSION = 0;
+    public static Child childData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        childData=null;
+        UserService userService = ServiceGenerator.createAuthorizedService(UserService.class);
+        Call<Child> call =userService.getMyChildData();
+        call.enqueue(new Callback<Child>() {
+            @Override
+            public void onResponse(Call<Child> call, Response<Child> response) {
+                if (response.isSuccessful()){
+                    childData=response.body();
+                }
+                else{
+                    Toast.makeText(ChildMainActivity.this, "JEST ŻLE", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Child> call, Throwable t) {
+                Toast.makeText(ChildMainActivity.this, "JEST ŻLE i TO BARDZO", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_main);
         toys = findViewById(R.id.my_toys);

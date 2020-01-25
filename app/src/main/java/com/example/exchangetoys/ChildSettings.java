@@ -106,6 +106,7 @@ if(toysData==null)
         childUpdateDTO.setAvailableAge(childAgeRange.getText().toString());
         childUpdateDTO.setAvailableTag(childTags.getText().toString());
         childUpdateDTO.setChild_radius_area(seekBarValue);
+        childUpdateDTO.setAmount(10);// TODO: 25/01/2020 zró jakiś wybór
         Call<Child> call = userService.updateChild(childUpdateDTO);
         call.enqueue(new Callback<Child>() {
             @Override

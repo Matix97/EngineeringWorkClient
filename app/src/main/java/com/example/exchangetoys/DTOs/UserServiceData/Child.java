@@ -21,6 +21,7 @@ public class Child implements Parcelable {
     private String child_suggestion;
     private String availableAge;
     private String availableTag;
+    private Integer amountOfSuggesstedToy;
 
     protected Child(Parcel in) {
         if (in.readByte() == 0) {
@@ -39,6 +40,7 @@ public class Child implements Parcelable {
         child_suggestion = in.readString();
         availableAge = in.readString();
         availableTag = in.readString();
+        amountOfSuggesstedToy = in.readInt();
     }
 
     public static final Creator<Child> CREATOR = new Creator<Child>() {
@@ -77,5 +79,6 @@ public class Child implements Parcelable {
         dest.writeString(child_suggestion);
         dest.writeString(availableAge);
         dest.writeString(availableTag);
+        dest.writeInt(amountOfSuggesstedToy);
     }
 }

@@ -23,9 +23,10 @@ import retrofit2.Response;
 public class AddChildPopUp {
 
     private EditText name, login, password, confirmPassword, childAge;
-    private TextView radius_info;
-    private SeekBar radius;
-    private Integer seekBarValue;
+    private TextView radius_info, suggestionInfo;
+    private SeekBar radius, suggestion;
+    private Integer seekBarValue, suggestionValue;
+
     //PopupWindow display method
     private View view;
     private UserService userService;
@@ -56,6 +57,29 @@ public class AddChildPopUp {
         password = popupView.findViewById(R.id.password_register_child);
         confirmPassword = popupView.findViewById(R.id.confirm_password_register_child);
         childAge = popupView.findViewById(R.id.child_age);
+        suggestionInfo = popupView.findViewById(R.id.suggestion_info);
+        suggestion = popupView.findViewById(R.id.seekBarSuggestion);
+        suggestion.setProgress(10);
+        suggestionValue=10;
+        suggestionInfo.setText("Amount of toys: "+suggestionValue);
+        suggestion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                suggestionValue=progress;
+                suggestionInfo.setText("Amount of toys: "+suggestionValue);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         radius_info = popupView.findViewById(R.id.radius_info);
         radius = popupView.findViewById(R.id.seekBar);
         radius.setProgress(30);
@@ -140,9 +164,9 @@ public class AddChildPopUp {
     }
 
     private void registerPostHandler() {
-        String messageToEncrypt = name.getText().toString() + ";" + login.getText().toString()
-                + ";" + password.getText().toString() + ";" + childAge.getText().toString()
-                + ";" + seekBarValue.toString();
+        String messageToEncrypt = name.getText().toString() + ">" + login.getText().toString()
+                + ">" + password.getText().toString() + ">" + childAge.getText().toString()
+                + ">" + seekBarValue.toString() + ">" + "0-3;4-7;8-12;13-15;16-100" + ">" + suggestionValue      ;
 
         try {
 

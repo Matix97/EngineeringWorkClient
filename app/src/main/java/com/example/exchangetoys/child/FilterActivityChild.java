@@ -4,6 +4,7 @@ import android.location.Location;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class FilterActivityChild {
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         //Set the location of the window on the screen
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 70);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 90);
         //todo find view by id for all components
         mainCategory = popupView.findViewById(R.id.category_spinner); mainCategory.setEnabled(false);
         age = popupView.findViewById(R.id.age_spinner); age.setEnabled(false);
@@ -53,6 +54,21 @@ public class FilterActivityChild {
         checkBoxTagSpinner = popupView.findViewById(R.id.checkBoxTagSpinner);
         checkBoxDidactic = popupView.findViewById(R.id.checkBoxDidactic);
         checkBoxVintage = popupView.findViewById(R.id.checkBoxVintage);
+
+        if(ChildMainActivity.childData!=null){//to powinno być zawsze no ale gdyby sypenło to już niech dziecko ma więskze prawa
+
+            String [] categorySpinner = ChildMainActivity.childData.getAvailableAge().split(";");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(),android.R.layout.simple_spinner_item, categorySpinner);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            age.setAdapter(adapter);
+
+//            String []tagsSpinner = ChildMainActivity.childData.getAvailableTag().split(";");
+//            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(popupView.getContext(),android.R.layout.simple_spinner_item, tagsSpinner);
+//            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            tags.setAdapter(adapter2);
+
+        }
+
 
         checkBoxAnyKeyword.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) anyKeyword.setEnabled(true);
@@ -92,9 +108,7 @@ public class FilterActivityChild {
             filterDTO.setRadius(null);
 
 
-               
-
-                ChildMainActivity.downloadToys2(filterDTO,view,location);
+            ChildMainActivity.downloadToys2(filterDTO,view,location);
             popupWindow.dismiss();
 
 

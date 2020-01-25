@@ -43,7 +43,7 @@ public class FilterActivityParent {
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
         //Set the location of the window on the screen
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 70);
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 90);
         //todo find view by id for all components
         mainCategory = popupView.findViewById(R.id.category_spinner); mainCategory.setEnabled(false);
         age = popupView.findViewById(R.id.age_spinner); age.setEnabled(false);

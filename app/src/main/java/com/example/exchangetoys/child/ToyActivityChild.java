@@ -22,13 +22,14 @@ import com.example.exchangetoys.ui.fragment.ImageArrayAdapter;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ToyActivityChild extends Activity {
     private RecyclerView images;
-    private TextView name, description;
+    private TextView name, description,vintage,didactic;
     private Button iWantThisToy;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +42,13 @@ public class ToyActivityChild extends Activity {
         description=findViewById(R.id.toy_activity_description);
         name.setText(toy.getToy_name());
         description.setText(toy.getToy_description());
+        vintage=findViewById(R.id.vintageIS);
+        didactic=findViewById(R.id.didacticIS);
+        if(toy.getToy_vintage()==0) vintage.setText("");
+        if(toy.getToy_didactic()==0) didactic.setText("");
+
         iWantThisToy=findViewById(R.id.iWantThisToy);
+
         iWantThisToy.setOnClickListener(v->{
             iWantThisToy(toy.getToy_id());
         });
@@ -69,27 +76,32 @@ public class ToyActivityChild extends Activity {
     }
 
     private void iWantThisToy(Long toyId) {
+
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        Call<Void> call = toyService.iWantAToy(toyId);
-        call.enqueue(new Callback<Void>() {
+        Call call = toyService.iWantAToy(toyId);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    new AlertDialog.Builder(ToyActivityChild.this)
+
+
+                        new AlertDialog.Builder(ToyActivityChild.this)
                             .setTitle("Success")
                             .setMessage("Your parent will receive info about this toy")
                             .setNegativeButton(android.R.string.ok, null)
                             .show();
+
+
                 } else
                     new AlertDialog.Builder(ToyActivityChild.this)
-                            .setTitle("Something wrong")
-                            .setMessage("Try again ")
+                            .setTitle("Nope")
+                            .setMessage("You cannot add more toy,\ndelete old before adding new")
                             .setNegativeButton(android.R.string.ok, null)
                             .show();
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 new AlertDialog.Builder(ToyActivityChild.this)
                         .setTitle("Failure")
                         .setMessage("Check internet connection or restart application")

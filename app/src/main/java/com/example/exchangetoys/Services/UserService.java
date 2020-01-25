@@ -32,7 +32,8 @@ public interface UserService {
     @POST("child")
     Call<Void> registerChild(@Body String message);
 
-
+    @GET("child/my-data")
+    Call<Child> getMyChildData();
 
 
 

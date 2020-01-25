@@ -7,24 +7,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_green_light"
+        android:background="@color/backTransparency"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Search...(any keyword)" />
+            android:layout_marginTop="20dp"
+            android:text="Search...(any keyword)"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            >
 
             <CheckBox
                 android:id="@+id/checkBoxAnyKeyword"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/any_keyword"
                 android:layout_width="match_parent"
@@ -32,20 +38,25 @@
         </LinearLayout>
 
         <TextView
-            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/category_prompt" />
+            android:paddingTop="10dp"
+            android:text="@string/category_prompt"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
                 android:id="@+id/checkBoxCategorySpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+
             <Spinner
                 android:id="@+id/category_spinner"
                 android:layout_width="match_parent"
@@ -54,21 +65,27 @@
                 android:prompt="@string/category_prompt"
                 android:spinnerMode="dialog" />
         </LinearLayout>
+
         <TextView
-            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/age_prompt" />
+            android:paddingTop="10dp"
+            android:text="@string/age_prompt"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
                 android:id="@+id/checkBoxAgeSpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+
             <Spinner
                 android:id="@+id/age_spinner"
                 android:layout_width="match_parent"
@@ -79,20 +96,25 @@
         </LinearLayout>
         <!--tags-->
         <TextView
-            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/tag_prompt" />
+            android:paddingTop="10dp"
+            android:text="@string/tag_prompt"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
                 android:id="@+id/checkBoxTagSpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
+
             <Spinner
                 android:id="@+id/tag_spinner"
                 android:layout_width="match_parent"
@@ -101,48 +123,56 @@
                 android:prompt="@string/tag_prompt"
                 android:spinnerMode="dialog" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
-                android:layout_marginTop="10dp"
                 android:id="@+id/checkBoxDidactic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginTop="10dp" />
+
             <CheckBox
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
                 android:id="@+id/is_didactic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="Is didactic" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
-                android:layout_marginTop="10dp"
                 android:id="@+id/checkBoxVintage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginTop="10dp" />
+
             <CheckBox
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
                 android:id="@+id/is_vintage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="Is vintage" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
 
             <CheckBox
                 android:layout_marginTop="10dp"
@@ -154,7 +184,8 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose radius of area to display toys (in km)(0-1000)" />
+                android:layout_marginLeft="10dp"
+                android:text="Choose radius of area to display toys\n(0-1000km)" />
 
 
         </LinearLayout>
@@ -162,19 +193,30 @@
             android:id="@+id/seekBarRadius"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="1000" />
+            android:max="1000"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:id="@+id/radius_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0" />
+            android:text="0"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
         <Button
-            android:layout_marginTop="30dp"
             android:id="@+id/confirm_filtr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Filtr" />
+            android:layout_marginTop="30dp"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="casual"
+            android:text="Filtr"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"/>
 
 
     </LinearLayout>
