@@ -20,17 +20,21 @@ public interface UserService {
     @POST("register")
     Call<Void> registerParent(@Header("Authorization") byte[] message);
 
-    @POST("child")
-    Call<Void> registerChild(@Body String message);
+    @POST("authenticate")
+    Call<JwtResponse> login(@Header("Authorization") byte[] message);
 
     @GET("child")
     Call<List<Child>> getChild();
 
-    @POST("authenticate")
-    Call<JwtResponse> login(@Header("Authorization") byte[] message);
-
     @GET("adult/suggestion")
     Call<List<SuggestedToy>> getSuggestion();
+
+    @POST("child")
+    Call<Void> registerChild(@Body String message);
+
+
+
+
 
     @GET("child/want")
     Call<List<Toy>> getMySuggestion();

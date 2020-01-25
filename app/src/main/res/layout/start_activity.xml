@@ -3,21 +3,30 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_weight="1"
+        android:text="TextView" />
+
     <ImageButton
         android:id="@+id/parent_button"
         android:layout_width="match_parent"
-        android:layout_height="432dp"
+        android:layout_height="583dp"
         android:layout_weight="1"
-        android:text="@string/parent_button_name"
+        android:background="@color/colorPrimaryDark"
         android:contentDescription="@string/todo"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:text="@string/parent_button_name" />
 
     <ImageButton
         android:id="@+id/child_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="@string/child_button_name"
+        android:background="@color/colorPrimaryDark"
         android:contentDescription="TODO"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:text="@string/child_button_name" />
 </LinearLayout>

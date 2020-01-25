@@ -110,30 +110,31 @@ public class DashboardFragment extends Fragment  implements LocationSource.OnLoc
 //        toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
 //        toys.setAdapter(itemArrayAdapter);
         ///
-        ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        Call<List<Toy>> call = toyService.getToys(filterDTO);
-        call.enqueue(new Callback<List<Toy>>() {
-            @Override
-            public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
-                if (response.isSuccessful()) {
-                    download.clear();
-                    for (Toy t:response.body())
-                        download.add(t);
-                    ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
-                    toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    toys.setItemAnimator(new DefaultItemAnimator());
-                    toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-                    toys.setAdapter(itemArrayAdapter);
+ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+Call<List<Toy>> call = toyService.getToys(filterDTO);
+call.enqueue(new Callback<List<Toy>>() {
+    @Override
+    public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
+        if (response.isSuccessful()) {
+            download.clear();
+            for (Toy t:response.body())
+                download.add(t);
+            ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, download);
+            toys.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            toys.setItemAnimator(new DefaultItemAnimator());
+            toys.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+            toys.setAdapter(itemArrayAdapter);
 
-                } else
-                    Toast.makeText(view.getContext(), "Error in GET toys \nToken"+ServiceGenerator.bearerToken, Toast.LENGTH_SHORT).show();
-            }
+        }
+        else
+            Toast.makeText(view.getContext(), "Error in GET toys ", Toast.LENGTH_SHORT).show();
+    }
 
-            @Override
-            public void onFailure(Call<List<Toy>> call, Throwable t) {
-                Toast.makeText(view.getContext(), "FAILURE Error in GET toys ", Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void onFailure(Call<List<Toy>> call, Throwable t) {
+        Toast.makeText(view.getContext(), "FAILURE Error in GET toys ", Toast.LENGTH_SHORT).show();
+    }
+});
 
 
     }

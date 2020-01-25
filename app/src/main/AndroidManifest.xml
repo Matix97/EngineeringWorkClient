@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -16,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
+      <!--  <service
             android:name=".MyFirebaseInstanceIDService"
             android:enabled="false"
-            android:exported="false"></service>
+            android:exported="false"></service>-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -62,46 +63,47 @@
             android:name=".ParentLoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+            />
         <activity
             android:name=".ParentRegisterActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+/>
         <activity
             android:name=".ToyActivityParent"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+           />
         <activity
             android:name=".AddToyActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+            />
         <activity
             android:name=".child.ToyActivityChild"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+            />
         <activity
             android:name=".RentalToyActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+             />
         <activity
             android:name=".ChildSettings"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+            />
         <activity
             android:name=".child.SuggestedToys"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/theme" />
+            />
 <!--        to notification -->
         <service
             android:name="NotificationService"
-
+            android:enabled="true"
+            android:exported="true"
             >
         </service>
 

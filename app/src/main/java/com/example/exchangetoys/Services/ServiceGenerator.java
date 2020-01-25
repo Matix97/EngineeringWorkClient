@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "http://9f1880e6.ngrok.io ";
+    public static final String API_BASE_URL = "http://1de47ef9.ngrok.io";
 
     public static String bearerToken;
     public static String role;
@@ -30,7 +30,7 @@ public class ServiceGenerator {
     }
 
     public static <S> S createService(Class<S> serviceClass, final String authToken) {
-        if (!TextUtils.isEmpty(authToken)) {
+                if (!TextUtils.isEmpty(authToken)) {
             AuthenticationInterceptor interceptor = new AuthenticationInterceptor(authToken);
 
             if (!httpClient.interceptors().contains(interceptor)) {

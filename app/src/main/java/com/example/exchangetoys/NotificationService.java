@@ -1,5 +1,6 @@
 package com.example.exchangetoys;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -121,6 +122,18 @@ public class NotificationService extends Service {
         };
 
         timer.schedule(doAsynchronousTask, 0, 100000);// execute in every 100 s
+
+        createNotificationChannel();
+        Intent notificationIntent = new Intent(this, StartActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Foreground Service")
+                .setContentText("sdfsdfsdfsdfsdfsdfsdfsdfsdfsdf")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentIntent(pendingIntent)
+                .build();
+        startForeground(1, notification);
         return Service.START_STICKY;
     }
 
