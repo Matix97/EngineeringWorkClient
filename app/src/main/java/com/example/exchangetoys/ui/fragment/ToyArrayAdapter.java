@@ -50,8 +50,8 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
     public void onBindViewHolder(final ToyArrayAdapter.ViewHolder holder, final int listPosition) {
         TextView toyName = holder.toyName;
         toyName.setText(itemList.get(listPosition).getToy_name());
-        TextView toyInfo = holder.toyInfo;
-        toyInfo.setText(itemList.get(listPosition).getToy_description());
+       // TextView toyInfo = holder.toyInfo;
+       // toyInfo.setText(itemList.get(listPosition).getToy_description());
         ImageView imageView = holder.toyImage;
         holder.toy=itemList.get(listPosition);
         if (itemList.get(listPosition).getToy_photos() != null && itemList.get(listPosition).getToy_photos() != "")
@@ -70,7 +70,7 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
             super(itemView);
             itemView.setOnClickListener(this);
             toyName = itemView.findViewById(R.id.toyName);
-            toyInfo = itemView.findViewById(R.id.toySomeInfo);
+            //toyInfo = itemView.findViewById(R.id.toySomeInfo);
             toyImage = itemView.findViewById(R.id.imageViewToy);
             //   toyButton = itemView.findViewById(R.id.buttonToyAction);
         }
