@@ -37,16 +37,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
-        android:text="@string/toy_name" />
+        android:fontFamily="casual"
+        android:text="@string/toy_name"
+        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/toySomeInfo"
-        android:layout_width="61dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toyName"
-        android:layout_alignEnd="@+id/toyName"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="0dp"
-        android:text="@string/toy_some_info" />
+
 
 </RelativeLayout>

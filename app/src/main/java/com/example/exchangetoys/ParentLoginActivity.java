@@ -40,10 +40,7 @@ public class ParentLoginActivity extends Activity {
         password = findViewById(R.id.login_password_child);
         this.userService = ServiceGenerator.createService(UserService.class);
         loginButton.setOnClickListener(v -> {
-            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
-            i.putExtra("token",ServiceGenerator.bearerToken);
-            //  ParentLoginActivity.this.startService(i);
-            ContextCompat.startForegroundService(ParentLoginActivity.this, i);
+
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
             try {
 
@@ -61,10 +58,10 @@ public class ParentLoginActivity extends Activity {
                         if (response.isSuccessful()) {
                             ServiceGenerator.role="adult";
                             ServiceGenerator.bearerToken = response.body().getJwttoken();
-//                            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
-//                            i.putExtra("token",ServiceGenerator.bearerToken);
-//                          //  ParentLoginActivity.this.startService(i);
-//                            ContextCompat.startForegroundService(ParentLoginActivity.this, i);
+                            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
+                            i.putExtra("token",ServiceGenerator.bearerToken);
+                          //  ParentLoginActivity.this.startService(i);
+                            ContextCompat.startForegroundService(ParentLoginActivity.this, i);
                             Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
                             startActivity(intent);

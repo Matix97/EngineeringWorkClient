@@ -1,6 +1,7 @@
 package com.example.exchangetoys;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -30,13 +31,16 @@ import retrofit2.Response;
 public class ChildSettings  extends Activity {
 
 
-    private TextView childName, childRadius,childTags, childAgeRange;
+    private TextView childName, childRadius, childAgeRange;
     private Button confirm;
     private SeekBar seekRadiusBar;
     private RecyclerView suggestedToy;
     private int seekBarValue;
     private ArrayList<Toy> toysData;
     private Child child;
+    private TextView suggestionInfo;
+    private SeekBar  suggestion;
+    private Integer suggestionValue;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +52,36 @@ if(toysData==null)
         System.out.println("MY_TAG: Settings: "+child);
         childName=findViewById(R.id.child_name_text_view);
         childRadius=findViewById(R.id.radius_info);
-        childTags=findViewById(R.id.chosen_tags);
+
         childAgeRange=findViewById(R.id.chosen_age_range);
         confirm=findViewById(R.id.save_child_settings);
         seekRadiusBar=findViewById(R.id.seekBar);
         suggestedToy=findViewById(R.id.suggested_toy_view);
         childName.setText(child.getChild_name());
+        suggestionInfo = findViewById(R.id.suggestion_info);
+        suggestion = findViewById(R.id.seekBarSuggestion);
+        suggestionValue=child.getAmountOfSuggesstedToy();
+        suggestion.setProgress(suggestionValue);
+
+        suggestionInfo.setText("Amount of toys: "+suggestionValue);
+        suggestion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                suggestionValue=progress;
+                suggestionInfo.setText("Amount of toys: "+suggestionValue);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         seekBarValue=child.getChild_radius_area();
         seekRadiusBar.setProgress(seekBarValue);
 
@@ -73,27 +101,17 @@ if(toysData==null)
             public void onStopTrackingTouch(SeekBar seekBar) {      }
         });
         confirm.setOnClickListener(v -> sandSaveRequest());
-        childTags.setText(child.getAvailableTag());
+
         childAgeRange.setText(child.getAvailableAge());
-//        SpannableString spannableString = new SpannableString(childTags.getText().toString());
-//        ClickableSpan clickableSpan1 = new ClickableSpan() {
-//            @Override
-//            public void onClick(View widget) {
-//                setTagsAction();
-//            }
-//        };
-//        spannableString.setSpan(clickableSpan1, 1,childTags.getText().toString().length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         childAgeRange.setOnClickListener(v -> setAgeAction());
-        childTags.setOnClickListener(v -> setTagsAction());
+
 
         downloadSuggestion(child);
 
     }
 
-    private void setTagsAction() {
-        TagsOrAge tagsOrAge=new TagsOrAge();
-        tagsOrAge.showPopupWindow(confirm.getRootView(),childTags.getText().toString(),"");
-    }
+
 
     private void setAgeAction() {
 
@@ -104,18 +122,27 @@ if(toysData==null)
         ChildUpdateDTO childUpdateDTO = new ChildUpdateDTO();
         childUpdateDTO.setChild_login(child.getChild_login());
         childUpdateDTO.setAvailableAge(childAgeRange.getText().toString());
-        childUpdateDTO.setAvailableTag(childTags.getText().toString());
+        childUpdateDTO.setAvailableTag("soft;funny;scary;groupToy;collector;boys;girls");
         childUpdateDTO.setChild_radius_area(seekBarValue);
+        childUpdateDTO.setAmount(suggestionValue);
         Call<Child> call = userService.updateChild(childUpdateDTO);
         call.enqueue(new Callback<Child>() {
             @Override
             public void onResponse(Call<Child> call, Response<Child> response) {
-
+                new AlertDialog.Builder(ChildSettings.this)
+                        .setTitle("Success")
+                        .setMessage("Settings were changing\n" +response.body().toString())
+                        .setNegativeButton(android.R.string.ok, null)
+                        .show();
             }
 
             @Override
             public void onFailure(Call<Child> call, Throwable t) {
-
+                new AlertDialog.Builder(ChildSettings.this)
+                        .setTitle("Warning")
+                        .setMessage("Something go wrong")
+                        .setNegativeButton(android.R.string.ok, null)
+                        .show();
             }
         });
     }

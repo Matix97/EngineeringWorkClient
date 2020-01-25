@@ -7,6 +7,7 @@ import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -36,7 +37,7 @@ public interface ToyService {
     Call<Void> confirmRent(@Body RentalDTO rental);
 
     @POST("toy/want")
-    Call<Void> iWantAToy(@Body Long todId);
+    Call<ResponseBody> iWantAToy(@Body Long todId);
 
     @POST("toy/rent")
     Call<Void> rentToy(@Body RentalDTO rentalDTO);

@@ -26,13 +26,14 @@ public interface UserService {
     @GET("child")
     Call<List<Child>> getChild();
 
-    @GET("adult/suggestion")
+    @GET("adults/suggestion")
     Call<List<SuggestedToy>> getSuggestion();
 
     @POST("child")
     Call<Void> registerChild(@Body String message);
 
-
+    @GET("child/my-data")
+    Call<Child> getMyChildData();
 
 
 
