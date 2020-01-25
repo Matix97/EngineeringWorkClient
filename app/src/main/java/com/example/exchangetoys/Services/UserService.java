@@ -26,7 +26,7 @@ public interface UserService {
     @GET("child")
     Call<List<Child>> getChild();
 
-    @GET("adult/suggestion")
+    @GET("adults/suggestion")
     Call<List<SuggestedToy>> getSuggestion();
 
     @POST("child")
