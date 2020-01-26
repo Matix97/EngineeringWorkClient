@@ -14,7 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -26,7 +26,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,9 +64,9 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
     private UploadedPhotoURL uploadedPhotoURLs;
     private static final int REQ_PERMISSION = 0;
 
-    private EditText money_text;
-    private Spinner typ_advert_spinner;
-    private ArrayAdapter mAdapter;
+ //   private EditText money_text;
+ //   private Spinner typ_advert_spinner;
+   // private ArrayAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,8 +81,8 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
         isVintage = findViewById(R.id.is_vintage2);
         makePhoto = findViewById(R.id.make_photo_button);
         confirm = findViewById(R.id.confirm_adding_toy);
-        money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
-        typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
+     //   money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
+     //   typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
 
 
 
@@ -102,7 +101,7 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photos.setLayoutManager(linearLayoutManager);
         photos.setItemAnimator(new DefaultItemAnimator());
-        photos.addItemDecoration(new DividerItemDecoration(AddToyActivity.this, DividerItemDecoration.HORIZONTAL));
+       // photos.addItemDecoration(new DividerItemDecoration(AddToyActivity.this, DividerItemDecoration.HORIZONTAL));
         photos.setAdapter(itemArrayAdapter);
 
 
@@ -161,6 +160,10 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
             if (imgFile.exists()) {
                 Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
                 itemList.add(new ImageAdapter(myBitmap));
+              ViewGroup.LayoutParams layoutParams =photos.getLayoutParams();
+              layoutParams.height=300;
+              photos.setLayoutParams(layoutParams);
+
                 try {
 
                     UploadImage.execute(myBitmap, this);
@@ -191,9 +194,10 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
             addToyDTO.setIfVintage(isVintage.isChecked());
             addToyDTO.setToysFactoryName("");
             addToyDTO.setPhotosURLs(photoURLS);
-            addToyDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
-            if(typ_advert_spinner.getSelectedItem().toString().equals("moneyTimeRental") || typ_advert_spinner.getSelectedItem().toString().equals("moneyCommitment"))
-                addToyDTO.setMoney(Double.valueOf(money_text.getText().toString()));
+            //addToyDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
+            addToyDTO.setTypOfTransaction("moneyTimeRental");
+           // if(typ_advert_spinner.getSelectedItem().toString().equals("moneyTimeRental") || typ_advert_spinner.getSelectedItem().toString().equals("moneyCommitment"))
+             //   addToyDTO.setMoney(Double.valueOf(money_text.getText().toString()));
             //
             Criteria kr = new Criteria();
             LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);

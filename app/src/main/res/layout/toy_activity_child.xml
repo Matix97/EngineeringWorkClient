@@ -38,8 +38,12 @@
     <TextView
         android:id="@+id/toy_activity_description"
         android:layout_width="match_parent"
-        android:layout_height="136dp"
-        android:text="TextView" />
+        android:layout_height="120dp"
+        android:text="TextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"/>
 
     <TextView
         android:id="@+id/didacticIS"
@@ -63,13 +67,15 @@
         android:textSize="18sp"
         android:textStyle="italic"
         android:fontFamily="serif"
-        android:paddingTop="10dp"/>
+        android:paddingTop="10dp"
+        />
 
     <Button
         android:paddingTop="10dp"
         android:id="@+id/iWantThisToy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="@android:color/holo_blue_light"
         android:fontFamily="casual"
         android:text="I want this toy !!!" />

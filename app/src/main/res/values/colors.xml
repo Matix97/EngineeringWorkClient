@@ -6,4 +6,5 @@
     <color name="background">#33b5e5</color>
     <color name="orange">#33b5e5</color>
     <color name="backTransparency">#F2add8e6</color>
+    <color name="lightBack">#ccadd8e6</color>
 </resources>

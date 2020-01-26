@@ -11,6 +11,7 @@
     android:layout_height="match_parent">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/toy_activity_image"
@@ -19,18 +20,60 @@
         android:layout_height="240dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="55dp" />
-
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
     <TextView
         android:id="@+id/toy_activity_name"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:text="TextView" />
+        android:fontFamily="casual"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_purple"
+        android:textSize="24sp" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <TextView
         android:id="@+id/toy_activity_description"
         android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:text="TextView" />
+        android:layout_height="120dp"
+        android:text="TextView"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp"/>
+
+    <TextView
+        android:id="@+id/didacticIS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="DIDACTIC"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/vintageIS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VINTAGE"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:fontFamily="serif"
+        android:paddingTop="10dp"/>
 
     <LinearLayout
 
@@ -45,7 +88,10 @@
             android:layout_weight="0.5"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:text="Contact by Phone" />
+            android:layout_margin="10dp"
+            android:text="Contact by Phone"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="casual"/>
 
         <Button
             android:id="@+id/contactByEmial"
@@ -55,7 +101,10 @@
             android:layout_weight="0.5"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
-            android:text="Contact by Email " />
+            android:layout_margin="10dp"
+            android:text="Contact by Email "
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="casual"/>
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

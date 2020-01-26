@@ -133,7 +133,9 @@
         android:text="0"
         android:layout_marginBottom="20dp"
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
 
 
 
@@ -157,10 +159,13 @@
         android:id="@+id/suggestion_info"
         android:layout_width="2000dp"
         android:layout_height="wrap_content"
-        android:text="0"
         android:layout_marginBottom="20dp"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"
+        android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"/>
+        android:text="0"
+     />
 
     <TextView
         android:id="@+id/asdas"

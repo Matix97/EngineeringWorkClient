@@ -7,65 +7,65 @@
     android:fillViewport="false">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="Typ of advert" />
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="@color/lightBack">
 
-    <Spinner
-        android:id="@+id/typ_advert_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:entries="@array/advert_type"
-        android:spinnerMode="dialog" />
-    <TextView
-        android:id="@+id/asdasdad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Money: " />
-
-    <EditText
-        android:id="@+id/money_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="" />
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toy name" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"
+        android:text="Toy name"
+
+       />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Toy's Name" />
+        android:hint="Toy's Name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView9"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toy description" />
+        android:text="Toy description"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="151dp"
         android:ems="10"
+        android:hint="Toy's Description"
         android:gravity="start|top"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:inputType="textMultiLine" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:paddingTop="10dp"
-        android:text="@string/age_prompt" />
+        android:text="@string/age_prompt"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
 
     <Spinner
         android:id="@+id/age_spinner2"
@@ -73,13 +73,20 @@
         android:layout_height="40dp"
         android:entries="@array/age_category"
         android:prompt="@string/age_prompt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:spinnerMode="dialog" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="@string/category_prompt" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/category_prompt"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
 
     <Spinner
         android:id="@+id/category_spinner2"
@@ -87,19 +94,28 @@
         android:layout_height="40dp"
         android:entries="@array/spinner_category"
         android:prompt="@string/category_prompt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:spinnerMode="dialog" />
     <!--tags-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="casual"
         android:paddingTop="10dp"
-        android:text="@string/tag_prompt" />
+        android:text="@string/tag_prompt"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_light" />
 
     <Spinner
         android:id="@+id/tag_spinner2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:entries="@array/tag_category"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:prompt="@string/tag_prompt"
         android:spinnerMode="dialog" />
 
@@ -125,20 +141,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Make photo" />
-
+            android:text="Make photo"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_blue_light"
+            android:fontFamily="casual"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/uploaded_photos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+ />
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="casual"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:text="Typ of advert"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@android:color/holo_red_light" />-->
+
+<!--    <Spinner-->
+<!--        android:id="@+id/typ_advert_spinner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:entries="@array/advert_type"-->
+<!--        android:spinnerMode="dialog" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/asdasdad"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="casual"-->
+<!--        android:text="Money: "-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@android:color/holo_red_light" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/money_text"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="numberDecimal"-->
+<!--        android:text=""-->
+<!--        android:textAlignment="center" />-->
 
     <Button
         android:id="@+id/confirm_adding_toy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create advert" />
+        android:text="Create advert"
+        android:layout_margin="10dp"
+        android:background="@android:color/holo_blue_light"
+        android:fontFamily="casual"/>
 
 </LinearLayout>
 </ScrollView>

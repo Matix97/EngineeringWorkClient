@@ -77,9 +77,11 @@
         android:layout_width="2000dp"
         android:layout_height="wrap_content"
         android:text="0"
-
+        android:paddingBottom="20dp"
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
@@ -101,9 +103,11 @@
         android:layout_width="2000dp"
         android:layout_height="wrap_content"
         android:text="0"
-android:paddingTop="10dp"
+android:paddingBottom="20dp"
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp"
+        android:fontFamily="casual"
+        android:textColor="@android:color/holo_red_light"/>
 
     <TextView
         android:id="@+id/asdas"

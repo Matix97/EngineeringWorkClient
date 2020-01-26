@@ -30,7 +30,7 @@ import static android.content.ContentValues.TAG;
 
 public class ToyActivityParent extends Activity {
     private RecyclerView images;
-    private TextView name, description;
+    private TextView name, description,vintage,didactic;
     private Button contactByEmail, contactByPhone;
 
 
@@ -46,6 +46,10 @@ public class ToyActivityParent extends Activity {
         name.setText(toy.getToy_name());
         description.setText(toy.getToy_description());
         contactByPhone = findViewById(R.id.contactByPhone);
+        vintage=findViewById(R.id.vintageIS);
+        didactic=findViewById(R.id.didacticIS);
+        if(toy.getToy_vintage()==0) vintage.setText("");
+        if(toy.getToy_didactic()==0) didactic.setText("");
         if(toy.getToy_owner_phone_number()==null) contactByPhone.setEnabled(false);
         contactByEmail = findViewById(R.id.contactByEmial);
         contactByPhone.setOnClickListener(v -> phoneHandler(toy.getToy_owner_phone_number()));
