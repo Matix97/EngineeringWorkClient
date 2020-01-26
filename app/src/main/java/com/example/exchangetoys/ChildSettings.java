@@ -104,11 +104,14 @@ if(toysData==null)
         confirm.setOnClickListener(v -> sandSaveRequest());
 
         ArrayList<Item> items = new ArrayList<>();
-        items.add(Item.builder().name("0-3").value(true).build());
-        items.add(Item.builder().name("4-7").value(true).build());
-        items.add(Item.builder().name("8-12").value(true).build());
-        items.add(Item.builder().name("13-15").value(true).build());
-        items.add(Item.builder().name("16-100").value(true).build());
+        for (String s: "0-3;4-7;8-12;13-15;16-100".split(";")) {
+            if(child.getAvailableAge().contains(s))
+                items.add(Item.builder().name(s).value(true).build());
+            else
+                items.add(Item.builder().name(s).value(false).build());
+
+        }
+
 
         mySpinner =  findViewById(R.id.spn_items);
 
@@ -117,8 +120,8 @@ if(toysData==null)
         for (String s:child.getAvailableAge().split(";")  ) {
             selectedItems.add(Item.builder().name(s).value(true).build());
         }
-        mySpinner.setItems(selectedItems);
-        mySpinner.setSelection(items);
+        mySpinner.setItems(items);
+        mySpinner.setSelection(selectedItems);
 
 
         downloadSuggestion(child);
@@ -127,9 +130,7 @@ if(toysData==null)
 
 
 
-    private void setAgeAction() {
 
-           }
 
     private void sandSaveRequest() {
         UserService userService = ServiceGenerator.createAuthorizedService(UserService.class);

@@ -63,6 +63,13 @@ public class SettingsFragment extends Fragment {
         addChildPopUp.showPopupWindow(root);
     }
 
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        downloadChild();
+    }
+
     private void downloadChild() {
 
         UserService toyService = ServiceGenerator.createAuthorizedService(UserService.class);
