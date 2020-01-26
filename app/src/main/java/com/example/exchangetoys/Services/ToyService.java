@@ -45,4 +45,7 @@ public interface ToyService {
     @DELETE("toy/want/{id}")
     Call<Long> deleteSuggestion(@Path("id") Long itemId);
 
+    @DELETE("toy/{id}")
+    Call<Void> deleteToy(@Path("id") Long itemId);
+
 }

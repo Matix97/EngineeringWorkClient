@@ -1,5 +1,7 @@
-package com.example.exchangetoys.child.suggest;
+package com.example.exchangetoys.ui.home;
 
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.Tools.DownloadImageTask;
+import com.example.exchangetoys.child.ToyActivityChild;
 
 import java.util.ArrayList;
 
@@ -22,14 +25,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHolder> {
+public class TorDeleteAdvert extends RecyclerView.Adapter<TorDeleteAdvert.ViewHolder> {
 
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
     public ArrayList<Toy> itemList;
 
     // Constructor of the class
-    public ToyArrayAdapter(int layoutId, ArrayList<Toy> itemList) {
+    public TorDeleteAdvert(int layoutId, ArrayList<Toy> itemList) {
         listItemLayout = layoutId;
         this.itemList = itemList;
     }
@@ -43,19 +46,19 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
 
     // specify the row layout file and click for each row
     @Override
-    public ToyArrayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TorDeleteAdvert.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(listItemLayout, parent, false);
-        ToyArrayAdapter.ViewHolder myViewHolder = new ToyArrayAdapter.ViewHolder(view);
+       TorDeleteAdvert.ViewHolder myViewHolder = new TorDeleteAdvert.ViewHolder(view);
         return myViewHolder;
     }
 
     // load data in each row element
     @Override
-    public void onBindViewHolder(final ToyArrayAdapter.ViewHolder holder, final int listPosition) {
+    public void onBindViewHolder(final TorDeleteAdvert.ViewHolder holder, final int listPosition) {
         TextView toyName = holder.toyName;
         toyName.setText(itemList.get(listPosition).getToy_name());
-     //   TextView toyInfo = holder.toyInfo;
-       // toyInfo.setText(itemList.get(listPosition).getToy_description());
+        //   TextView toyInfo = holder.toyInfo;
+        // toyInfo.setText(itemList.get(listPosition).getToy_description());
         ImageView imageView = holder.toyImage;
         holder.toy=itemList.get(listPosition);
         if (itemList.get(listPosition).getToy_photos() != null && itemList.get(listPosition).getToy_photos() != "")
@@ -73,20 +76,19 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
     }
     private void deleteRequest(Toy toy) {
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
-        Call<Long> call = toyService.deleteSuggestion(toy.getToy_id());
-        call.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
-                if (response.isSuccessful()){
+       Call<Void> call =toyService.deleteToy(toy.getToy_id());
+       call.enqueue(new Callback<Void>() {
+           @Override
+           public void onResponse(Call<Void> call, Response<Void> response) {
 
-                }
-            }
+           }
 
-            @Override
-            public void onFailure(Call<Long> call, Throwable t) {
+           @Override
+           public void onFailure(Call<Void> call, Throwable t) {
 
-            }
-        });
+           }
+       });
+
     }
 
     // Static inner class to initialize the views of rows
@@ -101,7 +103,7 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
             super(itemView);
             itemView.setOnClickListener(this);
             toyName = itemView.findViewById(R.id.toyName);
-          //  toyInfo = itemView.findViewById(R.id.toySomeInfo);
+            //  toyInfo = itemView.findViewById(R.id.toySomeInfo);
             toyImage = itemView.findViewById(R.id.imageViewToy);
             delete = itemView.findViewById(R.id.delete_suggestion);
 
@@ -112,11 +114,11 @@ public class ToyArrayAdapter extends RecyclerView.Adapter<ToyArrayAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-//            if(ServiceGenerator.role.equals("child")){
-//                Intent intent = new Intent(view.getContext(), ToyActivityChild.class);
-//                intent.putExtra("toy", toy);
-//                view.getContext().startActivity(intent);
-//            }
+            if(ServiceGenerator.role.equals("child")){
+                Intent intent = new Intent(view.getContext(), ToyActivityChild.class);
+                intent.putExtra("toy", toy);
+                view.getContext().startActivity(intent);
+            }
 
         }
     }

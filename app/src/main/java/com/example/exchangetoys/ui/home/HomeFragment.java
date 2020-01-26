@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         my_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
         my_toys.setAdapter(itemArrayAdapter);
 
-        ToyArrayAdapter itemArrayAdapter2 = new ToyArrayAdapter(R.layout.toy_item, myToysData);
+        TorDeleteAdvert itemArrayAdapter2 = new TorDeleteAdvert(R.layout.toy_delete_advert, myToysData);
         rented_toys = root.findViewById(R.id.my_recycle_view_my_toy);
         rented_toys.setLayoutManager(new LinearLayoutManager(root.getContext()));
         rented_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -84,7 +84,46 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+    private void download(String which, TorDeleteAdvert toyArrayAdapter) {//"my" or "rented"
+        ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+        Call<List<Toy>> call = null;
+        if (which.equals("my"))
+            call = toyService.getYourToysAdvert();
+        else if (which.equals("rented"))
+            call = toyService.getYourRentedToys();
+        else
+            return;
 
+        call.enqueue(new Callback<List<Toy>>() {
+            @Override
+            public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
+                if (response.isSuccessful()) {//todo create list
+                    if (which.equals("my")) {
+                        myToysData.clear();
+                        for (Toy t : response.body()) {
+                            myToysData.add(t);
+                        }
+                        my_toys.setAdapter(toyArrayAdapter);
+                    } else if (which.equals("rented")) {
+                        rentedToysData.clear();
+                        for (Toy t : response.body()) {
+                            rentedToysData.add(t);
+                        }
+                        rented_toys.setAdapter(toyArrayAdapter);
+                    }
+
+
+                } else {
+                    Toast.makeText(root.getContext(), "Error in GET toy " + which, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Toy>> call, Throwable t) {
+                Toast.makeText(root.getContext(), "FAILURE Error in GET toy " + which, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void download(String which, ToyArrayAdapter toyArrayAdapter) {//"my" or "rented"
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = null;
