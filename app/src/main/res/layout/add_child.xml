@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="false">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backTransparency"
@@ -162,9 +162,23 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"/>
 
+    <TextView
+        android:id="@+id/asdas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select available age category for child"
 
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"/>
 
-
+    <com.example.exchangetoys.MultiSelectionSpinner
+        android:id="@+id/spn_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:layout_marginBottom="20dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp" />
 
 
 
@@ -179,5 +193,8 @@
         android:background="@android:color/holo_blue_light"
         android:fontFamily="casual"
         android:text="@string/register" />
+
+
+
 </LinearLayout>
 </ScrollView>

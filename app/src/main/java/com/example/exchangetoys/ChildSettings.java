@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class ChildSettings  extends Activity {
 
 
-    private TextView childName, childRadius, childAgeRange;
+    private TextView childName, childRadius;
     private Button confirm;
     private SeekBar seekRadiusBar;
     private RecyclerView suggestedToy;
@@ -41,6 +41,7 @@ public class ChildSettings  extends Activity {
     private TextView suggestionInfo;
     private SeekBar  suggestion;
     private Integer suggestionValue;
+    MultiSelectionSpinner mySpinner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ if(toysData==null)
         childName=findViewById(R.id.child_name_text_view);
         childRadius=findViewById(R.id.radius_info);
 
-        childAgeRange=findViewById(R.id.chosen_age_range);
+
         confirm=findViewById(R.id.save_child_settings);
         seekRadiusBar=findViewById(R.id.seekBar);
         suggestedToy=findViewById(R.id.suggested_toy_view);
@@ -102,9 +103,22 @@ if(toysData==null)
         });
         confirm.setOnClickListener(v -> sandSaveRequest());
 
-        childAgeRange.setText(child.getAvailableAge());
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(Item.builder().name("0-3").value(true).build());
+        items.add(Item.builder().name("4-7").value(true).build());
+        items.add(Item.builder().name("8-12").value(true).build());
+        items.add(Item.builder().name("13-15").value(true).build());
+        items.add(Item.builder().name("16-100").value(true).build());
 
-        childAgeRange.setOnClickListener(v -> setAgeAction());
+        mySpinner =  findViewById(R.id.spn_items);
+
+
+        ArrayList<Item> selectedItems = new ArrayList<>();
+        for (String s:child.getAvailableAge().split(";")  ) {
+            selectedItems.add(Item.builder().name(s).value(true).build());
+        }
+        mySpinner.setItems(selectedItems);
+        mySpinner.setSelection(items);
 
 
         downloadSuggestion(child);
@@ -121,7 +135,13 @@ if(toysData==null)
         UserService userService = ServiceGenerator.createAuthorizedService(UserService.class);
         ChildUpdateDTO childUpdateDTO = new ChildUpdateDTO();
         childUpdateDTO.setChild_login(child.getChild_login());
-        childUpdateDTO.setAvailableAge(childAgeRange.getText().toString());
+        ArrayList<Item> selectedItems = mySpinner.getSelectedItems();
+        StringBuilder stringBuilder =new StringBuilder();
+        for (Item i: selectedItems ) {
+            stringBuilder.append(i.getName());
+            stringBuilder.append(";");
+        }
+        childUpdateDTO.setAvailableAge(stringBuilder.toString());
         childUpdateDTO.setAvailableTag("soft;funny;scary;groupToy;collector;boys;girls");
         childUpdateDTO.setChild_radius_area(seekBarValue);
         childUpdateDTO.setAmount(suggestionValue);

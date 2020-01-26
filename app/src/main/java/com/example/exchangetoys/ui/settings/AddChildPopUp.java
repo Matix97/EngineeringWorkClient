@@ -12,9 +12,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.exchangetoys.Item;
+import com.example.exchangetoys.MultiSelectionSpinner;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +30,7 @@ public class AddChildPopUp {
     private TextView radius_info, suggestionInfo;
     private SeekBar radius, suggestion;
     private Integer seekBarValue, suggestionValue;
+    MultiSelectionSpinner mySpinner;
 
     //PopupWindow display method
     private View view;
@@ -125,9 +130,35 @@ public class AddChildPopUp {
 //                return true;
 //            }
 //        });
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(Item.builder().name("0-3").value(true).build());
+        items.add(Item.builder().name("4-7").value(true).build());
+        items.add(Item.builder().name("8-12").value(false).build());
+        items.add(Item.builder().name("13-15").value(false).build());
+        items.add(Item.builder().name("16-100").value(false).build());
+
+        mySpinner =  popupView.findViewById(R.id.spn_items);
+        mySpinner.setItems(items);
+
+        ArrayList<Item> selectedItems = new ArrayList<>();
+        selectedItems.add(Item.builder().name("0-3").value(true).build());
+        selectedItems.add(Item.builder().name("4-7").value(true).build());
+        selectedItems.add(Item.builder().name("8-12").value(false).build());
+        selectedItems.add(Item.builder().name("13-15").value(false).build());
+        selectedItems.add(Item.builder().name("16-100").value(false).build());
+
+        mySpinner.setSelection(selectedItems);
+
+
+
+
+
+
+
     }
 
     private void tryRegister() {
+
         if (ifAllRequireFieldAreFill()) {
             try {
                 Integer.parseInt(childAge.getText().toString());
@@ -164,9 +195,15 @@ public class AddChildPopUp {
     }
 
     private void registerPostHandler() {
+        ArrayList<Item> selectedItems = mySpinner.getSelectedItems();
+        StringBuilder stringBuilder =new StringBuilder();
+        for (Item i: selectedItems ) {
+           stringBuilder.append(i.getName());
+           stringBuilder.append(";");
+        }
         String messageToEncrypt = name.getText().toString() + ">" + login.getText().toString()
                 + ">" + password.getText().toString() + ">" + childAge.getText().toString()
-                + ">" + seekBarValue.toString() + ">" + "0-3;4-7;8-12;13-15;16-100" + ">" + suggestionValue      ;
+                + ">" + seekBarValue.toString() + ">" + stringBuilder.toString() + ">" + suggestionValue      ;
 
         try {
 

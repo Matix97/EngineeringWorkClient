@@ -35,6 +35,7 @@ public class SettingsFragment extends Fragment {
     private static ArrayList<Child> childrenList;
     private FloatingActionButton addChildButton;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 

@@ -106,24 +106,22 @@ android:paddingTop="10dp"
         android:paddingLeft="10dp"/>
 
     <TextView
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:id="@+id/asdas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose age range for child(default is all)" />
-
-    <TextView
-        android:id="@+id/chosen_age_range"
+        android:text="Select available age category for child"
 
         android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:textSize="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        />
+        android:paddingLeft="10dp"/>
 
+    <com.example.exchangetoys.MultiSelectionSpinner
+        android:id="@+id/spn_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:layout_marginBottom="20dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp" />
     <Button
 
         android:layout_margin="10dp"

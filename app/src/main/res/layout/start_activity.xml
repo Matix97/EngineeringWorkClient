@@ -3,17 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_weight="1"
-        android:text="TextView" />
-
     <ImageButton
         android:id="@+id/parent_button"
         android:layout_width="match_parent"
-        android:layout_height="583dp"
+        android:layout_height="602dp"
         android:layout_weight="1"
         android:background="@color/colorPrimaryDark"
         android:contentDescription="@string/todo"

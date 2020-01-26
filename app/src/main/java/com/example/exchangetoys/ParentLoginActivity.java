@@ -39,6 +39,7 @@ public class ParentLoginActivity extends Activity {
         loginName = findViewById(R.id.login_name_child);
         password = findViewById(R.id.login_password_child);
         this.userService = ServiceGenerator.createService(UserService.class);
+
         loginButton.setOnClickListener(v -> {
 
             String messageToEncrypt = loginName.getText().toString() + ";" + password.getText().toString() + ";" + "adult";
