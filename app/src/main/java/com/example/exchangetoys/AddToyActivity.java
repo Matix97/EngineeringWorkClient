@@ -158,21 +158,23 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
         if (requestCode == 1) {
             File imgFile = pictureImagePath;
             if (imgFile.exists()) {
-                Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
-                itemList.add(new ImageAdapter(myBitmap));
-              ViewGroup.LayoutParams layoutParams =photos.getLayoutParams();
-              layoutParams.height=300;
-              photos.setLayoutParams(layoutParams);
-
                 try {
+                    Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
+                    itemList.add(new ImageAdapter(myBitmap));
+                    ViewGroup.LayoutParams layoutParams = photos.getLayoutParams();
+                    layoutParams.height = 300;
+                    photos.setLayoutParams(layoutParams);
+                    try {
 
-                    UploadImage.execute(myBitmap, this);
-                    UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
+                        UploadImage.execute(myBitmap, this);
+                        UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }catch (Exception e){
+
                 }
-
             }
         }
     }

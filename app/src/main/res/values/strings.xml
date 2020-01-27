@@ -6,7 +6,7 @@
     <string name="child_button_name">Dziecko</string>
     <string name="parent_button_name">Rodzic</string>
     <string name="todo">TODO</string>
-    <string name="your_child">Your child</string>
+    <string name="your_child">Your child:</string>
     <string name="toy_action">Rent</string>
     <string name="toy_name">name</string>
     <string name="toy_some_info">some_info</string>

@@ -9,7 +9,17 @@
     android:background="@color/backTransparency"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/child_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:padding="5dp"
+        android:text="Add Child"
 
+        android:textSize="32dp"
+        android:textStyle="bold|italic" />
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="267dp"
@@ -176,7 +186,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"/>
 
-    <com.example.exchangetoys.MultiSelectionSpinner
+    <com.example.exchangetoys.spinner.MultiSelectionSpinner
         android:id="@+id/spn_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

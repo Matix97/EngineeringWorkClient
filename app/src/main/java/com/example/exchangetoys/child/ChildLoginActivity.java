@@ -14,7 +14,6 @@ import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
-import com.example.exchangetoys.Tools.EncryptionTools;
 import com.example.exchangetoys.Tools.MediaManagerInitializer;
 
 import retrofit2.Call;
@@ -45,7 +44,7 @@ public class ChildLoginActivity extends Activity {
 //                startActivity(intent);
                 this.userService = ServiceGenerator.createService(UserService.class);
                 ServiceGenerator.bearerToken=null;
-                Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
+                Call<JwtResponse> call = userService.login(messageToEncrypt);
 
                 call.enqueue(new Callback<JwtResponse>() {
                     @Override

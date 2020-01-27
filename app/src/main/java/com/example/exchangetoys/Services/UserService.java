@@ -18,10 +18,10 @@ import retrofit2.http.POST;
 public interface UserService {
 
     @POST("register")
-    Call<Void> registerParent(@Header("Authorization") byte[] message);
+    Call<Void> registerParent(@Header("Authorization") String message);
 
     @POST("authenticate")
-    Call<JwtResponse> login(@Header("Authorization") byte[] message);
+    Call<JwtResponse> login(@Header("Authorization") String message);
 
     @GET("child")
     Call<List<Child>> getChild();

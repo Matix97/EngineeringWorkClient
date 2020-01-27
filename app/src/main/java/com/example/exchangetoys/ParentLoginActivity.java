@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat;
 import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
-import com.example.exchangetoys.Tools.EncryptionTools;
 import com.example.exchangetoys.Tools.MediaManagerInitializer;
+import com.example.exchangetoys.notification.ForegroundService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,7 +51,7 @@ public class ParentLoginActivity extends Activity {
 //                startActivity(intent);
                 this.userService = ServiceGenerator.createService(UserService.class);
                 ServiceGenerator.bearerToken=null;
-                Call<JwtResponse> call = userService.login(EncryptionTools.encrypt(messageToEncrypt));
+                Call<JwtResponse> call = userService.login(messageToEncrypt);
 
                 call.enqueue(new Callback<JwtResponse>() {
                     @Override
@@ -59,12 +59,16 @@ public class ParentLoginActivity extends Activity {
                         if (response.isSuccessful()) {
                             ServiceGenerator.role="adult";
                             ServiceGenerator.bearerToken = response.body().getJwttoken();
-                            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
-                            i.putExtra("token",ServiceGenerator.bearerToken);
-                          //  ParentLoginActivity.this.startService(i);
-                            ContextCompat.startForegroundService(ParentLoginActivity.this, i);
+//                            Intent i= new Intent(ParentLoginActivity.this, NotificationService.class);
+//                            i.putExtra("token",ServiceGenerator.bearerToken);
+//                          //  ParentLoginActivity.this.startService(i);
+//                            ContextCompat.startForegroundService(ParentLoginActivity.this, i);
+                            Intent serviceIntent = new Intent(ParentLoginActivity.this, ForegroundService.class);
+                            serviceIntent.putExtra("token",ServiceGenerator.bearerToken);
+                            ContextCompat.startForegroundService(ParentLoginActivity.this, serviceIntent);
                             Toast.makeText(ParentLoginActivity.this, "Login succeeded", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(ParentLoginActivity.this, ParentMainActivity.class);
+                            intent.putExtra("token",ServiceGenerator.bearerToken);
                             startActivity(intent);
 
                         } else

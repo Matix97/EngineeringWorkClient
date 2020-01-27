@@ -118,7 +118,7 @@ android:paddingBottom="20dp"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"/>
 
-    <com.example.exchangetoys.MultiSelectionSpinner
+    <com.example.exchangetoys.spinner.MultiSelectionSpinner
         android:id="@+id/spn_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

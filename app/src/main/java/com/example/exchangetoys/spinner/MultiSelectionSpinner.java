@@ -1,4 +1,4 @@
-package com.example.exchangetoys;
+package com.example.exchangetoys.spinner;
 
 import android.app.AlertDialog;
 import android.content.Context;

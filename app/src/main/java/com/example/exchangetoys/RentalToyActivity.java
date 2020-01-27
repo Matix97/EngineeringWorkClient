@@ -4,6 +4,7 @@ package com.example.exchangetoys;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,11 +14,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.RentalDTO;
+import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.Tools.ImageUtils;
@@ -45,45 +48,73 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class RentalToyActivity extends Activity implements LocationSource.OnLocationChangedListener{
+public class RentalToyActivity extends Activity implements LocationSource.OnLocationChangedListener {
 
     static final int REQUEST_TAKE_PHOTO = 1;
-
-
+    private static final int REQ_PERMISSION = 0;
     private RecyclerView photos;
     private Button makePhoto, confirm;
     private ArrayList<ImageAdapter> itemList;
     private File pictureImagePath = null;
     private UploadedPhotoURL uploadedPhotoURLs;
-    private static final int REQ_PERMISSION = 0;
+    private Spinner toyToRent;
+    private Button returnDataButton;
+    private EditText borrowerEmail, borrowerPassword;
+    private int mYear, mMonth, mDay;
+    private TextView dataText;
 
-    private DatePicker picker;
-    private EditText money_text,editTextFutureHolder,editTextToyToExchangeSecond;
-    private Spinner typ_advert_spinner;
-    private ArrayAdapter mAdapter;
+    private ArrayList<Toy> myToysData;
+
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rental_activity);
 
-
+        myToysData = new ArrayList<>();
         makePhoto = findViewById(R.id.make_photo_button);
         confirm = findViewById(R.id.confirm_rental);
-      //  money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
-        typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
-        picker =findViewById(R.id.editTextData);
-        editTextFutureHolder=findViewById(R.id.editTextFutureHolder);
-        editTextToyToExchangeSecond=findViewById(R.id.editTextToyToExchangeSecond);
+        toyToRent = findViewById(R.id.toy_to_rent);
+        setUpToyToRent();
+        returnDataButton = findViewById(R.id.choose_data_button);
+        dataText = findViewById(R.id.choose_data_text);
+        borrowerEmail = findViewById(R.id.borrower_email);
+        borrowerPassword = findViewById(R.id.borrower_password);
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        dataText.setText(date);
+        returnDataButton.setOnClickListener(v -> {
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year, monthOfYear, dayOfMonth) -> dataText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
+            datePickerDialog.show();
+        });
         makePhoto.setOnClickListener(v -> {
             dispatchTakePictureIntent();
 
@@ -107,6 +138,32 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
 
     }
 
+    private void setUpToyToRent() {
+        ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
+        Call<List<Toy>> call = toyService.getYourToysAdvert();
+        call.enqueue(new Callback<List<Toy>>() {
+            @Override
+            public void onResponse(Call<List<Toy>> call, Response<List<Toy>> response) {
+                myToysData.clear();
+                for (Toy t : response.body()) {
+                    myToysData.add(t);
+                }
+                String[] array = new String[myToysData.size()];
+
+                for (int i = 0; i < myToysData.size(); i++) {
+                    array[i] = myToysData.get(i).getToy_name()+" "+myToysData.get(i).getToy_id();
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter(RentalToyActivity.this, android.R.layout.simple_spinner_item, array);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                toyToRent.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Toy>> call, Throwable t) {
+
+            }
+        });
+    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -122,7 +179,6 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
         // Save a file: path for use with ACTION_VIEW intents
         return image;
     }
-
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -155,77 +211,91 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
         if (requestCode == 1) {
             File imgFile = pictureImagePath;
             if (imgFile.exists()) {
-                Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
-                itemList.add(new ImageAdapter(myBitmap));
                 try {
+                    Bitmap myBitmap = ImageUtils.getInstant().getCompressedBitmap(imgFile.getAbsolutePath());
+                    itemList.add(new ImageAdapter(myBitmap));
+                    ViewGroup.LayoutParams layoutParams = photos.getLayoutParams();
+                    layoutParams.height = 300;
+                    photos.setLayoutParams(layoutParams);
+                    try {
 
-                    UploadImage.execute(myBitmap, this);
-                    UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
+                        UploadImage.execute(myBitmap, this);
+                        UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD++;//to synchronise
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }catch (Exception e){
+
                 }
 
             }
         }
     }
-    public static Date getDate(int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
 
     private void confirmFunction() {
-        if (UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD==0 || UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
+        if (UploadedPhotoURL.IMAGE_COUNT_TO_UPLOAD == 0 || UploadedPhotoURL.ALL_IMAGE_UPLOADED) {
             ArrayList<String> photoURLS = UploadedPhotoURL.getUrls();
             ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
             RentalDTO rentalDTO = new RentalDTO();
-            rentalDTO.setTypOfTransaction(typ_advert_spinner.getSelectedItem().toString());
-//            String pattern = "yyyy-MM-dd";
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-//            try {
-//                System.out.println("DATA: "+simpleDateFormat.parse(simpleDateFormat.format(getDate(picker.getYear(),picker.getMonth(),picker.getDayOfMonth() ))));
-//                rentalDTO.setSuggestedReturnDate(simpleDateFormat.parse(simpleDateFormat.format(getDate(picker.getYear(),picker.getMonth(),picker.getDayOfMonth() ))));// todo ustaw datę z sensme
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-
-            //picker.getDayOfMonth()+"/"+ (picker.getMonth() + 1)+"/"+picker.getYear();
-            rentalDTO.setFutureHolder(editTextFutureHolder.getText().toString());
             rentalDTO.setPhotos(photoURLS);
+            String id=null;
             try{
-                rentalDTO.setSecondToyIdToTransaction(Long.valueOf(editTextToyToExchangeSecond.getText().toString()));
+                 id= toyToRent.getSelectedItem().toString().split(" ")[toyToRent.getSelectedItem().toString().split(" ").length-1];
+
+            rentalDTO.setToyIdTo(Long.valueOf(id));
+            rentalDTO.setFutureHolderEmail(borrowerEmail.getText().toString());
+            rentalDTO.setFutureHolderPassword(borrowerPassword.getText().toString());
+           // String [] d = dataText.getText().toString().split("-");
+            //int year=Integer.parseInt(d[0]),month=Integer.parseInt(d[1]),day=Integer.parseInt(d[2]);
+         //   rentalDTO.setRentDate(getDate( year,month,day));
+                rentalDTO.setSuggestedReturnDate(dataText.getText().toString());
             }catch (Exception e){
 
+                new AlertDialog.Builder(RentalToyActivity.this)
+                        .setTitle("ERROR")
+                        .setMessage("Bad name of advert")
+                        //  .setNegativeButton(android.R.string.ok, null)
+                        .show();
+
             }
-
-
-            Call<Void> call = toyService.rentToy(rentalDTO);
-            call.enqueue(new Callback<Void>() {
+            System.out.println("PUPA DEBUG: "+rentalDTO.toString());
+            Call<ResponseBody> call = toyService.rentToy(rentalDTO);
+            call.enqueue(new Callback<ResponseBody>() {
                 @Override // TODO: 27/12/2019 jakieś komunikaty czy ogłoszenie dodane
-                public void onResponse(Call<Void> call, Response<Void> response) {
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
 
-                    } else {
 
-                    }
+                        new AlertDialog.Builder(RentalToyActivity.this)
+                                .setTitle("Success")
+                                .setMessage("RENTAL OK")
+                              //  .setNegativeButton(android.R.string.ok, null)
+                                .show();
+                        finish();
+
+
+                    } else
+                        new AlertDialog.Builder(RentalToyActivity.this)
+                                .setTitle("Failed")
+                                .setMessage("BAD RENTAL")
+                                //.setNegativeButton(android.R.string.ok, null)
+                                .show();
 
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    new AlertDialog.Builder(RentalToyActivity.this)
+                            .setTitle("Failure")
+                            .setMessage("Check internet connection or restart application")
+                           // .setNegativeButton(android.R.string.ok, null)
+                            .show();
                 }
             });
 
             UploadedPhotoURL.clear();
-            finish();
+            //  finish();
         } else {
             new AlertDialog.Builder(this)
                     .setTitle("Wait")
@@ -264,7 +334,8 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission granted
-                    if (checkPermission()){}
+                    if (checkPermission()) {
+                    }
                     // googleMap.setMyLocationEnabled(true);
 
                 } else {
@@ -275,6 +346,7 @@ public class RentalToyActivity extends Activity implements LocationSource.OnLoca
             }
         }
     }
+
     @Override
     public void onLocationChanged(Location location) {
         //  LatLng myLocation = new LatLng( location.getLatitude(),  location.getLongitude());

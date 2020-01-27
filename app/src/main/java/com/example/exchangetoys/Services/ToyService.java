@@ -40,7 +40,7 @@ public interface ToyService {
     Call<ResponseBody> iWantAToy(@Body Long todId);
 
     @POST("toy/rent")
-    Call<Void> rentToy(@Body RentalDTO rentalDTO);
+    Call<ResponseBody> rentToy(@Body RentalDTO rentalDTO);
 
     @DELETE("toy/want/{id}")
     Call<Long> deleteSuggestion(@Path("id") Long itemId);

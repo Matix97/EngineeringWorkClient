@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#0099cc</color>
     <color name="colorPrimaryDark">#0099CC</color>
-    <color name="colorAccent">#33b5e5</color>
+    <color name="colorAccent">#33B5E5</color>
     <color name="background">#33b5e5</color>
     <color name="orange">#33b5e5</color>
     <color name="backTransparency">#F2add8e6</color>
     <color name="lightBack">#ccadd8e6</color>
+    <color name="confirmRent">#ccccffcc</color>
 </resources>

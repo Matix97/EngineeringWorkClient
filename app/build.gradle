@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.exchangetoys"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -49,6 +49,6 @@ dependencies {
     //lokalizacja
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    //firbease-notification
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    //może wrokmanager
+   // implementation "android.arch.work:work-runtime:1.0.1"
 }

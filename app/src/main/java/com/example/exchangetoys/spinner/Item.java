@@ -1,4 +1,4 @@
-package com.example.exchangetoys;
+package com.example.exchangetoys.spinner;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

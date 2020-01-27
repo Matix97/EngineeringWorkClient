@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
-import com.example.exchangetoys.Tools.EncryptionTools;
 
 import java.util.regex.Pattern;
 
@@ -91,7 +90,7 @@ public class ParentRegisterActivity extends Activity {
                 + ";" + email.getText().toString();
         try {
             this.userService = ServiceGenerator.createService(UserService.class);
-            Call<Void> call = userService.registerParent(EncryptionTools.encrypt(messageToEncrypt));
+            Call<Void> call = userService.registerParent(messageToEncrypt);
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {

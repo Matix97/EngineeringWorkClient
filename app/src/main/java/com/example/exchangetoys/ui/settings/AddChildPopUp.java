@@ -12,8 +12,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.exchangetoys.Item;
-import com.example.exchangetoys.MultiSelectionSpinner;
+import com.example.exchangetoys.spinner.Item;
+import com.example.exchangetoys.spinner.MultiSelectionSpinner;
 import com.example.exchangetoys.R;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.UserService;
