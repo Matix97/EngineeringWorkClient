@@ -39,6 +39,13 @@ public class ParentLoginActivity extends Activity {
         loginName = findViewById(R.id.login_name_child);
         password = findViewById(R.id.login_password_child);
         this.userService = ServiceGenerator.createService(UserService.class);
+        try{
+            Bundle bundle = getIntent().getExtras();
+            loginName.setText(bundle.getString("login"));
+            password.setText(bundle.getString("pass"));
+        }catch (Exception e){
+
+        }
 
         loginButton.setOnClickListener(v -> {
 

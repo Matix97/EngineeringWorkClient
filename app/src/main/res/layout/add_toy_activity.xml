@@ -86,7 +86,7 @@
         android:prompt="@string/age_prompt"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:layout_width="match_parent"
@@ -107,7 +107,7 @@
         android:prompt="@string/category_prompt"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dropdown" />
     <!--tags-->
     <TextView
         android:layout_width="match_parent"
@@ -120,15 +120,16 @@
         android:textAlignment="center"
         android:textColor="@android:color/holo_red_light" />
 
-    <Spinner
+    <com.example.exchangetoys.spinner.MultiSelectionSpinner
         android:id="@+id/tag_spinner2"
+
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:entries="@array/tag_category"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:prompt="@string/tag_prompt"
-        android:spinnerMode="dialog" />
+ />
 
 
     <CheckBox

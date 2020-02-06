@@ -4,6 +4,7 @@ package com.example.exchangetoys.Services;
 import com.example.exchangetoys.DTOs.ToyServiceData.JwtResponse;
 import com.example.exchangetoys.DTOs.ToyServiceData.SuggestedToy;
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
+import com.example.exchangetoys.DTOs.UserServiceData.Adult;
 import com.example.exchangetoys.DTOs.UserServiceData.Child;
 import com.example.exchangetoys.DTOs.UserServiceData.ChildUpdateDTO;
 
@@ -45,6 +46,9 @@ public interface UserService {
 
     @GET("child/suggestion")
     Call<List<Toy>> getChildSuggestion();
+
+    @GET("adults/one")
+    Call<Adult> getOneAdult();
 //    @POST("updateChild")
 //    Call<Void> updateChild(@Body Child child);
 //

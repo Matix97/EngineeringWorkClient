@@ -2,15 +2,18 @@ package com.example.exchangetoys.Services;
 
 import android.text.TextUtils;
 
+import com.example.exchangetoys.DTOs.UserServiceData.Adult;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
-    public static final String API_BASE_URL = "https://ca8e202b.ngrok.io";
+    public static final String API_BASE_URL = "https://6c6f6202.ngrok.io";
 
     public static String bearerToken;
     public static String role;
+    public static Adult adult;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

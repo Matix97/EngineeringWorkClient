@@ -1,6 +1,8 @@
 package com.example.exchangetoys.ui.home;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
 import com.example.exchangetoys.Tools.DownloadImageTask;
 import com.example.exchangetoys.child.ToyActivityChild;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -30,11 +33,15 @@ public class TorDeleteAdvert extends RecyclerView.Adapter<TorDeleteAdvert.ViewHo
     //All methods in this adapter are required for a bare minimum recyclerview adapter
     private int listItemLayout;
     public ArrayList<Toy> itemList;
+    public Context context;
+    public View view;
 
     // Constructor of the class
-    public TorDeleteAdvert(int layoutId, ArrayList<Toy> itemList) {
+    public TorDeleteAdvert(int layoutId, ArrayList<Toy> itemList, Context context,View view) {
         listItemLayout = layoutId;
         this.itemList = itemList;
+        this.context=context;
+        this.view=view;
     }
 
     // get the size of the list
@@ -65,8 +72,19 @@ public class TorDeleteAdvert extends RecyclerView.Adapter<TorDeleteAdvert.ViewHo
             new DownloadImageTask(imageView)
                     .execute(itemList.get(listPosition).getToy_photos().split(";")[0]);
         holder.delete.setOnClickListener(v -> {
-            deleteRequest(itemList.get(listPosition));
-            removeItem(itemList.get(listPosition));
+            new AlertDialog.Builder(context)
+                    .setTitle("Confirm")
+                    .setMessage("Are You sure to retrun advert? ")
+                    .setNegativeButton(android.R.string.no, (dialog, which) -> {
+
+                        Snackbar.make(view, "You cancel deleting", Snackbar.LENGTH_LONG).show();
+                    })
+                    .setPositiveButton(android.R.string.yes, ((dialog, which) -> {
+                        deleteRequest(itemList.get(listPosition));
+                        removeItem(itemList.get(listPosition));
+                    }))
+                    .show();
+
         });
 
     }
@@ -80,7 +98,7 @@ public class TorDeleteAdvert extends RecyclerView.Adapter<TorDeleteAdvert.ViewHo
        call.enqueue(new Callback<Void>() {
            @Override
            public void onResponse(Call<Void> call, Response<Void> response) {
-
+               Snackbar.make(view, "Deleting complete", Snackbar.LENGTH_LONG).show();
            }
 
            @Override

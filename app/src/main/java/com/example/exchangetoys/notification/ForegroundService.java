@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
 
@@ -48,7 +49,9 @@ public class ForegroundService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("ToY")
                 .setContentText("Your child want new toy")
-                .setSmallIcon(R.drawable.add_icon)
+                .setSmallIcon(R.mipmap.test_round)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.test_round))
                 .setTicker(input)
                 .setContentIntent(pendingIntent)
                 .build();
@@ -81,7 +84,9 @@ public class ForegroundService extends Service {
                                     String CHANNEL_ID2 = String.valueOf(integer);
                                     System.out.println("MY_TAG: Notification: "+ CHANNEL_ID2);
                                     NotificationCompat.Builder builder = new NotificationCompat.Builder(ForegroundService.this, CHANNEL_ID2)
-                                            .setSmallIcon(R.drawable.add_icon)
+                                            .setSmallIcon(R.mipmap.test_round)
+                                            .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                                                    R.mipmap.test_round))
                                             .setContentTitle(t.getChild().getChild_name())
                                             .setContentText("I want "+t.getToy().getToy_name())
                                             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -109,7 +114,7 @@ public class ForegroundService extends Service {
                 });
             }
         } ;
-        timer.schedule(doAsynchronousTask, 0, 10000);// execute in every 100 s
+        timer.schedule(doAsynchronousTask, 0, 100000);// execute in every 1000 s
         return START_NOT_STICKY;
     }
     @Override

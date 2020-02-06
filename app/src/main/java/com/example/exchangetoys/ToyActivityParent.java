@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.exchangetoys.DTOs.ToyServiceData.Toy;
+import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.ui.fragment.ImageArrayAdapter;
 
 import java.util.ArrayList;
@@ -34,13 +35,16 @@ public class ToyActivityParent extends Activity {
     private Button contactByEmail, contactByPhone;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.toy_activity_parent);
         Bundle bundle = getIntent().getExtras();
         Toy toy = bundle.getParcelable("toy");
+
         //image=findViewById(R.id.toy_activity_image);
+
         name = findViewById(R.id.toy_activity_name);
         description = findViewById(R.id.toy_activity_description);
         name.setText(toy.getToy_name());
@@ -53,7 +57,7 @@ public class ToyActivityParent extends Activity {
         if(toy.getToy_owner_phone_number()==null) contactByPhone.setEnabled(false);
         contactByEmail = findViewById(R.id.contactByEmial);
         contactByPhone.setOnClickListener(v -> phoneHandler(toy.getToy_owner_phone_number()));
-        contactByEmail.setOnClickListener(v -> emailHandler(toy.getToy_owner_id(),creatBodyMail(toy),creatSubject(toy)));
+        contactByEmail.setOnClickListener(v -> emailHandler(toy.getToy_owner_id(),creatBodyMail(toy), createSubject(toy)));
 
         if (toy.getToy_photos() != null && toy.getToy_photos() != "") {
             String[] urls = toy.getToy_photos().split(";");
@@ -79,15 +83,22 @@ public class ToyActivityParent extends Activity {
 
     }
     private String creatBodyMail(Toy toy){
-        StringBuilder s = new StringBuilder("Witam, \nzwracam się z uprzejmym zapytaniem dotyczącym ogłoszenia \"");
+        StringBuilder s = new StringBuilder("Witam, \n\nzwracam się z uprzejmym zapytaniem dotyczącym ogłoszenia \n\"");
         s.append(toy.getToy_name());
         s.append("\"\n<wpisz swoje pytania>");
-        s.append("\nSErdecznie pozdrawaiam\n ");
+        s.append("\n\nSerdecznie pozdrawiam\n ");
+        try{
+            s.append(ServiceGenerator.adult.getAdult_name());
+            s.append(" ");
+            s.append(ServiceGenerator.adult.getAdult_surname()   );
+        }catch (Exception e){
+
+        }
 
 
         return s.toString();
     }
-    private String creatSubject(Toy toy){
+    private String createSubject(Toy toy){
         StringBuilder s = new StringBuilder("Toy's app: ");
         s.append(toy.getToy_name());
         return s.toString();

@@ -2,6 +2,7 @@ package com.example.exchangetoys;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -57,6 +58,12 @@ public class ParentRegisterActivity extends Activity {
                                 .setNegativeButton(android.R.string.ok, null)
                                 .show();
             }
+            else
+                new AlertDialog.Builder(this)
+                        .setTitle("Warning")
+                        .setMessage("Entered passwords are differ")
+                        .setNegativeButton(android.R.string.ok, null)
+                        .show();
         } else {
             new AlertDialog.Builder(this)
                     .setTitle("Warning")
@@ -98,11 +105,20 @@ public class ParentRegisterActivity extends Activity {
                         new AlertDialog.Builder(ParentRegisterActivity.this)
                                 .setTitle("Register")
                                 .setMessage("Welcome in toys' world")
-                                .setNegativeButton(android.R.string.ok, null)
+                                .setNegativeButton(android.R.string.ok, (dialog, which) -> {
+                                    Intent intent = new Intent(ParentRegisterActivity.this, ParentLoginActivity.class);
+                                    intent.putExtra("login",email.getText().toString());
+                                    intent.putExtra("pass",password.getText().toString());
+                                    startActivity(intent);
+                                })
                                 .show();
 
                     } else {
-                        Toast.makeText(ParentRegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        new AlertDialog.Builder(ParentRegisterActivity.this)
+                                .setTitle("Error")
+                                .setMessage("Given email address is already subscribed")
+                                .setNegativeButton(android.R.string.ok, null)
+                                .show();
                     }
                 }
 

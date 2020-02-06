@@ -2,6 +2,7 @@ package com.example.exchangetoys.child;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
@@ -95,8 +96,12 @@ public class ToyActivityChild extends Activity {
                 } else
                     new AlertDialog.Builder(ToyActivityChild.this)
                             .setTitle("Nope")
-                            .setMessage("You cannot add more toy,\ndelete old before adding new")
-                            .setNegativeButton(android.R.string.ok, null)
+                            .setMessage("You cannot add more toy,\nretrun old before adding new")
+                            .setNegativeButton("Go to favourite",  (dialog, which) -> {
+                                Intent intent = new Intent(ToyActivityChild.this, SuggestedToys.class);
+
+                                startActivity(intent);
+                            })
                             .show();
             }
 

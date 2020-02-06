@@ -37,6 +37,8 @@ import com.example.exchangetoys.Tools.UploadImage;
 import com.example.exchangetoys.Tools.UploadedPhotoURL;
 import com.example.exchangetoys.recycleAdapters.ImageAdapter;
 import com.example.exchangetoys.recycleAdapters.ImageArrayAdapter;
+import com.example.exchangetoys.spinner.Item;
+import com.example.exchangetoys.spinner.MultiSelectionSpinner;
 import com.google.android.gms.maps.LocationSource;
 
 import java.io.File;
@@ -55,7 +57,7 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
 
     static final int REQUEST_TAKE_PHOTO = 1;
     private EditText name, description;
-    private Spinner age, category, tags;
+    private Spinner age, category;
     private CheckBox isDidactic, isVintage;
     private RecyclerView photos;
     private Button makePhoto, confirm;
@@ -63,6 +65,7 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
     private File pictureImagePath = null;
     private UploadedPhotoURL uploadedPhotoURLs;
     private static final int REQ_PERMISSION = 0;
+    private  MultiSelectionSpinner tags;
 
  //   private EditText money_text;
  //   private Spinner typ_advert_spinner;
@@ -84,9 +87,13 @@ public class AddToyActivity extends Activity implements LocationSource.OnLocatio
      //   money_text=findViewById(R.id.money_text);money_text.setEnabled(true);
      //   typ_advert_spinner=findViewById(R.id.typ_advert_spinner);
 
+        String [] tagList = getResources().getStringArray(R.array.tag_category);
+        ArrayList<Item> items = new ArrayList<>();
+        for(String s : tagList){
+            items.add(Item.builder().name(s).value(false).build());
+        }
 
-
-
+        tags.setItems(items);
         makePhoto.setOnClickListener(v -> {
             dispatchTakePictureIntent();
 

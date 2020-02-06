@@ -20,7 +20,6 @@ import com.example.exchangetoys.R;
 import com.example.exchangetoys.RentalToyActivity;
 import com.example.exchangetoys.Services.ServiceGenerator;
 import com.example.exchangetoys.Services.ToyService;
-import com.example.exchangetoys.ui.fragment.ToyArrayAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class HomeFragment extends Fragment {
         myToysData = new ArrayList<>();
         rentedToysData = new ArrayList<>();
 
-        ToyArrayAdapter itemArrayAdapter = new ToyArrayAdapter(R.layout.toy_item, rentedToysData);
+        ToyItemRented itemArrayAdapter = new ToyItemRented(R.layout.toy_item_rented, rentedToysData,getContext(),root);
         my_toys = root.findViewById(R.id.my_recycle_view_rented_toy);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -70,7 +69,7 @@ public class HomeFragment extends Fragment {
         my_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
         my_toys.setAdapter(itemArrayAdapter);
 
-        TorDeleteAdvert itemArrayAdapter2 = new TorDeleteAdvert(R.layout.toy_delete_advert, myToysData);
+        TorDeleteAdvert itemArrayAdapter2 = new TorDeleteAdvert(R.layout.toy_delete_advert, myToysData,getContext(),root);
         rented_toys = root.findViewById(R.id.my_recycle_view_my_toy);
         rented_toys.setLayoutManager(new LinearLayoutManager(root.getContext()));
         rented_toys.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -101,13 +100,15 @@ public class HomeFragment extends Fragment {
                     if (which.equals("my")) {
                         myToysData.clear();
                         for (Toy t : response.body()) {
-                            myToysData.add(t);
+
+                                myToysData.add(t);
                         }
                         my_toys.setAdapter(toyArrayAdapter);
                     } else if (which.equals("rented")) {
                         rentedToysData.clear();
                         for (Toy t : response.body()) {
-                            rentedToysData.add(t);
+
+                                rentedToysData.add(t);
                         }
                         rented_toys.setAdapter(toyArrayAdapter);
                     }
@@ -124,7 +125,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    private void download(String which, ToyArrayAdapter toyArrayAdapter) {//"my" or "rented"
+    private void download(String which, ToyItemRented toyArrayAdapter) {//"my" or "rented"
         ToyService toyService = ServiceGenerator.createAuthorizedService(ToyService.class);
         Call<List<Toy>> call = null;
         if (which.equals("my"))
@@ -141,12 +142,14 @@ public class HomeFragment extends Fragment {
                     if (which.equals("my")) {
                         myToysData.clear();
                         for (Toy t : response.body()) {
+                            if(t.getToy_current_holder_id()==null)
                             myToysData.add(t);
                         }
                         my_toys.setAdapter(toyArrayAdapter);
                     } else if (which.equals("rented")) {
                         rentedToysData.clear();
                         for (Toy t : response.body()) {
+                            if(t.getToy_current_holder_id()==null)
                             rentedToysData.add(t);
                         }
                         rented_toys.setAdapter(toyArrayAdapter);

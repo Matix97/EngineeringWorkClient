@@ -12,12 +12,18 @@
     android:paddingTop = "@dimen/activity_vertical_margin"
     android:paddingBottom = "@dimen/activity_vertical_margin" tools:context = ".ParentMainActivity">
 
-    <TextView android:text = "          " android:layout_width="wrap_content"
-        android:layout_height = "wrap_content"
-        android:id = "@+id/textview"
-        android:textSize = "35dp"
-        android:layout_alignParentTop = "true"
-        android:layout_centerHorizontal = "true" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="Adult's Login"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="36sp"
+        android:textStyle="bold|italic" />
 
     <EditText
         android:id="@+id/login_name_child"
@@ -29,11 +35,11 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="126dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:focusable="true"
-        android:hint="Name"
+        android:hint="Email"
         android:textColorHighlight="#ff7eff15"
         android:textColorHint="#a4a4a4"
         android:inputType="textEmailAddress"/>

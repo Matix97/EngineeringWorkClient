@@ -32,7 +32,7 @@ public class FilterActivityChild {
         View popupView = inflater.inflate(R.layout.filtr_activity_child, null);
         //Specify the length and width through constants
         int width = view.getWidth() - 150;
-        int height = view.getHeight() - 300;
+            int height = view.getHeight() - 300;
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = true;
         //Create a window with our parameters
